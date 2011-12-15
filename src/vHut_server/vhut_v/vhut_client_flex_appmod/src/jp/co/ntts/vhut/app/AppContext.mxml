@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppModuleContext.mxml -->
+<!---
+アプリケーションのSpiceコンテキスト.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<Objects xmlns="http://www.spicefactory.org/parsley"
+		   xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:presentation="jp.co.ntts.vhut.app.presentation.*"
+		   xmlns:data="com.adobe.cairngorm.integration.data.*"
+		   xmlns:domain="jp.co.ntts.vhut.app.domain.*"
+		   xmlns:wizp="jp.co.ntts.vhut.app.wiz.presentation.*"
+		   xmlns:compwizd="jp.co.ntts.vhut.comp.wiz.domain.*"
+		   xmlns:comp-wizp="jp.co.ntts.vhut.comp.wiz.presentation.*"
+		   xmlns:dialog="jp.co.ntts.vhut.dialog.presentation.*"
+		   xmlns:config="jp.co.ntts.vhut.config.*" >
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.app.application.ActivateApplicationByIdCommand;
+			import jp.co.ntts.vhut.app.application.AddReleasedApplicationByApplicationIdCommand;
+			import jp.co.ntts.vhut.app.application.CancelCommandCommand;
+			import jp.co.ntts.vhut.app.application.CreateApplicationCommand;
+			import jp.co.ntts.vhut.app.application.DeactivateApplicationByIdCommand;
+			import jp.co.ntts.vhut.app.application.DeleteApplicationByIdCommand;
+			import jp.co.ntts.vhut.app.application.GetAllApplicationAbstractionListCommand;
+			import jp.co.ntts.vhut.app.application.GetAllBaseTemplateListCommand;
+			import jp.co.ntts.vhut.app.application.GetAllDiskTemplateAbstractionListCommand;
+			import jp.co.ntts.vhut.app.application.GetAllSpecTemplateAbstractionListCommand;
+			import jp.co.ntts.vhut.app.application.GetAllSwitchTemplateAbstractionListCommand;
+			import jp.co.ntts.vhut.app.application.GetAllVhutUserAbstractionListCommand;
+			import jp.co.ntts.vhut.app.application.GetApplicationByIdCommand;
+			import jp.co.ntts.vhut.app.application.GetAvailableTermListByApplicationIdCommand;
+			import jp.co.ntts.vhut.app.application.GetTermListByApplicationIdCommand;
+			import jp.co.ntts.vhut.app.application.GetUnfinishedCommandAbstractionListByApplicationIdCommand;
+			import jp.co.ntts.vhut.app.application.RetryCommandCommand;
+			import jp.co.ntts.vhut.app.application.SetTermListCommand;
+			import jp.co.ntts.vhut.app.application.StartApplicationVmCommand;
+			import jp.co.ntts.vhut.app.application.StopApplicationVmCommand;
+			import jp.co.ntts.vhut.app.application.UpdateApplicationCommand;
+			import jp.co.ntts.vhut.app.domain.Applications;
+			import jp.co.ntts.vhut.app.domain.EditingApplication;
+			import jp.co.ntts.vhut.app.domain.Templates;
+			import jp.co.ntts.vhut.app.presentation.AppPM;
+			import jp.co.ntts.vhut.app.wiz.application.AppWizardDestination;
+			import jp.co.ntts.vhut.app.wiz.application.TermWizardDestination;
+			import jp.co.ntts.vhut.app.wiz.presentation.AppWizardPM;
+			import jp.co.ntts.vhut.core.CommandEvent;
+			import jp.co.ntts.vhut.core.GetAllEvent;
+			import jp.co.ntts.vhut.core.GetByIdEvent;
+			import jp.co.ntts.vhut.core.GetByIdWithTimeSpanEvent;
+			import jp.co.ntts.vhut.core.domain.Session;
+			import jp.co.ntts.vhut.rapp.presentation.RappPM;
+			import mx.resources.ResourceManager;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+
+		<!-- PRESENTATION LAYER -->
+		<presentation:AppPM id="appPM"/>
+		<wizp:AppWizardPM id="appWizardPM" steps="{ appWizardSteps }"/>
+		<wizp:EditorViewPM id="editorViewPM"/>
+		<wizp:PropertyViewPM id="propertyViewPM"/>
+		<wizp:TermWizardPM id="termWizardPM" steps="{ termWizardSteps }"/>
+		<wizp:TermViewPM id="termViewPM"/>
+		<dialog:OwnerSelectDialogPM id="ownerSelectDialogPM"/>
+
+		<!-- APPLICATION LAYER -->
+		<DynamicCommand type="{ GetAllApplicationAbstractionListCommand }"
+						selector="getAllApp"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetApplicationByIdCommand }"
+						selector="getAppById"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ CreateApplicationCommand }"
+						selector="createApp"
+						messageType="{ ApplicationEvent }"/>
+		<DynamicCommand type="{ UpdateApplicationCommand }"
+						selector="updateApp"
+						messageType="{ ApplicationEvent }"/>
+		<DynamicCommand type="{ DeleteApplicationByIdCommand }"
+						selector="deleteApp"
+						messageType="{ ApplicationEvent }"/>
+		<DynamicCommand type="{ ActivateApplicationByIdCommand }"
+						selector="activateApp"
+						messageType="{ ApplicationEvent }"/>
+		<DynamicCommand type="{ DeactivateApplicationByIdCommand }"
+						selector="deactivateApp"
+						messageType="{ ApplicationEvent }"/>
+		<DynamicCommand type="{ AddReleasedApplicationByApplicationIdCommand }"
+						selector="deployApp"
+						messageType="{ ApplicationEvent }"/>
+		<DynamicCommand type="{ GetUnfinishedCommandAbstractionListByApplicationIdCommand }"
+						selector="getCommandListByAppId"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ CancelCommandCommand }"
+						selector="cancelCommand"
+						messageType="{ CommandEvent }"/>
+		<DynamicCommand type="{ RetryCommandCommand }"
+						selector="retryCommand"
+						messageType="{ CommandEvent }"/>
+		<DynamicCommand type="{ SetTermListCommand }"
+						selector="setTerm"
+						messageType="{ TermEvent }"/>
+		<DynamicCommand type="{ GetTermListByApplicationIdCommand }"
+						selector="getTermListByAppId"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ GetAvailableTermListByApplicationIdCommand }"
+						selector="getAvailableTermListByAppId"
+						messageType="{ GetByIdWithTimeSpanEvent }"/>
+		<DynamicCommand type="{ StartApplicationVmCommand }"
+						selector="startAppVm"
+						messageType="{ AppVmEvent }"/>
+		<DynamicCommand type="{ StopApplicationVmCommand }"
+						selector="stopAppVm"
+						messageType="{ AppVmEvent }"/>
+		<DynamicCommand type="{ GetAllBaseTemplateListCommand }"
+						selector="getAllBaseTemplate"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetAllSwitchTemplateAbstractionListCommand }"
+						selector="getAllSwitchTemplate"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetAllDiskTemplateAbstractionListCommand }"
+						selector="getAllDiskTemplate"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetAllSpecTemplateAbstractionListCommand }"
+						selector="getAllSpecTemplate"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetAllVhutUserAbstractionListCommand }"
+						selector="getAllUser"
+						messageType="{ GetAllEvent }"/>
+		<compwizd:WizardSteps id="appWizardSteps">
+			<compwizd:WizardStep destination="{ AppWizardDestination.EDITOR }"
+								 name="{ ResourceManager.getInstance().getString('APPUI', AppWizardDestination.EDITOR) }"
+								 validator="{ editorViewPM }"/>
+			<compwizd:WizardStep destination="{ AppWizardDestination.PROP }"
+								 name="{ ResourceManager.getInstance().getString('APPUI', AppWizardDestination.PROP) }"
+								 validator="{ propertyViewPM }"/>
+		</compwizd:WizardSteps>
+		<compwizd:WizardSteps id="termWizardSteps">
+			<compwizd:WizardStep destination="{ TermWizardDestination.TERM }"
+								 name="{ ResourceManager.getInstance().getString('APPUI', TermWizardDestination.TERM) }"
+								 validator="{ termViewPM }"/>
+		</compwizd:WizardSteps>
+
+		<!-- DOMAIN LAYER -->
+		<Object type="{ Applications }"/>
+		<Object type="{ EditingApplication }"/>
+		<Object type="{ Templates }"/>
+
+		<!-- INFRASTRUCTURE LAYER-->
+		<config:VhutConfig id="vhutConfig"/>
+		<s:RemoteObject id="applicationService"
+						destination="applicationService"/>
+		<s:RemoteObject id="baseTemplateService"
+						destination="baseTemplateService"/>
+		<s:RemoteObject id="vhutUserService"
+						destination="vhutUserService"/>
+		<data:DataCache id="applicationDataCache"
+						type="jp.co.ntts.vhut.entity.Application"/>
+		<data:DataCache id="appCommandDataCache"
+						type="jp.co.ntts.vhut.entity.Command"/>
+		<data:DataCache id="termDataCache"
+						type="jp.co.ntts.vhut.entity.Term"/>
+		<data:DataCache id="availableTermDataCache"
+						type="jp.co.ntts.vhut.entity.Term"/>
+		<data:DataCache id="baseTemplateDataCache"
+						type="jp.co.ntts.vhut.entity.BaseTemplate"/>
+		<data:DataCache id="userDataCache"
+						type="jp.co.ntts.vhut.entity.VhutUser"/>
+
+	</fx:Declarations>
+</Objects>

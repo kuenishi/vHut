@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\TopContext.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<Objects
+	xmlns="http://www.spicefactory.org/parsley"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:module="com.adobe.cairngorm.module.*"
+	xmlns:presentation="jp.co.ntts.vhut.mng.presentation.*"
+	xmlns:domain="jp.co.ntts.vhut.mng.domain.*"
+	xmlns:config="jp.co.ntts.vhut.config.*"
+	>
+
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.GetAllEvent;
+			import jp.co.ntts.vhut.core.GetEvent;
+			import jp.co.ntts.vhut.core.GetWithTimeSpanEvent;
+			import jp.co.ntts.vhut.core.SearchCommandEvent;
+			import jp.co.ntts.vhut.mng.application.GetAllCommandListCommand;
+			import jp.co.ntts.vhut.mng.application.GetPerformanceCommand;
+			import jp.co.ntts.vhut.mng.application.GetPredictionCommand;
+			import jp.co.ntts.vhut.mng.application.GetTroubleCommand;
+			import jp.co.ntts.vhut.mng.application.SearchCommandListCommand;
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- INFRASTRUCTURE -->
+		<config:VhutConfig id="vhutConfig"/>
+		<s:RemoteObject id="managementService"
+						destination="managementService"/>
+		<!-- DOMAIN -->
+		<domain:Commands/>
+		<domain:Performance/>
+		<domain:Predictions/>
+		<domain:Troubles/>
+		<!-- APPLICATION -->
+		<DynamicCommand type="{ GetPerformanceCommand }"
+						selector="getPerformance"
+						messageType="{ GetEvent }"/>
+		<DynamicCommand type="{ GetTroubleCommand }"
+						selector="getTrouble"
+						messageType="{ GetEvent }"/>
+		<DynamicCommand type="{ GetPredictionCommand }"
+						selector="getPerformanceWithTimeSpan"
+						messageType="{ GetWithTimeSpanEvent }"/>
+		<DynamicCommand type="{ SearchCommandListCommand }"
+						selector="searchAllCommands"
+						messageType="{ SearchCommandEvent }"/>
+		<!-- PRESENTATION -->
+		<presentation:MngPM/>
+		<presentation:CommandViewPM/>
+	</fx:Declarations>
+
+</Objects>

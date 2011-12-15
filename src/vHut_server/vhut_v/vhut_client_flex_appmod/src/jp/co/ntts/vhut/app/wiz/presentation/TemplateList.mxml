@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\TemplateList.mxml -->
+<!---
+	 アプリケーション構成に必要なテンプレートを表示するリストです.
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+		 xmlns:form="jp.co.ntts.vhut.form.presentation.*"
+		 width="250"
+		 height="550"
+		 creationComplete="pm.updateAllTemplates();">
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.app.domain.Templates;
+
+			[Inject]
+			[Bindable]
+			public var pm:EditorViewPM;
+
+		]]>
+	</fx:Script>
+	<s:SkinnableContainer width="100%" height="35"
+						  styleName="glass">
+		<s:ButtonBar requireSelection="true"
+					 selectedIndex="0"
+					 horizontalCenter="0"
+					 dataProvider="{ viewstack }"
+					  verticalCenter="0">
+		</s:ButtonBar>
+	</s:SkinnableContainer>
+	<mx:ViewStack id="viewstack" width="100%" height="100%">
+		<s:NavigatorContent label="@Resource(key='vm', bundle='APPUI')" width="100%" height="100%">
+			<s:layout>
+				<s:VerticalLayout gap="0"/>
+			</s:layout>
+			<form:SearchBox width="100%" height="40"
+							search="pm.searchBaseTemplateHandler(event)"/>
+			<s:List width="100%" height="100%"
+					dataProvider="{ pm.templates.baseTemplates }"
+					itemRenderer="jp.co.ntts.vhut.core.presentation.TemplateDragItemRenderer"
+					styleName="basicList">
+			</s:List>
+		</s:NavigatorContent>
+
+		<s:NavigatorContent label="@Resource(key='switch', bundle='APPUI')" width="100%" height="100%">
+			<s:layout>
+				<s:VerticalLayout gap="0"/>
+			</s:layout>
+			<form:SearchBox width="100%" height="40"
+							search="pm.searchSwitchTemplateHandler(event)"/>
+			<s:List width="100%" height="100%"
+					dataProvider="{ pm.templates.switchTemplates }"
+					itemRenderer="jp.co.ntts.vhut.core.presentation.SwitchDragItemRenderer"
+					styleName="basicList">
+			</s:List>
+		</s:NavigatorContent>
+
+		<s:NavigatorContent label="@Resource(key='disk', bundle='APPUI')" width="100%" height="100%">
+			<s:layout>
+				<s:VerticalLayout gap="0"/>
+			</s:layout>
+			<form:SearchBox width="100%" height="40"
+							search="pm.searchDiskTemplateHandler(event)"/>
+			<s:List width="100%" height="100%"
+					dataProvider="{ pm.templates.diskTemplates }"
+					itemRenderer="jp.co.ntts.vhut.core.presentation.DiskDragItemRenderer"
+					styleName="basicList">
+			</s:List>
+		</s:NavigatorContent>
+	</mx:ViewStack>
+</s:Group>

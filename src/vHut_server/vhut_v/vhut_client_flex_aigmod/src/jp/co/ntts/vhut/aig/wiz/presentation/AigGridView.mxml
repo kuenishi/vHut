@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\EditorView.mxml -->
+<!---
+	アプリケーションインスタンスグループ一括ウィザードの
+	アプリケーションインスタンスグループ編集時のView.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:va="jp.co.ntts.vhut.va.*"
+		 xmlns:presentation="jp.co.ntts.vhut.app.wiz.presentation.*"
+		 xmlns:va1="jp.co.ntts.vhut.comp.va.*"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 width="800"
+		 height="550" xmlns:presentation1="jp.co.ntts.vhut.aig.wiz.presentation.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.entity.ApplicationInstanceGroup;
+			import jp.co.ntts.vhut.entity.VhutUser;
+			[Inject]
+			[Bindable]
+			public var pm:AigGridViewPM;
+			
+			public function dateFormat(item:Object, column:DataGridColumn):String
+			{
+				return dateFormatter.format(item[column.dataField]);
+			}
+			
+			public function appFormat(item:Object, column:DataGridColumn):String
+			{
+				return pm.apps.getAppNameByAppId(item[column.dataField]);
+			}
+			
+			public function ownerFormat(item:Object, column:DataGridColumn):String
+			{
+				return (item[column.dataField] as VhutUser).fullName;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+		<mx:DateFormatter id="dateFormatter" formatString="YYYY/MM/DD"/>
+	</fx:Declarations>
+	<mx:DataGrid dataProvider="{pm.importingAigs.aigList}"
+				 width="100%"
+				 height="100%"
+				 editable="true">
+		<mx:columns>
+			<mx:DataGridColumn dataField="name"
+							   editable="false"
+							   headerText="@Resource(key='aig.wizard.import.aigName', bundle='AIGUI')" 
+							   width="200"/>
+			<mx:DataGridColumn dataField="startTime"
+							   labelFunction="dateFormat"
+							   editable="false"
+							   headerText="@Resource(key='aig.wizard.import.startTime', bundle='AIGUI')" 
+							   width="80"/>
+			<mx:DataGridColumn dataField="endTime"
+							   labelFunction="dateFormat"
+							   editable="false"
+							   headerText="@Resource(key='aig.wizard.import.endTime', bundle='AIGUI')" 
+							   width="80"/>
+			<mx:DataGridColumn dataField="deleteTime"
+							   labelFunction="dateFormat"
+							   editable="false"
+							   headerText="@Resource(key='aig.wizard.import.deleteTime', bundle='AIGUI')" 
+							   width="80"/>
+			<mx:DataGridColumn dataField="userCount"
+							   editable="false"
+							   headerText="@Resource(key='aig.wizard.import.userCount', bundle='AIGUI')" 
+							   width="50"/>
+			<mx:DataGridColumn dataField="applicationId"
+							   labelFunction="appFormat"
+							   editorDataField="applicationId"
+							   itemEditor="jp.co.ntts.vhut.aig.wiz.presentation.AigGridItemRenderer"
+							   headerText="@Resource(key='aig.wizard.import.appName', bundle='AIGUI')"/>
+			<mx:DataGridColumn dataField="vhutUser"
+							   labelFunction="ownerFormat"
+							   editable="false"
+							   headerText="@Resource(key='aig.wizard.import.owner', bundle='AIGUI')" 
+							   width="80"/>
+		</mx:columns>
+	</mx:DataGrid>
+</s:SkinnableContainer>

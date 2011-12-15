@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppModule.mxml -->
+<!---
+	 xxxモジュール.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		   xmlns:cairngorm="com.adobe.cairngorm.*"
+		   xmlns:popup="com.adobe.cairngorm.popup.*"
+		   xmlns:aig_p="jp.co.ntts.vhut.aig.presentation.*"
+		   xmlns:ai_p="jp.co.ntts.vhut.ai.presentation.*"
+		   xmlns:presentation="jp.co.ntts.vhut.dialog.presentation.*"
+		   xmlns:presentation1="jp.co.ntts.vhut.aig.wiz.presentation.*"
+		   implements="com.adobe.cairngorm.module.IParsleyModule"
+		   layout="absolute"
+		   width="100%"
+		   height="100%"
+		   currentState="aig">
+	<mx:states>
+		<s:State name="aig"/>
+		<s:State name="ai"/>
+	</mx:states>
+	<mx:transitions>
+		<s:Transition fromState="aig" toState="ai">
+			<s:Parallel duration="200">
+				<s:Animate target="{ listContainer }">
+					<s:SimpleMotionPath property="horizontalScrollPosition"
+										valueFrom="0"
+										valueTo="{ listContainer.width }"/>
+				</s:Animate>
+				<s:Fade targets="{ [ aigElements, aiElements ] }"/>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="ai" toState="aig">
+			<s:Parallel duration="200">
+				<s:Animate target="{ listContainer }">
+					<s:SimpleMotionPath property="horizontalScrollPosition"
+										valueFrom="{ listContainer.width }"
+										valueTo="0"/>
+				</s:Animate>
+				<s:Fade targets="{ [ aigElements, aiElements ] }"/>
+			</s:Parallel>
+		</s:Transition>
+	</mx:transitions>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.APIContext;
+			import jp.co.ntts.vhut.ai.AiContext;
+			import jp.co.ntts.vhut.aig.AigContext;
+			import jp.co.ntts.vhut.aig.presentation.AigPM;
+
+			import mx.core.Application;
+			import mx.core.FlexGlobals;
+			import mx.resources.ResourceBundle;
+
+			import org.spicefactory.parsley.core.context.Context;
+
+			/**
+			 * Spiceコンテキスト.
+			 */
+			public function get contextBuilder():ContextBuilderTag
+			{
+				return _contextBuilder;
+			}
+
+			/**
+			 * プレゼンテーションモデル.
+			 */
+			[Inject]
+			[Bindable]
+			public var pm:AigPM;
+
+			/**
+			 * Spiceコアコンテキスト.
+			 */
+			[Inject]
+			[Bindable]
+			public var context:Context;
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[ResourceBundle("vhut")]
+		[ResourceBundle("AIGMessages")]
+		[ResourceBundle("AIGUI")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<spicefactory:ContextBuilder id="_contextBuilder">
+			<cairngorm:CairngormModuleSupport/>
+			<cairngorm:CairngormIntegrationSupport/>
+			<cairngorm:CairngormNavigationSupport/>
+			<spicefactory:FlexConfig type="{ AigContext }"/>
+			<spicefactory:FlexConfig type="{ AiContext }"/>
+		</spicefactory:ContextBuilder>
+		<spicefactory:Configure/>
+
+		<popup:PopUpWrapper open="{pm.isAigWizardOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isAigWizardOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+				</fx:Array>
+			</popup:behaviors>
+			<presentation1:AigWizard/>
+		</popup:PopUpWrapper>
+
+		<popup:PopUpWrapper open="{pm.isImportWizardOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isImportWizardOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+				</fx:Array>
+			</popup:behaviors>
+			<presentation1:ImportWizard/>
+		</popup:PopUpWrapper>
+	</fx:Declarations>
+
+
+	<s:Group id="listContainer"
+			 top="37"
+			 bottom="37"
+			 left="0"
+			 width="300"
+			 clipAndEnableScrolling="true"
+			 horizontalScrollPosition.aig="0"
+			 horizontalScrollPosition.ai="{listContainer.width}">
+		<s:layout>
+			<s:HorizontalLayout gap="0"/>
+		</s:layout>
+		<aig_p:ListContent id="aigListContent"
+						   width="300" height="100%"/>
+		<ai_p:ListContent id="aiListContent"
+							width="300" height="100%"/>
+	</s:Group>
+
+
+
+	<!-- ApplicationInstanceGroup表示時 -->
+
+	<s:Group id="aigElements"
+			 top="0" left="0" right="0" bottom="0"
+			 visible.ai="false">
+		<s:Group height="37"
+				 top="0"
+				 left="0"
+				 width="300">
+			<s:HGroup right="0"
+					  height="100%"
+					  verticalAlign="middle"
+					  paddingLeft="6"
+					  paddingRight="6">
+				<s:Button label="@Resource(key='ai', bundle='AIGUI')"
+						  click="currentState='ai'"
+						  enabled="{pm.isSwitchButtonEnabled}"
+						  visible="{pm.isSwitchButtonVisible}"
+						  styleName="menuButton"/>
+			</s:HGroup>
+		</s:Group>
+		<aig_p:ListFootBar height="37"
+						   bottom="0"
+						   left="0"
+						   width="300"/>
+		<aig_p:MainHeadBar height="37"
+						   top="0"
+						   right="0"
+						   left="306"/>
+		<aig_p:MainContent id="mainContent"
+						   left="306"
+						   right="0"
+						   top="37"
+						   bottom="37"/>
+		<aig_p:MainFootBar height="37"
+						   bottom="0"
+						   right="0"
+						   left="306"/>
+	</s:Group>
+	<!-- ApplicationInstance表示時 -->
+
+	<s:Group id="aiElements"
+			 top="0" left="0" right="0" bottom="0"
+			 visible.aig="false">
+		<s:Group height="37"
+				 top="0"
+				 left="0"
+				 width="300">
+			<s:HGroup left="0"
+					  height="100%"
+					  verticalAlign="middle"
+					  paddingLeft="6"
+					  paddingRight="6">
+				<s:Button label="@Resource(key='aig', bundle='AIGUI')"
+						  click="currentState='aig'"
+						  styleName="menuButton"/>
+			</s:HGroup>
+		</s:Group>
+		<ai_p:ListFootBar height="37"
+							bottom="0"
+							left="0"
+							width="300"/>
+		<ai_p:MainHeadBar height="37"
+							top="0"
+							right="0"
+							left="306"/>
+		<ai_p:MainContent left="306"
+							right="0"
+							top="37"
+							bottom="37"/>
+		<ai_p:MainFootBar height="37"
+							bottom="0"
+							right="0"
+							left="306"/>
+	</s:Group>
+</mx:Module>

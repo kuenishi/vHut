@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppModuleContext.mxml -->
+<!---
+アプリケーションのSpiceコンテキスト.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<Objects xmlns="http://www.spicefactory.org/parsley"
+		   xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:presentation="jp.co.ntts.vhut.aig.presentation.*"
+		   xmlns:wiz="jp.co.ntts.vhut.aig.wiz.presentation.*"
+		   xmlns:data="com.adobe.cairngorm.integration.data.*"
+		   xmlns:domain="jp.co.ntts.vhut.app.domain.*"
+		   xmlns:domain1="jp.co.ntts.vhut.dialog.domain.*"
+		   xmlns:compwizd="jp.co.ntts.vhut.comp.wiz.domain.*"
+		   xmlns:config="jp.co.ntts.vhut.config.*"
+		   xmlns:dialogp="jp.co.ntts.vhut.dialog.presentation.*">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.aig.application.CreateApplicationInstanceGroupCommand;
+			import jp.co.ntts.vhut.aig.application.CreateApplicationInstanceGroupListCommand;
+			import jp.co.ntts.vhut.aig.application.DeleteApplicationInstanceGroupByIdCommand;
+			import jp.co.ntts.vhut.aig.application.GetAllApplicationAbstractionListCommand;
+			import jp.co.ntts.vhut.aig.application.GetAllApplicationInstanceGroupAbstractionListCommand;
+			import jp.co.ntts.vhut.aig.application.GetAllVhutUserAbstractionListCommand;
+			import jp.co.ntts.vhut.aig.application.GetApplicationByIdCommand;
+			import jp.co.ntts.vhut.aig.application.GetApplicationInstanceGroupByIdCommand;
+			import jp.co.ntts.vhut.aig.application.GetIpInfoListByApplicationInstanceGroupIdCommand;
+			import jp.co.ntts.vhut.aig.application.UpdateApplicationInstanceGroupCommand;
+			import jp.co.ntts.vhut.aig.application.ValidateVhutUserListCommand;
+			import jp.co.ntts.vhut.aig.domain.Aigs;
+			import jp.co.ntts.vhut.aig.domain.Apps;
+			import jp.co.ntts.vhut.aig.domain.EditingAig;
+			import jp.co.ntts.vhut.aig.domain.ImportingAigs;
+			import jp.co.ntts.vhut.aig.wiz.application.AigWizardDestination;
+			import jp.co.ntts.vhut.aig.wiz.application.ImportWizardDestination;
+			import jp.co.ntts.vhut.app.AppVmEvent;
+			import jp.co.ntts.vhut.core.CommandEvent;
+			import jp.co.ntts.vhut.core.GetAllEvent;
+			import jp.co.ntts.vhut.core.GetByIdEvent;
+			import jp.co.ntts.vhut.core.GetByIdWithTimeSpanEvent;
+
+			import mx.resources.ResourceManager;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+
+		<!-- PRESENTATION LAYER -->
+		<presentation:AigPM id="aigPM"/>
+		<wiz:AigWizardPM id="aigWizardPM" steps="{ aigWizardSteps }"/>
+		<wiz:AppViewPM id="appViewPM"/>
+		<wiz:UserViewPM id="userViewPM"/>
+		<wiz:PropViewPM id="propViewPM"/>
+		<wiz:ImportWizardPM id="importWizardPM" steps="{ importWizardSteps }"/>
+		<wiz:FileViewPM id="fileViewPM"/>
+		<wiz:UserGridViewPM id="userGridViewPM"/>
+		<wiz:AigGridViewPM id="aigGridViewPM"/>
+		<dialogp:OwnerSelectDialogPM id="ownerSelectDialogPM"/>
+
+		<!-- APPLICATION LAYER -->
+		<DynamicCommand type="{ CreateApplicationInstanceGroupCommand }"
+						selector="createAig"
+						messageType="{ AigEvent }"/>
+		<DynamicCommand type="{ CreateApplicationInstanceGroupListCommand }"
+						selector="createAigList"
+						messageType="{ AigListEvent }"/>
+		<DynamicCommand type="{ DeleteApplicationInstanceGroupByIdCommand }"
+						selector="deleteAig"
+						messageType="{ AigEvent }"/>
+		<DynamicCommand type="{ GetAllApplicationAbstractionListCommand }"
+						selector="getAllApp"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetAllApplicationInstanceGroupAbstractionListCommand }"
+						selector="getAllAig"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetAllVhutUserAbstractionListCommand }"
+						selector="getAllUser"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetApplicationByIdCommand }"
+						selector="getAppById"
+						messageType="{ GetByIdEvent}"/>
+		<DynamicCommand type="{ GetApplicationInstanceGroupByIdCommand }"
+						selector="getAigById"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ UpdateApplicationInstanceGroupCommand }"
+						selector="updateAig"
+						messageType="{ AigEvent }"/>
+		<DynamicCommand type="{ ValidateVhutUserListCommand }"
+						selector="validateUserList"
+						messageType="{ UserListEvent }"/>
+		<DynamicCommand type="{ GetIpInfoListByApplicationInstanceGroupIdCommand }"
+						selector="getIpInfoListByAigId"
+						messageType="{ GetByIdEvent }"/>
+
+		<compwizd:WizardSteps id="aigWizardSteps">
+			<compwizd:WizardStep destination="{ AigWizardDestination.APP }"
+								 name="{ ResourceManager.getInstance().getString('AIGUI', AigWizardDestination.APP) }"
+								 initiator="{ appViewPM }"
+								 validator="{ appViewPM }"/>
+			<compwizd:WizardStep destination="{ AigWizardDestination.USER }"
+								 name="{ ResourceManager.getInstance().getString('AIGUI', AigWizardDestination.USER) }"
+								 initiator="{ userViewPM }"
+								 validator="{ userViewPM }"/>
+			<compwizd:WizardStep destination="{ AigWizardDestination.PROP }"
+								 name="{ ResourceManager.getInstance().getString('AIGUI', AigWizardDestination.PROP) }"
+								 validator="{ propViewPM }"/>
+		</compwizd:WizardSteps>
+		<compwizd:WizardSteps id="importWizardSteps">
+			<compwizd:WizardStep destination="{ ImportWizardDestination.FILE }"
+								 name="{ ResourceManager.getInstance().getString('AIGUI', ImportWizardDestination.FILE) }"
+								 validator="{ fileViewPM }"/>
+			<compwizd:WizardStep destination="{ ImportWizardDestination.USER }"
+								 name="{ ResourceManager.getInstance().getString('AIGUI', ImportWizardDestination.USER) }"
+								 validator="{ userGridViewPM }"/>
+			<compwizd:WizardStep destination="{ ImportWizardDestination.AIG }"
+								 name="{ ResourceManager.getInstance().getString('AIGUI', ImportWizardDestination.AIG) }"
+								 validator="{ aigGridViewPM }"/>
+		</compwizd:WizardSteps>
+
+		<!-- DOMAIN LAYER -->
+		<Object type="{ Aigs }"/>
+		<Object type="{ Apps }"/>
+		<Object type="{ EditingAig }"/>
+		<Object type="{ ImportingAigs }"/>
+
+		<!-- INFRASTRUCTURE LAYER-->
+		<config:VhutConfig id="vhutConfig"/>
+		<s:RemoteObject id="aigService"
+						destination="applicationInstanceGroupService"/>
+		<s:RemoteObject id="vhutUserService"
+						destination="vhutUserService"/>
+		<s:RemoteObject id="appService"
+						destination="applicationService"/>
+		<data:DataCache id="aigDataCache"
+						type="jp.co.ntts.vhut.entity.ApplicationInstanceGroup"/>
+		<data:DataCache id="appDataCache"
+						type="jp.co.ntts.vhut.entity.Application"/>
+		<data:DataCache id="userDataCache"
+						type="jp.co.ntts.vhut.entity.VhutUser"/>
+
+	</fx:Declarations>
+</Objects>

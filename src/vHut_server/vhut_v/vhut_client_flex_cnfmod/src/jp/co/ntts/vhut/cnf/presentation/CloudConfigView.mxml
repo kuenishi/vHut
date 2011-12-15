@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AbstractionView.mxml -->
+<!---
+<p>使い方表示コンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  xmlns:parsley="http://www.spicefactory.org/parsley"
+					  width="400" height="300" xmlns:presentation="jp.co.ntts.vhut.form.presentation.*" >
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			[Inject]
+			[Bindable]
+			public var pm:CnfPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:Group width="100%" height="37">
+		<s:HGroup left="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+		<s:HGroup right="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+	</s:Group>
+	<s:Scroller width="100%" height="100%"
+				horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+		<s:VGroup>
+			<s:SkinnableContainer id="template" styleName="paper">
+				<s:layout>
+					<s:VerticalLayout gap="20"
+									  paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"/>
+				</s:layout>
+				<s:VGroup>
+					<presentation:KeyValueDescriptionForm
+						id="specList"
+						descriptionText="@Resource(key='cloud.specList', bundle='CNFUI')"
+						keyText="cloud.specList"
+						valueText="{ pm.configs.cloudConfig.specListString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="diskList"
+						descriptionText="@Resource(key='cloud.diskList', bundle='CNFUI')"
+						keyText="cloud.diskList"
+						valueText="{ pm.configs.cloudConfig.diskListString }"
+						width="100%"
+						/>
+				</s:VGroup>
+				<s:VGroup>
+					<presentation:KeyValueDescriptionForm
+						id="cpuResourceWarnRate"
+						descriptionText="@Resource(key='cloud.cpuResourceWarnRate', bundle='CNFUI')"
+						keyText="cloud.cpuResourceWarnRate"
+						valueText="{ pm.configs.cloudConfig.cpuResourceWarnRateString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="cpuResourceLimitRate"
+						descriptionText="@Resource(key='cloud.cpuResourceLimitRate', bundle='CNFUI')"
+						keyText="cloud.cpuResourceLimitRate"
+						valueText="{ pm.configs.cloudConfig.cpuResourceLimitRateString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="memoryResourceWarnRate"
+						descriptionText="@Resource(key='cloud.memoryResourceWarnRate', bundle='CNFUI')"
+						keyText="cloud.memoryResourceWarnRate"
+						valueText="{ pm.configs.cloudConfig.memoryResourceWarnRateString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="memoryResourceLimitRate"
+						descriptionText="@Resource(key='cloud.memoryResourceLimitRate', bundle='CNFUI')"
+						keyText="cloud.memoryResourceLimitRate"
+						valueText="{ pm.configs.cloudConfig.memoryResourceLimitRateString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="storageResourceWarnRate"
+						descriptionText="@Resource(key='cloud.storageResourceWarnRate', bundle='CNFUI')"
+						keyText="cloud.storageResourceWarnRate"
+						valueText="{ pm.configs.cloudConfig.storageResourceWarnRateString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="storageResourceLimitRate"
+						descriptionText="@Resource(key='cloud.storageResourceLimitRate', bundle='CNFUI')"
+						keyText="cloud.storageResourceLimitRate"
+						valueText="{ pm.configs.cloudConfig.storageResourceLimitRateString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="vlanResourceWarnRate"
+						descriptionText="@Resource(key='cloud.vlanResourceWarnRate', bundle='CNFUI')"
+						keyText="cloud.vlanResourceWarnRate"
+						valueText="{ pm.configs.cloudConfig.vlanResourceWarnRateString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="vlanResourceLimitRate"
+						descriptionText="@Resource(key='cloud.vlanResourceLimitRate', bundle='CNFUI')"
+						keyText="cloud.vlanResourceLimitRate"
+						valueText="{ pm.configs.cloudConfig.vlanResourceLimitRateString }"
+						width="100%"
+						/>
+				</s:VGroup>
+				<s:VGroup>
+					<presentation:KeyValueDescriptionForm
+						id="cloudTaskCronExpression"
+						descriptionText="@Resource(key='cloud.cloudTaskCronExpression', bundle='CNFUI')"
+						keyText="cloud.cloudTaskCronExpression"
+						valueText="{ pm.configs.cloudConfig.cloudTaskCronExpression }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="intervalCheckClusters"
+						descriptionText="@Resource(key='cloud.intervalCheckClusters', bundle='CNFUI')"
+						keyText="cloud.intervalCheckClusters"
+						valueText="{ pm.configs.cloudConfig.intervalCheckClustersString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="intervalCheckHosts"
+						descriptionText="@Resource(key='cloud.intervalCheckHosts', bundle='CNFUI')"
+						keyText="cloud.intervalCheckHosts"
+						valueText="{ pm.configs.cloudConfig.intervalCheckHostsString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="intervalCheckNetworks"
+						descriptionText="@Resource(key='cloud.intervalCheckNetworks', bundle='CNFUI')"
+						keyText="cloud.intervalCheckNetworks"
+						valueText="{ pm.configs.cloudConfig.intervalCheckNetworksString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="intervalCheckDataStorages"
+						descriptionText="@Resource(key='cloud.intervalCheckDataStorages', bundle='CNFUI')"
+						keyText="cloud.intervalCheckDataStorages"
+						valueText="{ pm.configs.cloudConfig.intervalCheckDataStoragesString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="intervalCheckVms"
+						descriptionText="@Resource(key='cloud.intervalCheckVms', bundle='CNFUI')"
+						keyText="cloud.intervalCheckVms"
+						valueText="{ pm.configs.cloudConfig.intervalCheckVmsString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="intervalCheckTemplates"
+						descriptionText="@Resource(key='cloud.intervalCheckTemplates', bundle='CNFUI')"
+						keyText="cloud.intervalCheckTemplates"
+						valueText="{ pm.configs.cloudConfig.intervalCheckTemplatesString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="intervalCheckUsers"
+						descriptionText="@Resource(key='cloud.intervalCheckUsers', bundle='CNFUI')"
+						keyText="cloud.intervalCheckUsers"
+						valueText="{ pm.configs.cloudConfig.intervalCheckUsersString }"
+						width="100%"
+						/>
+				</s:VGroup>
+				<s:VGroup>
+					<presentation:KeyValueDescriptionForm
+						id="rhevAgentIp"
+						descriptionText="@Resource(key='cloud.rhevAgentIp', bundle='CNFUI')"
+						keyText="cloud.rhevAgentIp"
+						valueText="{ pm.configs.cloudConfig.rhevAgentIp }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="rhevAgentPort"
+						descriptionText="@Resource(key='cloud.rhevAgentPort', bundle='CNFUI')"
+						keyText="cloud.rhevAgentPort"
+						valueText="{ pm.configs.cloudConfig.rhevAgentPortString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="rhevPortalUrl"
+						descriptionText="@Resource(key='cloud.rhevPortalUrl', bundle='CNFUI')"
+						keyText="cloud.rhevPortalUrl"
+						valueText="{ pm.configs.cloudConfig.rhevPortalUrl }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="rhevCluster"
+						descriptionText="@Resource(key='cloud.rhevCluster', bundle='CNFUI')"
+						keyText="cloud.rhevCluster"
+						valueText="{ pm.configs.cloudConfig.rhevCluster }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="rhevClusterId"
+						descriptionText="@Resource(key='cloud.rhevClusterId', bundle='CNFUI')"
+						keyText="cloud.rhevClusterId"
+						valueText="{ pm.configs.cloudConfig.rhevClusterId }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="rhevStorageDomain"
+						descriptionText="@Resource(key='cloud.rhevStorageDomain', bundle='CNFUI')"
+						keyText="cloud.rhevStorageDomain"
+						valueText="{ pm.configs.cloudConfig.rhevStorageDomain }"
+						width="100%"
+						/>
+				</s:VGroup>
+				<s:VGroup>
+					<presentation:KeyValueDescriptionForm
+						id="primaryNwAgentUrl"
+						descriptionText="@Resource(key='cloud.primaryNwAgentUrl', bundle='CNFUI')"
+						keyText="cloud.primaryNwAgentUrl"
+						valueText="{ pm.configs.cloudConfig.primaryNwAgentUrlString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="secondaryNwAgentUrl"
+						descriptionText="@Resource(key='cloud.secondaryNwAgentUrl', bundle='CNFUI')"
+						keyText="cloud.secondaryNwAgentUrl"
+						valueText="{ pm.configs.cloudConfig.secondaryNwAgentUrlString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="vlanStartNumber"
+						descriptionText="@Resource(key='cloud.vlanStartNumber', bundle='CNFUI')"
+						keyText="cloud.vlanStartNumber"
+						valueText="{ pm.configs.cloudConfig.vlanStartNumberString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="vlanEndNumber"
+						descriptionText="@Resource(key='cloud.vlanEndNumber', bundle='CNFUI')"
+						keyText="cloud.vlanEndNumber"
+						valueText="{ pm.configs.cloudConfig.vlanEndNumberString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="vlanExcludeList"
+						descriptionText="@Resource(key='cloud.vlanExcludeList', bundle='CNFUI')"
+						keyText="cloud.vlanExcludeList"
+						valueText="{ pm.configs.cloudConfig.vlanExcludeListString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="exIpExcludeList"
+						descriptionText="@Resource(key='cloud.exIpExcludeList', bundle='CNFUI')"
+						keyText="cloud.exIpExcludeList"
+						valueText="{ pm.configs.cloudConfig.exIpExcludeListString }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="inIpNwAddress"
+						descriptionText="@Resource(key='cloud.inIpNwAddress', bundle='CNFUI')"
+						keyText="cloud.inIpNwAddress"
+						valueText="{ pm.configs.cloudConfig.inIpNwAddress }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="inIpSubnetMask"
+						descriptionText="@Resource(key='cloud.inIpSubnetMask', bundle='CNFUI')"
+						keyText="cloud.inIpSubnetMask"
+						valueText="{ pm.configs.cloudConfig.inIpSubnetMask }"
+						width="100%"
+						/>
+					<presentation:KeyValueDescriptionForm
+						id="virtSwitchPortCount"
+						descriptionText="@Resource(key='cloud.virtSwitchPortCount', bundle='CNFUI')"
+						keyText="cloud.virtSwitchPortCount"
+						valueText="{ pm.configs.cloudConfig.virtSwitchPortCountString }"
+						width="100%"
+						/>
+				</s:VGroup>
+			</s:SkinnableContainer>
+		</s:VGroup>
+	</s:Scroller>
+	<s:Group width="100%" height="37">
+		<s:HGroup left="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+		<s:HGroup right="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+	</s:Group>
+</s:Group>

@@ -1,0 +1,151 @@
+/* CSS file */
+
+/* vHutアプリケーション共通のスタイルファイル。 */
+
+/* $Date$ */
+/* $Revision$ */
+/* $Author$ */
+
+/* author NTT Software Corporation. */
+/* version 1.0.0 */
+
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace p "jp.co.ntts.vhut.presentation.*";
+@namespace dialog "jp.co.ntts.vhut.dialog.presentation.*";
+@namespace form "jp.co.ntts.vhut.form.presentation.*";
+@namespace panel "jp.co.ntts.vhut.panel.presentation.*";
+
+s|TextBase,
+s|SkinnableTextBase
+{
+	/* FTE ならフォント名を並べて書ける */
+	/* メイリオは無視 */
+	fontFamily: "ヒラギノ角ゴ Pro W3", "さざなみゴシック", "ＭＳ Ｐゴシック", "_sans";
+}
+
+s|List.basicList
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.BasicListSkin");
+	content-background-alpha:0;
+	border-visible:false;
+}
+
+s|List.basicList s|Scroller
+{
+	vertical-scroll-policy:on;
+	horizontal-scroll-policy:off;
+}
+
+s|Button.menuButton
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.WiredButtonSkin");
+	corner-radius:4;
+}
+
+dialog|VhutAlert
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.dialog.presentation.VhutAlertSkin");
+	button-style-name:menuButton;
+}
+
+s|SkinnableContainer.paper
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.PaperContainerSkin");
+	background-color:#FFFFFF;
+	background-alpha:0.8;
+}
+
+s|SkinnableDataContainer.paper
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.PaperDataContainerSkin");
+	background-color:#FFFFFF;
+	background-alpha:0.8;
+}
+
+s|SkinnableContainer.solidMenuBar
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.SolidMenuBarContainerSkin");
+}
+
+mx|Form.attr mx|FormItem.h1
+{
+	background-color:#FFFFFF;
+	background-alpha:0.3;
+}
+
+mx|Form.attr mx|FormItem s|TextArea
+{
+	border-color:#FFFFFF;
+	border-alpha:0.3;
+	content-background-alpha:0;
+}
+
+form|ElementTitleForm #localNameLabel
+{
+	padding-top:5;
+	padding-left:5;
+	font-size:18;
+}
+
+form|ElementTitleForm #globalNameLabel
+{
+	padding-left:5;
+	font-size:12;
+}
+
+form|SearchBox s|Button
+{
+	corner-radius:0;
+	color:#FFFFFF;
+	chrome-color:#FFBF00;
+}
+
+s|Scroller.bevelDownScroller
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.BevelDownScrollerSkin");
+	background-color:#80BFEF;
+}
+
+
+s|SkinnableContainer.paper
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.PaperContainerSkin");
+	background-color:#FFFFFF;
+	background-alpha:0.8;
+}
+
+s|SkinnableContainer.glass
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.core.presentation.BasicContainerSkin");
+}
+
+p|SessionIndicator
+{
+	corner-radius:7;
+	background-alpha:0.3;
+	border-color:#000000;
+	border-alpha:0.2;
+	border-style:solid;
+	border-weight:2;
+}
+
+p|SessionIndicator #account
+{
+	font-size:10;
+	color:#00344A;
+}
+
+p|SessionIndicator #logoutBtn
+{
+	font-size:10;
+	color:#AF8405;
+	text-roll-over-color:#AF8405;
+	roll-over-color:#ADD6F5;
+}
+
+panel|VAttributePanel s|SkinnableContainer.basicContainer
+{
+	background-color:#FFFFFF;
+	background-alpha:0.5;
+}

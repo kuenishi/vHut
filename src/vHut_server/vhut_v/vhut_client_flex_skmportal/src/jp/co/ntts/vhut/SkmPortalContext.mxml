@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\VhutSkmPortalContext.mxml -->
+<!---
+	 メインアプリケーションのDI定義.
+	 <p>SPICE Frameworkの一部</p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<fx:Object xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:presentation="jp.co.ntts.vhut.presentation.*"
+		   xmlns:cairngorm="http://ns.adobe.com/cairngorm"
+		   xmlns:infrastructure="jp.co.ntts.vhut.core.infrastructure.*"
+		   xmlns:domain="jp.co.ntts.vhut.core.domain.*"
+		   xmlns:parsley="http://www.spicefactory.org/parsley">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.AuthenticationEvent;
+			import jp.co.ntts.vhut.core.GetEvent;
+			import jp.co.ntts.vhut.core.application.ModuleChangeEvent;
+			import jp.co.ntts.vhut.core.infrastructure.GetCurrentUserCommand;
+			import jp.co.ntts.vhut.core.infrastructure.LoginCommand;
+			import jp.co.ntts.vhut.core.infrastructure.LogoutCommand;
+			import jp.co.ntts.vhut.log.LogConfPanelEvent;
+
+			import org.spicefactory.lib.reflect.ClassInfo;
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- PRESENTATION LAYER -->
+		<presentation:ContentPM/>
+		<cairngorm:GlobalHistory/>
+
+		<!-- APPLICATION LAYER -->
+
+		<!-- DOMAIN LAYER -->
+
+		<!-- INFRASTRACTURE LAYER -->
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_topmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="topModuleManager"
+										   url="vhut_client_flex_topmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_appmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="appModuleManager"
+										   url="vhut_client_flex_appmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_aigmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="aigModuleManager"
+										   url="vhut_client_flex_aigmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_tmpmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="tmpModuleManager"
+										   url="vhut_client_flex_tmpmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_usrmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="usrModuleManager"
+										   url="vhut_client_flex_usrmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_rolmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="rolModuleManager"
+										   url="vhut_client_flex_rolmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_mngmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="mngModuleManager"
+										   url="vhut_client_flex_mngmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_cnfmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="cnfModuleManager"
+										   url="vhut_client_flex_cnfmod.swf"
+										   applicationDomain="{ ClassInfo.currentDomain }"/>
+
+		<!--- Spiceモジュール読み込みクラス.vhut_client_flex_logmod.swfを読み込む設定 -->
+		<cairngorm:ParsleyModuleDescriptor objectId="logModuleManager"
+										   url="vhut_client_flex_logmod.swf"
+										   applicationDomain="{ClassInfo.currentDomain}"/>
+
+		<!--- Spiceモジュールと通信するためのインターセプター.LogConfPanelEventで通信 -->
+		<cairngorm:ModuleMessageInterceptor id="logConfPanelEventInterceptor"
+											type="{ LogConfPanelEvent }"
+											selector="launch"/>
+
+		<!--- Spiceモジュールと通信するためのインターセプター.ModuleChangeEventで通信 -->
+		<cairngorm:ModuleMessageInterceptor id="moduleChangeEventInterceptor"
+											type="{ ModuleChangeEvent }"
+											selector="moduleChange"/>
+	</fx:Declarations>
+
+</fx:Object>

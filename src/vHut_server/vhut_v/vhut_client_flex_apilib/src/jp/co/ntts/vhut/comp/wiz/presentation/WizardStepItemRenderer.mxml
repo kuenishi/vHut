@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\WizardStepItemRenderer.mxml -->
+<!---
+<p>xxxアイテムレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				autoDrawBackground="false">
+	<fx:Script>
+		<![CDATA[
+			import mx.binding.utils.BindingUtils;
+			import mx.binding.utils.ChangeWatcher;
+			import mx.events.FlexEvent;
+
+			import org.spicefactory.lib.reflect.Property;
+
+
+			override protected function getCurrentRendererState():String
+			{
+				if(data && data.isCurrent)
+				{
+					return "current";
+				}
+				return "normal";
+			}
+
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				if(_watcher)
+					_watcher.unwatch();
+
+				if(data)
+					_watcher = BindingUtils.bindSetter(function(value:Object):void
+					{
+						currentState = getCurrentRendererState();
+					}, data, "isCurrent");
+			}
+			protected var _watcher:ChangeWatcher;
+
+		]]>
+	</fx:Script>
+
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="current"/>
+	</s:states>
+
+	<s:Label text="{data.name}"
+			 fontSize="12" fontSize.current="16"
+			 fontWeight="normal" fontWeight.current="bold"
+			 color="#95CCED" color.current="#398FC4"
+			 verticalAlign="middle"
+			 />
+
+</s:ItemRenderer>

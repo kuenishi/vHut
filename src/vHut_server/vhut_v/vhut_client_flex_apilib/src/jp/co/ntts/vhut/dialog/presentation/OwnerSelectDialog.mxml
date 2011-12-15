@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\OwnerSelectDialog.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:form="jp.co.ntts.vhut.form.presentation.*"
+		 skinClass="jp.co.ntts.vhut.dialog.presentation.BasicPanelSkin"
+		 width="300" height="600">
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	<s:controlBarContent>
+		<s:Button id="selectBtn"
+				  label="@Resource(key='select', bundle='APIUI')"
+				  right="0" bottom="0"
+				  click="select()"
+				  styleName="menuButton"/>
+	</s:controlBarContent>
+	<fx:Script>
+		<![CDATA[
+
+			import mx.events.CloseEvent;
+
+			[Inject]
+			[Bindable]
+			public var pm:OwnerSelectDialogPM;
+
+			protected function select():void
+			{
+				dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="30"
+						  styleName="glass">
+		<s:Label text="@Resource(key='allUsers', bundle='APIUI')"
+				 verticalCenter="0" horizontalCenter="0"/>
+	</s:SkinnableContainer>
+	<form:SearchBox width="100%" height="40" search="pm.searchUserHandler(event)"/>
+	<s:List id="unregisteredUserList"
+			width="100%" height="100%"
+			dataProvider="{ pm.userList }"
+			selectedItem="@{ pm.targetUser }"
+			itemRenderer="jp.co.ntts.vhut.core.presentation.UserItemRenderer"
+			styleName="basicList">
+	</s:List>
+</s:Panel>

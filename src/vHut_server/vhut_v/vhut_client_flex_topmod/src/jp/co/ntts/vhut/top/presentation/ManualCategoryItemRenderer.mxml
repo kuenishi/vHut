@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ManualCategoryItemRenderer.mxml -->
+<!---
+<p>xxxアイテムレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				autoDrawBackground="false"
+				width="100%">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.XMLListCollection;
+
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				manualList = new XMLListCollection(new XMLList(data.manual));
+			}
+
+			[Bindable]
+			public var manualList:XMLListCollection;
+
+		]]>
+	</fx:Script>
+	<s:SkinnableContainer id="manualContainer" styleName="paper"
+						  width="100%">
+		<s:layout>
+			<s:VerticalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+		</s:layout>
+		<s:Label text="{data.@name}"/>
+		<s:DataGroup id="manualDataGroup"
+					 dataProvider="{manualList}"
+					 itemRenderer="jp.co.ntts.vhut.top.presentation.ManualItemRenderer">
+			<s:layout>
+				<s:VerticalLayout paddingLeft="10" paddingRight="10"/>
+			</s:layout>
+		</s:DataGroup>
+	</s:SkinnableContainer>
+</s:ItemRenderer>

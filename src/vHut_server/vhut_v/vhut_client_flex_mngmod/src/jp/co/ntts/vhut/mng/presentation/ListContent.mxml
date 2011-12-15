@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ItemList.mxml -->
+<!---
+	 xxxコンポーネント.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		 xmlns:core="jp.co.ntts.vhut.core.presentation.*" 
+		 xmlns:form="jp.co.ntts.vhut.form.presentation.*"
+		 creationComplete="pm.onCreationComplete(event)" 
+		 width="300" height="300">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.presentation.BasicItemRenderer;
+			[Inject]
+			[Bindable]
+			public var pm:MngPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<spicefactory:Configure/>
+	</fx:Declarations>
+	<s:List top="0" bottom="0" left="0" right="0"
+			dataProvider="{pm.contents}"
+			selectedItem="@{pm.targetContent}"
+			itemRenderer="jp.co.ntts.vhut.core.presentation.BasicItemRenderer"
+			styleName="basicList">
+	</s:List>
+</s:Group>

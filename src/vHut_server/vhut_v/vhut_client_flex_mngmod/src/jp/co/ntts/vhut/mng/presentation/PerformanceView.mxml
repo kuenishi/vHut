@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AbstractionView.mxml -->
+<!---
+<p>使い方表示コンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  xmlns:parsley="http://www.spicefactory.org/parsley"
+					  width="400" height="300" xmlns:presentation="jp.co.ntts.vhut.form.presentation.*" >
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			[Inject]
+			[Bindable]
+			public var pm:MngPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:Group width="100%" height="37">
+		<s:HGroup left="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+		<s:HGroup right="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+	</s:Group>
+	<s:Scroller width="100%" height="100%"
+				horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+		<s:VGroup>
+			<s:SkinnableContainer id="service" styleName="paper">
+				<s:layout>
+					<s:VerticalLayout gap="20"
+									  paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"/>
+				</s:layout>
+				<s:Group>
+					<s:layout>
+						<s:TileLayout requestedColumnCount="2" columnWidth="180"
+									  horizontalGap="10" verticalGap="10"/>
+					</s:layout>
+					<presentation:KeyValueForm id="activeAppForm"
+											   keyText="@Resource(key='performance.activeApp', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.acviveAp}"
+											   width="100%"/>
+					<presentation:KeyValueForm id="committedAppForm"
+											   keyText="@Resource(key='performance.committedApp', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.commitedAp}"
+											   width="100%"/>
+
+					<presentation:KeyValueForm id="activeAigForm"
+											   keyText="@Resource(key='performance.activeAig', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.activeAig}"
+											   width="100%"/>
+					<presentation:KeyValueForm id="activeAiForm"
+											   keyText="@Resource(key='performance.activeAi', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.activeAi}"
+											   width="100%"/>
+
+					<presentation:KeyValueForm id="activeVmForm"
+											   keyText="@Resource(key='performance.activeVm', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.activeVm}"
+											   width="100%"/>
+					<presentation:KeyValueForm id="committedVmForm"
+											   keyText="@Resource(key='performance.committedVm', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.commitedVm}"
+											   width="100%"/>
+				</s:Group>
+				<s:Group>
+					<s:layout>
+						<s:TileLayout requestedColumnCount="3" columnWidth="200"
+									  horizontalGap="10" verticalGap="10"/>
+					</s:layout>
+					<presentation:KeyValueForm id="activeCpuFreqForm"
+											   keyText="@Resource(key='performance.activeCpuFreq', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.activeCpuFreq}"
+											   unitText="@Resource(key='unit.cpu.freq.m', bundle='APIUI')"
+											   width="100%"/>
+					<presentation:KeyValueForm id="committedCpuFreqForm"
+											   keyText="@Resource(key='performance.committedCpuFreq', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.commitedCpuFreq}"
+											   unitText="@Resource(key='unit.cpu.freq.m', bundle='APIUI')"
+											   width="100%"/>
+					<presentation:KeyValueForm id="totalCpuFreqForm"
+											   keyText="@Resource(key='performance.totalCpuFreq', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.totalCpuFreq}"
+											   unitText="@Resource(key='unit.cpu.freq.m', bundle='APIUI')"
+											   width="100%"/>
+
+					<presentation:KeyValueForm id="activeMemoryForm"
+											   keyText="@Resource(key='performance.activeMemory', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.activeMemory}"
+											   unitText="@Resource(key='unit.memory.m', bundle='APIUI')"
+											   width="100%"/>
+					<presentation:KeyValueForm id="committedMemoryForm"
+											   keyText="@Resource(key='performance.committedMemory', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.commitedMemory}"
+											   unitText="@Resource(key='unit.memory.m', bundle='APIUI')"
+											   width="100%"/>
+					<presentation:KeyValueForm id="totalMemory"
+											   keyText="@Resource(key='performance.totalMemory', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.totalMemory}"
+											   unitText="@Resource(key='unit.memory.m', bundle='APIUI')"
+											   width="100%"/>
+				</s:Group>
+				<s:Group>
+					<s:layout>
+						<s:TileLayout requestedColumnCount="2" columnWidth="200"
+									  horizontalGap="10" verticalGap="10"/>
+					</s:layout>
+					<presentation:KeyValueForm id="activeStorageForm"
+											   keyText="@Resource(key='performance.activeStorage', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.activeStorage}"
+											   unitText="@Resource(key='unit.disk.g', bundle='APIUI')"
+											   width="100%"/>
+					<presentation:KeyValueForm id="committedStorageForm"
+											   keyText="@Resource(key='performance.totalStorage', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.totalStorage}"
+											   unitText="@Resource(key='unit.disk.g', bundle='APIUI')"
+											   width="100%"/>
+
+					<presentation:KeyValueForm id="activeVlanForm"
+											   keyText="@Resource(key='performance.activeVlan', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.activeVlan}"
+											   width="100%"/>
+					<presentation:KeyValueForm id="committedVlanForm"
+											   keyText="@Resource(key='performance.totalVlan', bundle='MNGUI')"
+											   valueText="{pm.performance.dto.cloudInfra.totalVlan}"
+											   width="100%"/>
+				</s:Group>
+			</s:SkinnableContainer>
+		</s:VGroup>
+	</s:Scroller>
+	<s:Group width="100%" height="37">
+		<s:HGroup left="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+		<s:HGroup right="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+	</s:Group>
+</s:Group>

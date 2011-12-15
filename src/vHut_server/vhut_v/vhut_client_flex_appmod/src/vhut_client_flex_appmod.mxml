@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppModule.mxml -->
+<!---
+	 xxxモジュール.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		   xmlns:cairngorm="com.adobe.cairngorm.*"
+		   xmlns:popup="com.adobe.cairngorm.popup.*"
+		   xmlns:app_p="jp.co.ntts.vhut.app.presentation.*"
+		   xmlns:rapp_p="jp.co.ntts.vhut.rapp.presentation.*"
+		   xmlns:presentation="jp.co.ntts.vhut.dialog.presentation.*"
+		   xmlns:presentation1="jp.co.ntts.vhut.app.wiz.presentation.*"
+		   implements="com.adobe.cairngorm.module.IParsleyModule"
+		   layout="absolute"
+		   width="100%"
+		   height="100%"
+		   currentState="app" xmlns:behavior="com.adobe.cairngorm.popup.behavior.*">
+	<mx:states>
+		<s:State name="app"/>
+		<s:State name="rapp"/>
+	</mx:states>
+	<mx:transitions>
+		<s:Transition fromState="app" toState="rapp">
+			<s:Parallel duration="200">
+				<s:Animate target="{ listContainer }">
+					<s:SimpleMotionPath property="horizontalScrollPosition"
+										valueFrom="0"
+										valueTo="{ listContainer.width }"/>
+				</s:Animate>
+				<s:Fade targets="{ [ appElements, rappElements ] }"/>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="rapp" toState="app">
+			<s:Parallel duration="200">
+				<s:Animate target="{ listContainer }">
+					<s:SimpleMotionPath property="horizontalScrollPosition"
+										valueFrom="{ listContainer.width }"
+										valueTo="0"/>
+				</s:Animate>
+				<s:Fade targets="{ [ appElements, rappElements ] }"/>
+			</s:Parallel>
+		</s:Transition>
+	</mx:transitions>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.module.IParsleyModule;
+
+			import jp.co.ntts.vhut.APIContext;
+			import jp.co.ntts.vhut.app.AppContext;
+			import jp.co.ntts.vhut.app.presentation.AppPM;
+			import jp.co.ntts.vhut.rapp.RappContext;
+
+			import mx.core.Application;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.resources.ResourceBundle;
+
+			import org.spicefactory.parsley.core.context.Context;
+
+			/**
+			 * Spiceコンテキスト.
+			 */
+			public function get contextBuilder():ContextBuilderTag
+			{
+				return _contextBuilder;
+			}
+
+			/**
+			 * プレゼンテーションモデル.
+			 */
+			[Inject]
+			[Bindable]
+			public var pm:AppPM;
+
+			/**
+			 * Spiceコアコンテキスト.
+			 */
+			[Inject]
+			[Bindable]
+			public var context:Context;
+
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[ResourceBundle("vhut")]
+		[ResourceBundle("APPMessages")]
+		[ResourceBundle("APPUI")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<spicefactory:ContextBuilder id="_contextBuilder">
+			<cairngorm:CairngormModuleSupport/>
+			<cairngorm:CairngormIntegrationSupport/>
+			<cairngorm:CairngormNavigationSupport/>
+			<spicefactory:FlexConfig type="{ AppContext }"/>
+			<spicefactory:FlexConfig type="{ RappContext }"/>
+		</spicefactory:ContextBuilder>
+
+		<spicefactory:Configure/>
+
+		<popup:PopUpWrapper open="{pm.isAppWizardOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isAppWizardOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+					<behavior:KeepCenteredBehavior/>
+				</fx:Array>
+			</popup:behaviors>
+			<presentation1:AppWizard/>
+		</popup:PopUpWrapper>
+
+		<popup:PopUpWrapper open="{pm.isTermWizardOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isTermWizardOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+					<behavior:KeepCenteredBehavior/>
+				</fx:Array>
+			</popup:behaviors>
+			<presentation1:TermWizard/>
+		</popup:PopUpWrapper>
+	</fx:Declarations>
+
+	<s:Group id="listContainer"
+			 top="37"
+			 bottom="37"
+			 left="0"
+			 width="300"
+			 clipAndEnableScrolling="true"
+			 horizontalScrollPosition.app="0"
+			 horizontalScrollPosition.rapp="{listContainer.width}">
+		<s:layout>
+			<s:HorizontalLayout gap="0"/>
+		</s:layout>
+		<app_p:ListContent id="appListContent"
+						   width="300" height="100%"/>
+		<rapp_p:ListContent id="rappListContent"
+							width="300" height="100%"/>
+	</s:Group>
+
+	<!-- Application表示時 -->
+
+	<s:Group id="appElements"
+			 top="0" left="0" right="0" bottom="0"
+			 visible.rapp="false">
+		<s:Group height="37"
+				 top="0"
+				 left="0"
+				 width="300">
+			<s:HGroup right="0"
+					  height="100%"
+					  verticalAlign="middle"
+					  paddingLeft="6"
+					  paddingRight="6">
+				<s:Button label="@Resource(key='release', bundle='APPUI')"
+						  click="currentState='rapp'"
+						  enabled="{pm.isSwitchButtonEnabled}"
+						  visible="{pm.isSwitchButtonVisible}"
+						  styleName="menuButton"/>
+			</s:HGroup>
+		</s:Group>
+		<app_p:ListFootBar height="37"
+						   bottom="0"
+						   left="0"
+						   width="300"/>
+		<app_p:MainHeadBar height="37"
+						   top="0"
+						   right="0"
+						   left="306"/>
+		<app_p:MainContent id="mainContent"
+						   left="306"
+						   right="0"
+						   top="37"
+						   bottom="37"/>
+		<app_p:MainFootBar height="37"
+						   bottom="0"
+						   right="0"
+						   left="306"/>
+	</s:Group>
+	<!-- ReleasedApplication表示時 -->
+
+	<s:Group id="rappElements"
+			 top="0" left="0" right="0" bottom="0"
+			 visible.app="false">
+		<s:Group height="37"
+				 top="0"
+				 left="0"
+				 width="300">
+			<s:HGroup left="0"
+					  height="100%"
+					  verticalAlign="middle"
+					  paddingLeft="6"
+					  paddingRight="6">
+				<s:Button label="@Resource(key='application', bundle='APPUI')"
+						  click="currentState='app'"
+						  styleName="menuButton"/>
+			</s:HGroup>
+		</s:Group>
+		<rapp_p:ListFootBar height="37"
+							bottom="0"
+							left="0"
+							width="300"/>
+		<rapp_p:MainHeadBar height="37"
+							top="0"
+							right="0"
+							left="306"/>
+		<rapp_p:MainContent left="306"
+							right="0"
+							top="37"
+							bottom="37"/>
+		<rapp_p:MainFootBar height="37"
+							bottom="0"
+							right="0"
+							left="306"/>
+	</s:Group>
+</mx:Module>

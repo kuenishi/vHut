@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ItemList.mxml -->
+<!---
+リリースドアプリケーション概要リストコンポーネント.
+<p xmlns:presentation1="jp.co.ntts.vhut.core.presentation.*"></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+		 width="300" height="300" >
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+		<fx:Script>
+			<![CDATA[
+				import jp.co.ntts.vhut.rapp.presentation.RappPM;
+				[Inject]
+				[Bindable]
+				public var pm:RappPM;
+			]]>
+		</fx:Script>
+		<fx:Declarations>
+			<parsley:Configure/>
+		</fx:Declarations>
+		<core:IconLabel id="parentIndicator"
+						width="100%" height="54"
+						source="@Embed(source='/images/icon_app.png')"
+						url="{pm.releasedApplications.applications.targetApplication.imageUrl}">
+			<s:Label id="nameLabel"
+					 text="{pm.releasedApplications.applications.targetApplication.name}"
+					 textAlign="center"
+					 maxDisplayedLines="1"/>
+		</core:IconLabel>
+		<s:List width="100%" height="100%"
+				dataProvider="{pm.releasedApplications.releasedApplications}"
+				styleName="basicList">
+			<s:itemRenderer>
+				<fx:Component>
+					<core:RappItemRenderer width="100%"
+												  click="outerDocument.pm.selectReleasedApplication(data as ReleasedApplication)">
+						<fx:Script>
+							<![CDATA[
+								import jp.co.ntts.vhut.entity.ReleasedApplication;
+							]]>
+						</fx:Script>
+					</core:RappItemRenderer>
+				</fx:Component>
+			</s:itemRenderer>
+		</s:List>
+</s:Group>

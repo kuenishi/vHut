@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\TopContext.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<Objects 
+	xmlns="http://www.spicefactory.org/parsley"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:module="com.adobe.cairngorm.module.*" 
+	xmlns:presentation="jp.co.ntts.vhut.cnf.presentation.*" 
+	xmlns:domain="jp.co.ntts.vhut.cnf.domain.*" 
+	xmlns:config="jp.co.ntts.vhut.config.*" 
+	>
+	
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.cnf.application.GetCloudConfigurationCommand;
+			import jp.co.ntts.vhut.cnf.application.GetServiceConfigurationCommand;
+			import jp.co.ntts.vhut.core.GetEvent;
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- INFRASTRUCTURE -->
+		<config:VhutConfig id="vhutConfig"/>
+		<s:RemoteObject id="configurationService"
+						destination="configurationService"/>
+		<!-- DOMAIN -->
+		<domain:Configs/>
+		<!-- APPLICATION -->
+		<DynamicCommand type="{ GetCloudConfigurationCommand }"
+						selector="getCloudConfig"
+						messageType="{ GetEvent }"/>
+		<DynamicCommand type="{ GetServiceConfigurationCommand }"
+						selector="getServiceConfig"
+						messageType="{ GetEvent }"/>
+		<!-- PRESENTATION -->
+		<presentation:CnfPM/>
+	</fx:Declarations>
+	
+</Objects> 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testrun name="" >
+<testsuite  name="Default Test Suite" project="vhut_client_flex_appmod">
+<testsuite name="jp.co.ntts.vhut.app.domain:AppCommandsTest" type="testsuiteclass"/>
+</testsuite>
+</testrun>

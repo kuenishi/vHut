@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\MenuItemRenderer.mxml -->
+<!---
+<p>xxxアイテムレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				autoDrawBackground="false">
+	<s:RichEditableText editable="false">
+		<s:textFlow>
+			<s:TextFlow>
+				<s:p>
+					<s:span text="{data.@title}"/>
+					<s:a href="{data.@url}" target="_blank">
+						<s:span text="@Resource(bundle='TOPUI', key='launch')"/>
+					</s:a>
+				</s:p>
+			</s:TextFlow>
+		</s:textFlow>
+	</s:RichEditableText>
+
+</s:ItemRenderer>

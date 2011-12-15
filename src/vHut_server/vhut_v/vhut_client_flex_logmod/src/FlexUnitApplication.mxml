@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- asdoc\FlexUnitApplication.mxml -->
+<!---
+<p>xxxクラスです。</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+
+<!-- これは自動的に生成されるファイルです。変更しないでください。 -->
+
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" xmlns:flexui="flexunit.flexui.*" creationComplete="onCreationComplete()">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.log.infrastructure.LogViewerEventTest;
+			import jp.co.ntts.vhut.log.LogCacheTargetTest;
+			import jp.co.ntts.vhut.log.presentation.TraceTargetConfGroupPMTest;
+			import jp.co.ntts.vhut.log.VhutLogLoggerTest;
+			import jp.co.ntts.vhut.log.presentation.LogViewerGroupPMTest;
+			import jp.co.ntts.vhut.log.UnitTest;
+			
+			public function currentRunTestSuite():Array
+			{
+				var testsToRun:Array = new Array();
+				testsToRun.push(jp.co.ntts.vhut.log.UnitTest);
+				testsToRun.push(jp.co.ntts.vhut.log.presentation.LogViewerGroupPMTest);
+				testsToRun.push(jp.co.ntts.vhut.log.VhutLogLoggerTest);
+				testsToRun.push(jp.co.ntts.vhut.log.presentation.TraceTargetConfGroupPMTest);
+				testsToRun.push(jp.co.ntts.vhut.log.LogCacheTargetTest);
+				testsToRun.push(jp.co.ntts.vhut.log.infrastructure.LogViewerEventTest);
+				return testsToRun;
+			}
+			
+			
+			private function onCreationComplete():void
+			{
+				testRunner.runWithFlexUnit4Runner(currentRunTestSuite(), "vhut_client_flex_logmod");
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+	<flexui:FlexUnitTestRunnerUI id="testRunner">
+	</flexui:FlexUnitTestRunnerUI>
+</s:Application>

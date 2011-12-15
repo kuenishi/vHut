@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application
+    xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:spicefactory="http://www.spicefactory.org/parsley"
+	xmlns:cairngorm="http://ns.adobe.com/cairngorm"
+	xmlns:presentation="jp.co.ntts.vhut.presentation.*"
+	xmlns:core="jp.co.ntts.vhut.core.*"
+	xmlns:presentation1="jp.co.ntts.vhut.dialog.presentation.*"
+	skinClass="jp.co.ntts.vhut.core.presentation.VhutSkmPortalSkin"
+	minWidth="955" minHeight="600"
+	creationComplete="creationCompleteHandler(event)"
+	currentState="{pm.state ? pm.state : 'logout'}">
+	<s:states>
+		<s:State name="login"/>
+		<s:State name="logout"/>
+	</s:states>
+
+	<s:transitions>
+		<s:Transition fromState="login" toState="logout">
+			<s:Parallel duration="500">
+				<s:Fade targets="{ [loginPanel, mainContainer] }"/>
+				<s:Move target="{ sessionIndicator }"/>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="logout" toState="login">
+			<s:Parallel duration="500">
+				<s:Fade targets="{ [loginPanel, mainContainer] }"/>
+				<s:Move target="{ sessionIndicator }"/>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+	<fx:Style source="VhutStyle.css"/>
+	<fx:Style source="SkmPortalStyle.css"/>
+	<fx:Metadata>
+		[ResourceBundle("vhut")]
+		[ResourceBundle("SKMUI")]
+		[ManagedEvents(names="login")]
+	</fx:Metadata>
+    <fx:Script>
+        <![CDATA[
+			import com.adobe.cairngorm.module.IModuleManager;
+			import com.adobe.cairngorm.navigation.history.GlobalHistory;
+
+			import jp.co.ntts.vhut.APIContext;
+			import jp.co.ntts.vhut.SkmPortalContext;
+			import jp.co.ntts.vhut.application.ContentDestination;
+			import jp.co.ntts.vhut.config.VhutConfig;
+			import jp.co.ntts.vhut.core.presentation.MainContainerSkin;
+			import jp.co.ntts.vhut.core.presentation.VhutSkmPortalSkin;
+			import jp.co.ntts.vhut.dialog.presentation.BasicPanelSkin;
+			import jp.co.ntts.vhut.entity.Right;
+			import jp.co.ntts.vhut.log.LogConfPanelEvent;
+			import jp.co.ntts.vhut.presentation.ContentPM;
+			import jp.co.ntts.vhut.presentation.VhutMainNavigatorContent;
+
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.logging.LogEventLevel;
+			import mx.managers.BrowserManager;
+			import mx.managers.IBrowserManager;
+
+			[Bindable]
+			[Inject]
+			public var pm:ContentPM;
+
+			[Bindable]
+			[Inject]
+			public var history:GlobalHistory;
+
+			[Bindable]
+			[Inject(id="logModuleManager")]
+			/**
+			 * Spiceのモジュール管理マネージャ.
+			 */
+			public var logModuleManager:IModuleManager;
+
+			[MessageDispatcher]
+			/** Spiceメッセージハンドラー登録用dispacher. */
+			public var dispacher:Function;
+
+			private var bm:IBrowserManager;
+
+            public function creationCompleteHandler(event:FlexEvent):void
+            {
+				new VhutConfig();
+
+//				bm = BrowserManager.getInstance();
+//				bm.init("", "SKM Portal");
+//				bm.setTitle("Welcome " + ti1.text + " from " + ti2.text + "!");
+
+				FlexGlobals.topLevelApplication.addEventListener(KeyboardEvent.KEY_UP, keyHandler);
+            }
+
+			/**
+			 * キー入力を感知するハンドラー.
+			 * @param event キーボードイベント
+			 */
+			protected function keyHandler(event:KeyboardEvent):void
+			{
+				if (event.keyCode == Keyboard.F2)
+				{
+					//F2
+					dispacher(LogConfPanelEvent.newLaunchMessage());
+				}
+			}
+
+			[Bindable]
+			[Inject(id="topModuleManager")]
+			public var topModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="appModuleManager")]
+			public var appModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="aigModuleManager")]
+			public var aigModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="tmpModuleManager")]
+			public var tmpModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="usrModuleManager")]
+			public var usrModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="rolModuleManager")]
+			public var rolModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="mngModuleManager")]
+			public var mngModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="cnfModuleManager")]
+			public var cnfModuleManager:IModuleManager;
+
+        ]]>
+    </fx:Script>
+    <fx:Declarations>
+		<spicefactory:Configure/>
+
+		<spicefactory:ContextBuilder>
+			<cairngorm:CairngormModuleSupport/>
+			<cairngorm:CairngormNavigationSupport/>
+			<cairngorm:CairngormIntegrationSupport/>
+			<spicefactory:FlexConfig type="{ SkmPortalContext }"/>
+			<spicefactory:FlexConfig type="{ APIContext }"/>
+		</spicefactory:ContextBuilder>
+
+
+		<s:TraceTarget level="{ LogEventLevel.DEBUG }"
+					   includeCategory="true"
+					   includeLevel="true">
+			<s:filters>
+				<fx:Array>
+					<fx:String>com.adobe.cairngorm.*</fx:String>
+					<fx:String>org.spicefactory.*</fx:String>
+					<fx:String>jp.co.ntts.vhut.*</fx:String>
+				</fx:Array>
+			</s:filters>
+		</s:TraceTarget>
+
+    </fx:Declarations>
+	<!-- Loged Out -->
+	<presentation:LoginPanel id="loginPanel"
+			 width="300" height="200"
+			 verticalCenter="0" horizontalCenter="0"
+			 visible.login="false"/>
+
+	<!-- Loged In -->
+	<s:SkinnableContainer id="mainContainer"
+						  top="0" bottom="0" right="0" left="0"
+						  skinClass="jp.co.ntts.vhut.core.presentation.MainContainerSkin"
+						  visible.logout="false">
+		<mx:HBox height="25" top="25" left="150" right="20">
+			<s:TabBar id="contentTabBar"
+					  dataProvider="{contentViewStack}"/>
+		</mx:HBox>
+		<presentation:ContentViewStack id="contentViewStack"
+									   top="43" bottom="43" left="20" right="20"
+									   selectedIndex="0"
+									   includeIn="login"
+									   rightsMap="{pm.session.user.rightsMap}"
+									   change="{pm.selectedName = (contentViewStack.selectedChild as VhutMainNavigatorContent).automationName}"/>
+	</s:SkinnableContainer>
+
+	<presentation:SessionIndicator id="sessionIndicator"
+								   width="200" height="60" y.login="-36" y="-60" right="20"/>
+
+	<core:VhutViewLoader id="logModuleLoader"
+						 moduleId="log"
+						 moduleManager="{ logModuleManager }"
+						 skinClass="com.adobe.cairngorm.module.ModuleViewLoaderSkin"/>
+
+</s:Application>

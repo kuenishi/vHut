@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ImageForm.mxml -->
+<!---
+xxxコンポーネント.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="250">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+	<s:HGroup horizontalCenter="0" top="0">
+		<s:Button label="file"/>
+		<s:Button label="default"/>
+	</s:HGroup>
+	<mx:Image width="180" horizontalCenter="0" verticalCenter="0" height="180"/>
+	
+	<s:HGroup horizontalCenter="0" bottom="0">
+		<s:HSlider/>
+		<s:Button label="cancel"/>
+	</s:HGroup>
+</s:Group>

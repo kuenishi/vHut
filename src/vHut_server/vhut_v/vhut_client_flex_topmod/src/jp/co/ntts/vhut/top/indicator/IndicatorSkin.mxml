@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\IndicatorSkin.mxml -->
+<!---
+<p>xxxスキンです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<Skin xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("jp.co.ntts.vhut.top.indicator.Indicator")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<!--
+		<LinearGradient id="indicatorFill" x="20.5" y="23" scaleX="22.8165" rotation="270">
+			<GradientEntry ratio="0" color="#00FFFF" alpha="0.98"/>
+			<GradientEntry ratio="0.521212" color="#29ABE2"/>
+		</LinearGradient>
+		-->
+		<LinearGradient id="indicatorFill" x="20.5" y="23" scaleX="22.8165" rotation="270">
+			<GradientEntry id="idicatorFillEndGradientEntry" ratio="0" color="#F7AD00" alpha="0.98"/>
+			<GradientEntry id="idicatorFillStartGradientEntry" ratio="0.521212" color="#FF0000"/>
+		</LinearGradient>
+	</fx:Declarations>
+
+	<fx:Script>
+		<![CDATA[
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+				if (!isNaN(getStyle("startColor")))
+				{
+					idicatorFillStartGradientEntry.color = getStyle("startColor");
+				}
+
+				if (!isNaN(getStyle("endColor")))
+				{
+					idicatorFillEndGradientEntry.color = getStyle("endColor");
+				}
+			}
+		]]>
+	</fx:Script>
+
+
+	<Group>
+		<Group>
+			<Rect x="3" y="1" width="215" height="23" >
+				<fill>
+					<SolidColor/>
+				</fill>
+			</Rect>
+			<Rect x="176" y="1" width="41" height="23" fill="{ indicatorFill }"
+				  visible="{ hostComponent.value == 1 }"/>
+			<Rect x="133" y="1" width="41" height="23" fill="{ indicatorFill }"
+				  visible="{ hostComponent.value >= 0.8 }"/>
+			<Rect x="90" y="1" width="41" height="23" fill="{ indicatorFill }"
+				  visible="{ hostComponent.value >= 0.6 }"/>
+			<Rect x="47" y="1" width="41" height="23" fill="{ indicatorFill }"
+				  visible="{ hostComponent.value >= 0.4 }"/>
+			<Rect x="4" y="1" width="41" height="23" fill="{ indicatorFill }"
+				  visible="{ hostComponent.value >= 0.2 }"/>
+		</Group>
+
+		<Group>
+			<Rect y="1" width="221" height="24" >
+				<fill>
+					<LinearGradient x="110.5" y="23.8823" scaleX="24" rotation="270">
+						<GradientEntry ratio="0" alpha="0.15"/>
+						<GradientEntry ratio="0.569697" alpha="0.46"/>
+						<GradientEntry ratio="1" alpha="0.22"/>
+					</LinearGradient>
+				</fill>
+			</Rect>
+			<Rect y="12" width="221" height="13" >
+				<fill>
+					<LinearGradient x="110.5" y="12.9365" scaleX="13" rotation="270">
+						<GradientEntry ratio="0" alpha="0.15"/>
+						<GradientEntry ratio="0.90303" alpha="0.4"/>
+						<GradientEntry ratio="1" alpha="0.2"/>
+					</LinearGradient>
+				</fill>
+			</Rect>
+			<Rect width="221" height="4" >
+				<fill>
+					<LinearGradient x="110.5" y="3.98047" scaleX="4" rotation="270">
+						<GradientEntry ratio="0" color="#FFFFFF" alpha="0"/>
+						<GradientEntry ratio="0.915152" color="#FFFFFF" alpha="0.88"/>
+						<GradientEntry ratio="1" color="#FFFFFF" alpha="0.4"/>
+					</LinearGradient>
+				</fill>
+			</Rect>
+			<Rect y="4" width="221" height="9" >
+				<fill>
+					<LinearGradient x="110.5" y="8.95605" scaleX="9" rotation="270">
+						<GradientEntry ratio="0" color="#FFFFFF" alpha="0"/>
+						<GradientEntry ratio="1" color="#FFFFFF" alpha="0.5"/>
+					</LinearGradient>
+				</fill>
+			</Rect>
+			<Rect y="15" width="221" height="9" >
+				<fill>
+					<LinearGradient x="110.5" y="8.95605" scaleX="9" rotation="270">
+						<GradientEntry ratio="0" color="#FFFFFF" alpha="0"/>
+						<GradientEntry ratio="0.284848" color="#FFFFFF" alpha="0.54"/>
+						<GradientEntry ratio="0.690909" color="#FFFFFF" alpha="0.38"/>
+						<GradientEntry ratio="1" color="#FFFFFF" alpha="0"/>
+					</LinearGradient>
+				</fill>
+			</Rect>
+			<Rect y="24" width="221" height="1" >
+				<fill>
+					<LinearGradient x="110.5" y="0.995117" scaleX="1" rotation="270">
+						<GradientEntry ratio="0" alpha="0.9"/>
+						<GradientEntry ratio="1" alpha="0.3"/>
+					</LinearGradient>
+				</fill>
+			</Rect>
+		</Group>
+	</Group>
+</Skin>

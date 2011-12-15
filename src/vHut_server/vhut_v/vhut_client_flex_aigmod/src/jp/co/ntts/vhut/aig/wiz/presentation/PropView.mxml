@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\EditorView.mxml -->
+<!---
+	アプリケーションインスタンスグループ追加・複製・編集ウィザードの
+ 	プロパティを入力する画面
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:presentation="jp.co.ntts.vhut.app.wiz.presentation.*"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:popup="http://ns.adobe.com/cairngorm"
+		 xmlns:behavior="com.adobe.cairngorm.popup.behavior.*"
+		 xmlns:dialogp="jp.co.ntts.vhut.dialog.presentation.*"
+		 width="800"
+		 height="550"
+		 >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import org.spicefactory.parsley.core.context.Context;
+			[Inject]
+			[Bindable]
+			public var pm:PropViewPM;
+
+			/**
+			 * Spiceコアコンテキスト.
+			 */
+			[Inject]
+			[Bindable]
+			public var context:Context;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+
+		<popup:PopUpWrapper open="{pm.isOwnerSelectDialogOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isOwnerSelectDialogOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+					<behavior:KeepCenteredBehavior/>
+				</fx:Array>
+			</popup:behaviors>
+			<dialogp:OwnerSelectDialog/>
+		</popup:PopUpWrapper>
+	</fx:Declarations>
+	<mx:Form top="0" bottom="0" width="500" horizontalCenter="0">
+		<mx:FormItem label="@Resource(key='owner', bundle='AIGUI')" horizontalAlign="left">
+			<s:HGroup verticalAlign="middle">
+				<mx:Text text="{ pm.editingAig.targetAig.vhutUser.fullName }" />
+				<s:Button label="@Resource(key='change', bundle='AIGUI')"
+						  click="pm.launchOwnerSelectDialog()"
+						  visible="{pm.isOwnerButtonVisible}"/>
+			</s:HGroup>
+		</mx:FormItem>
+		<mx:HRule width="100%"/>
+		<mx:FormItem label="@Resource(key='aigName', bundle='AIGUI')" width="100%" required="true">
+			<s:TextInput width="100%" text="@{ pm.editingAig.targetAig.name }"
+						 maxChars="32"
+						 errorString="{pm.aigNameErrorMessage}"/>
+		</mx:FormItem>
+		<mx:HRule width="100%"/>
+		<s:Group>
+			<s:layout>
+				<s:VerticalLayout/>
+			</s:layout>
+			<mx:FormItem label="@Resource(key='startDate', bundle='AIGUI')" width="100%" required="true">
+				<mx:DateField id="startTimeDateField" selectedDate="@{pm.editingAig.targetAig.startTime}"
+							  errorString="{pm.startTimeErrorMessage}"/>
+			</mx:FormItem>
+			<mx:FormItem label="@Resource(key='endDate', bundle='AIGUI')" width="100%" required="true">
+				<mx:DateField selectedDate="@{pm.editingAig.targetAig.endTime}"
+							  errorString="{pm.endTimeErrorMessage}"/>
+			</mx:FormItem>
+			<mx:FormItem label="@Resource(key='deleteDate', bundle='AIGUI')" width="100%" required="true">
+				<mx:DateField selectedDate="@{pm.editingAig.targetAig.deleteTime}"
+							  errorString="{pm.deleteTimeErrorMessage}"/>
+			</mx:FormItem>
+		</s:Group>
+	</mx:Form>
+</s:SkinnableContainer>

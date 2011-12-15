@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\MainContent.mxml -->
+<!---
+	 xxxコンポーネント.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:top="jp.co.ntts.vhut.top.presentation.*"
+		 xmlns:va="jp.co.ntts.vhut.comp.va.*"
+		 xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		 width="800"
+		 height="600"
+		 minWidth="30"
+		 minHeight="30"
+		 xmlns:core="jp.co.ntts.vhut.core.presentation.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Metadata>
+		[Event(type="jp.co.ntts.vhut.core.CommandEvent", name="cancelCommand")]
+		[Event(type="jp.co.ntts.vhut.core.CommandEvent", name="retryCommand")]
+		[ManagedEvents(names="cancelCommand,retryCommand")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.CommandEvent;
+			import jp.co.ntts.vhut.core.presentation.AiItemRenderer;
+			import jp.co.ntts.vhut.core.presentation.AiItemRenderer2;
+			import jp.co.ntts.vhut.core.presentation.AigItemRenderer;
+			import jp.co.ntts.vhut.core.presentation.AppItemRenderer;
+			[Inject]
+			[Bindable]
+			public var pm:UsrPM ;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<spicefactory:Configure/>
+	</fx:Declarations>
+	<s:Scroller width="100%" height="100%"
+				horizontalScrollPolicy="off" verticalScrollPolicy="on">
+		<s:Group visible="{pm.vhutUsers.targetVhutUser != null}">
+			<s:layout>
+				<s:VerticalLayout paddingLeft="10" paddingRight="10"/>
+			</s:layout>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<s:layout>
+					<s:HorizontalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+				</s:layout>
+				<core:IconImage source="@Embed(source='/images/icon_user.png')"
+										 url="{pm.vhutUsers.targetVhutUser.imageUrl}"
+										 shadow="true"
+										 width="60" height="60"/>
+				<mx:Form left="0" right="50" paddingTop="0" paddingLeft="0" paddingRight="0" paddingBottom="0">
+					<mx:FormItem label="@Resource(key='usr.fullname', bundle='USRUI')"
+								 width="100%">
+						<mx:Text  text="{ pm.vhutUsers.targetVhutUser.fullName }"/>
+					</mx:FormItem>
+					<mx:FormItem label="@Resource(key='usr.account', bundle='USRUI')"
+								 width="100%">
+						<mx:Text text="{ pm.vhutUsers.targetVhutUser.account }"/>
+					</mx:FormItem>
+					<mx:FormItem label="@Resource(key='usr.email', bundle='USRUI')"
+								 width="100%">
+						<mx:Text  text="{ pm.vhutUsers.targetVhutUser.email }"/>
+					</mx:FormItem>
+				</mx:Form>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<s:layout>
+					<s:HorizontalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+				</s:layout>
+				<mx:Form left="0" right="0" paddingTop="0" paddingLeft="0" paddingRight="0" paddingBottom="0">
+					<mx:FormItem label="@Resource(key='usr.role', bundle='USRUI')"
+								 width="100%">
+						<mx:Text  text="{ pm.vhutUsers.targetVhutUser.roleNames }"/>
+					</mx:FormItem>
+				</mx:Form>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<s:layout>
+					<s:VerticalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+				</s:layout>
+				<s:Label text="@Resource(key='title.applist', bundle='USRUI')"/>
+				<s:List width="100%" height="200"
+						dataProvider="{pm.vhutUsers.targetAppList}"
+						itemRenderer="jp.co.ntts.vhut.core.presentation.AppItemRenderer"
+						styleName="basicList">
+				</s:List>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<s:layout>
+					<s:VerticalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+				</s:layout>
+				<s:Label text="@Resource(key='title.aiglist', bundle='USRUI')"/>
+				<s:List width="100%" height="200"
+						dataProvider="{pm.vhutUsers.targetAigList}"
+						itemRenderer="jp.co.ntts.vhut.core.presentation.AigItemRenderer"
+						styleName="basicList">
+				</s:List>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<s:layout>
+					<s:VerticalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+				</s:layout>
+				<s:Label text="@Resource(key='title.ailist', bundle='USRUI')"/>
+				<s:List width="100%" height="200"
+						dataProvider="{pm.vhutUsers.targetAiList}"
+						itemRenderer="jp.co.ntts.vhut.core.presentation.AiItemRenderer2"
+						styleName="basicList">
+				</s:List>
+			</s:SkinnableContainer>
+		</s:Group>
+	</s:Scroller>
+</s:Group>

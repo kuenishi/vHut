@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ToolBar.mxml -->
+<!---
+xxxコンポーネント.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="500" height="30">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			[Inject]
+			[Bindable]
+			public var pm:UsrPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+	<s:HGroup left="0" height="100%" verticalAlign="middle" paddingLeft="6" paddingRight="6">
+	</s:HGroup>
+	<s:HGroup right="0" height="100%" verticalAlign="middle" paddingLeft="6" paddingRight="6">
+	</s:HGroup>
+</s:Group>

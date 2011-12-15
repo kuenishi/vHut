@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ContentControlBar.mxml -->
+<!---
+	 xxxコンポーネント.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 width="500" height="30">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			[Inject]
+			[Bindable]
+			public var pm:RolPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:HGroup left="0"
+			  height="100%"
+			  verticalAlign="middle"
+			  paddingLeft="6"
+			  paddingRight="6">
+		<s:Button label="@Resource(key='update', bundle='APIUI')"
+				  click="pm.updateTarget()"
+				  enabled="{pm.isUpdateButtonEnabled}"
+				  visible="{pm.isUpdateButtonVisible}"
+				  styleName="menuButton"/>
+		<s:Button label="@Resource(key='edit', bundle='APIUI')"
+				  click="pm.launchRolWizardToEdit()"
+				  enabled="{pm.isEditButtonEnabled}"
+				  visible="{pm.isEditButtonVisible}"
+				  styleName="menuButton"/>
+	</s:HGroup>
+	<s:HGroup right="0"
+			  height="100%"
+			  verticalAlign="middle"
+			  paddingLeft="6"
+			  paddingRight="6">
+		<s:Button label="@Resource(key='delete', bundle='APIUI')"
+				  click="pm.deleteUsr()"
+				  enabled="{pm.isDeleteButtonEnabled}"
+				  visible="{pm.isDeleteButtonVisible}"
+				  styleName="menuButton"/>
+	</s:HGroup>
+</s:Group>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ApplicationElementPanel.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<panel:VAttributePanel xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  xmlns:panel="jp.co.ntts.vhut.panel.presentation.*"
+					  xmlns:form="jp.co.ntts.vhut.form.presentation.*"
+					  currentState="{ pm.editingApplication.targetApplicationElement ? 'active' : 'deactive'}" xmlns:presentation="jp.co.ntts.vhut.core.presentation.*">
+	<panel:layout>
+		<s:BasicLayout/>
+	</panel:layout>
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.dto.SpecDto;
+			import jp.co.ntts.vhut.entity.ApplicationSecurityGroup;
+
+			import spark.events.DropDownEvent;
+
+			import spark.components.DropDownList;
+			[Inject]
+			[Bindable]
+			public var pm:EditorViewPM;
+
+			protected function getViewstackIndex(target:Object):int
+			{
+				if(target != null && target is ApplicationSecurityGroup) return 1;
+				return 0;
+			}
+
+			protected function onSpecSelected(event:DropDownEvent):void
+			{
+				pm.changeSpec((event.target as DropDownList).selectedItem as SpecDto);
+			}
+		]]>
+	</fx:Script>
+	<mx:ViewStack
+		id="viewStack"
+		top="0" bottom="0" left="0" right="0"
+		selectedIndex="{getViewstackIndex(pm.editingApplication.targetApplicationElement)}">
+		<s:NavigatorContent label="@Resource(key='vm', bundle='APPUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<presentation:IconLabel height="60" right="5" top="5" left="5"
+										url="{pm.editingApplication.targetApplicationVm.imageUrl}"
+										source="@Embed(source='/images/icon_vm.png')">
+					<s:TextInput id="appVmNameLabel"
+								 text="@{pm.editingApplication.targetApplicationVm.name}"
+								 maxChars="32"
+								 width="100%"/>
+					<s:Label id="vmNameLabel"
+							 text="{pm.editingApplication.targetApplicationVm.vm.name}"
+							 maxDisplayedLines="1"/>
+				</presentation:IconLabel>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+							<mx:FormItem label="@Resource(key='description', bundle='APPUI')"
+										 width="100%">
+								<s:TextArea text="@{pm.editingApplication.targetApplicationVm.description}"
+											editable="true"
+											maxChars="256"
+											restrict="^ "
+											width="100%" />
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='spec', bundle='APPUI')"
+										 width="100%"
+										 styleName="h1">
+								<s:DropDownList id="specList"
+												width="100%"
+												dataProvider="{pm.templates.specTemplates}"
+												selectedIndex="{pm.getSpecIndex(pm.editingApplication.targetApplicationVm.vm)}"
+												close="onSpecSelected(event)"
+												labelField="name"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='cpu', bundle='APPUI')"
+										 width="100%">
+								<mx:Text text="{(specList.selectedItem as SpecDto).cpuCore + resourceManager.getString('APPUI', 'unit.cpu.core')}"
+										 width="100%"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='memory', bundle='APPUI')"
+										 width="100%">
+								<mx:Text text="{(specList.selectedItem as SpecDto).memory + resourceManager.getString('APPUI', 'unit.memory.m')}"
+										 width="100%"/>
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='os', bundle='APPUI')"
+										 width="100%"
+										 styleName="h1">
+								<mx:Text text="{pm.editingApplication.targetApplicationVm.vm.os}"
+										 width="100%"/>
+							</mx:FormItem>
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="@Resource(key='securityGroup', bundle='APPUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<presentation:IconLabel height="60" right="5" top="5" left="5"
+										url="{pm.editingApplication.targetApplicationVm.imageUrl}"
+										source="@Embed(source='/images/icon_nw.png')">
+					<s:TextInput id="appSgNameLabel"
+								 text="@{pm.editingApplication.targetApplicationSecurityGroup.name}"
+								 width="100%"/>
+					<s:Label id="sgNameLabel"
+							 text="{pm.editingApplication.targetApplicationSecurityGroup.securityGroup.name}"
+							 maxDisplayedLines="1"/>
+				</presentation:IconLabel>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+	</mx:ViewStack>
+</panel:VAttributePanel>

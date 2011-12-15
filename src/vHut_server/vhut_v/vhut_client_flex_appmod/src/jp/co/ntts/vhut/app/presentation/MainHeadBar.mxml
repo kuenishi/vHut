@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ContentControlBar.mxml -->
+<!---
+	 xxxコンポーネント.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:comp="jp.co.ntts.vhut.app.comp.*"
+		 xmlns:si="jp.co.ntts.vhut.comp.si.*"
+		 width="500"
+		 height="30" >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			[Inject]
+			[Bindable]
+			public var pm:AppPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:HGroup left="0"
+			  height="100%"
+			  gap="5">
+		<si:StatusIndicator id="statusIndicator"
+							  height="100%"
+							  currentStatus="{pm.applications.targetApplication.status.toString()}"
+							  currentStatusName="{pm.applications.targetApplication.statusName}"
+							  nextStatus="{pm.applications.targetApplication.nextStatus.toString()}"
+							  actionName="{pm.applications.targetApplication.statusActionName}"
+							  changeStatus="pm.changeApplicationStatus(event)"
+							  buttonEnabled="{pm.isStatusButtonEnabled}"
+							  buttonVisible="{pm.isStatusButtonVisible}"/>
+		<s:HGroup height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6"
+				  paddingRight="6">
+			<s:Button label="@Resource(key='update', bundle='APPUI')"
+					  click="pm.updateTarget()"
+					  enabled="{pm.isUpdateButtonEnabled}"
+					  visible="{pm.isUpdateButtonVisible}"
+					  styleName="menuButton"/>
+			<s:Button label="@Resource(key='reserve', bundle='APPUI')"
+					  click="pm.launchTermWizard()"
+					  enabled="{pm.isReserveButtonEnabled}"
+					  visible="{pm.isReserveButtonVisible}"
+					  styleName="menuButton"/>
+			<s:Button label="@Resource(key='edit', bundle='APPUI')"
+					  click="pm.launchAppWizardToEdit()"
+					  enabled="{pm.isEditButtonEnabled}"
+					  visible="{pm.isEditButtonVisible}"
+					  styleName="menuButton"/>
+			<s:Button label="@Resource(key='deploy', bundle='APPUI')"
+					  enabled="{pm.isDeployButtonEnabled}"
+					  visible="{pm.isDeployButtonVisible}"
+					  click="pm.deployApplication()"
+					  styleName="menuButton"/>
+		</s:HGroup>
+	</s:HGroup>
+
+	<s:HGroup right="0"
+			  height="100%"
+			  verticalAlign="middle"
+			  paddingLeft="6"
+			  paddingRight="6">
+		<s:Button label="@Resource(key='delete', bundle='APPUI')"
+				  enabled="{pm.isDeleteButtonEnabled}"
+				  visible="{pm.isDeleteButtonVisible}"
+				  click="pm.deleteApplication()"
+				  styleName="menuButton"/>
+	</s:HGroup>
+</s:Group>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\EditableRightItemRenderer2.mxml -->
+<!---
+<p>xxxアイテムレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:MXDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+						  xmlns:s="library://ns.adobe.com/flex/spark"
+						  xmlns:mx="library://ns.adobe.com/flex/mx"
+						  xmlns:primitives="jp.co.ntts.vhut.primitives.*"
+						  autoDrawBackground="false"
+						  focusEnabled="true"
+						  click="clickHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			override protected function getCurrentRendererState():String
+			{
+				var value:int = data[dataGridListData.dataField] as int;
+				if (value > 0) return "enabled";
+				if (value < 0) return "disabled";
+				return "locked";
+			}
+
+			protected function clickHandler(event:MouseEvent):void
+			{
+				data[dataGridListData.dataField] *= -1;
+			}
+
+		]]>
+	</fx:Script>
+
+	<s:states>
+		<s:State name="enabled"/>
+		<s:State name="disabled"/>
+		<s:State name="locked"/>
+	</s:states>
+
+	<s:Label id="statusLabel"
+			 top="0" left="0" right="0" bottom="0"
+			 textAlign="center" verticalAlign="middle"
+			 text="{dataGridListData.label}" />
+
+	<primitives:Bevel id="bevel"
+					  weight="1"
+					  direction ="{Bevel.DIRECTION_NW}"
+					  left="0" right="0" top="0" bottom="0"
+					  excludeFrom="locked"/>
+</s:MXDataGridItemRenderer>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AigGridItemRenderer.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<mx:Box xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 width="100%" height="100%"
+		 verticalScrollPolicy="off" horizontalScrollPolicy="off" >
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.entity.Application;
+			import jp.co.ntts.vhut.entity.ApplicationInstanceGroup;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.binding.utils.ChangeWatcher;
+			import mx.events.ListEvent;
+			[Inject]
+			[Bindable]
+			public var pm:AigGridViewPM;
+			
+			private var _watcher:ChangeWatcher
+			
+			[Init]
+			public function init():void
+			{
+				_watcher = BindingUtils.bindSetter(
+					function(object:Object):void 
+					{
+						updateComboBoxIndex();
+					},
+					pm, ["apps", "apps"]
+				);
+			}
+			
+			override public function set data(value:Object):void
+			{
+				_data = value as ApplicationInstanceGroup;
+				updateComboBoxIndex();
+			}
+			protected var _data:ApplicationInstanceGroup;
+			
+			public function updateComboBoxIndex():void
+			{
+				if(_data != null)
+				{
+					comboBox.selectedIndex = pm.apps.getAppsIndexByAppId(_data.applicationId);
+				}
+			}
+			
+			public function updateApplicationId():void
+			{
+				var item:Application =  comboBox.selectedItem as Application;
+				if(item != null)
+				{
+					applicationId = item.id;
+				}
+				else
+				{
+					applicationId = _data.applicationId;
+				}
+			}
+			
+			protected function comboBox_changeHandler(event:ListEvent):void
+			{
+				updateApplicationId();
+			}
+			
+			protected function comboBox_exitFrameHandler(event:Event):void
+			{
+				
+				updateApplicationId();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+		<fx:Number id="applicationId"/>
+	</fx:Declarations>
+	<mx:ComboBox id="comboBox" 
+				 width="100%" height="100%"
+				 dataProvider="{pm.apps.apps}" 
+				 labelField="name"
+				 change="comboBox_changeHandler(event)" 
+				 exitFrame="comboBox_exitFrameHandler(event)"/>
+</mx:Box>

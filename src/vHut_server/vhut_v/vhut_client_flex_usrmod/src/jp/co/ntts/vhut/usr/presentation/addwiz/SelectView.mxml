@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\EditorView.mxml -->
+<!---
+	アプリケーションインスタンスグループ追加・複製・編集ウィザードの
+	ユーザを選択する画面
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:presentation="jp.co.ntts.vhut.app.wiz.presentation.*"
+		 xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+		 xmlns:form="jp.co.ntts.vhut.form.presentation.*"
+		 width="800"
+		 height="550">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.entity.VhutUser;
+			[Inject]
+			[Bindable]
+			public var pm:SelectViewPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+
+	<s:Group top="0" bottom="0" width="220" horizontalCenter="-160">
+		<s:layout>
+			<s:VerticalLayout gap="0"/>
+		</s:layout>
+		<s:SkinnableContainer width="100%" height="30"
+							  styleName="glass">
+			<s:Label text="@Resource(key='usr.wizard.unregistered', bundle='USRUI')"
+					 verticalCenter="0" horizontalCenter="0"/>
+		</s:SkinnableContainer>
+		<form:SearchBox width="100%" height="40"
+						search="pm.searchUnregisteredVhutUsersHandler(event)"
+						keyword="{ pm.unregisteredVhutUsers.unregisteredVhutUsersFilterKeywords.join(' ') }"/>
+		<s:List id="unregisteredUserList"
+				width="100%" height="100%"
+				dataProvider="{ pm.unregisteredVhutUsers.unregisteredVhutUsers}"
+				itemRenderer="jp.co.ntts.vhut.core.presentation.UserItemRenderer"
+				allowMultipleSelection="true"
+				styleName="basicList">
+		</s:List>
+	</s:Group>
+
+	<s:Group top="0" bottom="0" width="220" horizontalCenter="160">
+		<s:layout>
+			<s:VerticalLayout gap="0"/>
+		</s:layout>
+		<s:SkinnableContainer width="100%" height="30"
+							  styleName="glass">
+			<s:Label text="@Resource(key='usr.wizard.candidate', bundle='USRUI')"
+					 verticalCenter="0" horizontalCenter="0"/>
+		</s:SkinnableContainer>
+		<form:SearchBox width="100%" height="40"
+						search="pm.searchTargetVhutUsersHandler(event)"
+						keyword="{ pm.editingVhutUsers.targetVhutUsersFilterKeywords.join(' ') }"/>
+		<s:List id="registeredUserList"
+				width="100%" height="100%"
+				dataProvider="{ pm.editingVhutUsers.targetVhutUsers }"
+				itemRenderer="jp.co.ntts.vhut.core.presentation.UserItemRenderer"
+				allowMultipleSelection="true"
+				styleName="basicList">
+		</s:List>
+	</s:Group>
+	<s:Button label="@Resource(key='add', bundle='APIUI')" verticalCenter="-30" horizontalCenter="0"
+			  enabled="{ unregisteredUserList.selectedItem as VhutUser != null }"
+			  click="pm.editingVhutUsers.addTargetVhutUsers(unregisteredUserList.selectedItems)"/>
+	<s:Button label="@Resource(key='delete', bundle='APIUI')" verticalCenter="30" horizontalCenter="0"
+			  enabled="{ registeredUserList.selectedItem as VhutUser != null }"
+			  click="pm.editingVhutUsers.removeTargetVhutUsers(registeredUserList.selectedItems)"/>
+</s:SkinnableContainer>

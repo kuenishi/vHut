@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\EditorView.mxml -->
+<!---
+	アプリケーションインスタンスグループ追加・編集・複製ウィザードの
+	アプリケーション選択時のView.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:presentation="jp.co.ntts.vhut.aig.wiz.presentation.*"
+		 xmlns:va="jp.co.ntts.vhut.comp.va.*"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+		 xmlns:form="jp.co.ntts.vhut.form.presentation.*"
+		 width="800"
+		 height="550">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import spark.events.IndexChangeEvent;
+			[Inject]
+			[Bindable]
+			public var pm:AppViewPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:Group top="0" bottom="0" left="0" width="250">
+		<s:layout>
+			<s:VerticalLayout gap="0"/>
+		</s:layout>
+		<form:SearchBox width="100%" height="40"
+						search="pm.searchAppHandler(event)"
+						keyword="{pm.apps.appsFilterKeywords.join(' ')}"/>
+		<s:List width="100%" height="100%"
+				dataProvider="{ pm.apps.apps }"
+				selectedItem="{ pm.apps.targetApp }"
+				change="pm.selectApplicationHandler(event)"
+				itemRenderer="jp.co.ntts.vhut.core.presentation.AppItemRenderer"
+				styleName="basicList">
+		</s:List>
+	</s:Group>
+	<va:VaViewer id="vaViewer" left="250" top="0" bottom="0" right="0"
+				 topology="{ pm.apps.targetApp.topology }"
+				 selectVm="pm.selectApplicationElement(event.data)"
+				 selectSg="pm.selectApplicationElement(event.data)"/>
+	<presentation:AppElementPanel top="0" bottom="0" right="0" width="250"/>
+</s:SkinnableContainer>

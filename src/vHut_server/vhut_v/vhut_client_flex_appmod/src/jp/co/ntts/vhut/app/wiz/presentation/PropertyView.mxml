@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\PropertyView.mxml -->
+<!---
+xxxコンポーネント.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<s:SkinnableContainer
+		 xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:popup="http://ns.adobe.com/cairngorm"
+		 xmlns:wiz="jp.co.ntts.vhut.app.wiz.presentation.*"
+		 xmlns:behavior="com.adobe.cairngorm.popup.behavior.*"
+		 xmlns:presentation="jp.co.ntts.vhut.dialog.presentation.*"
+		 width="600" height="550"
+		 >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import org.spicefactory.parsley.core.context.Context;
+			[Inject]
+			[Bindable]
+			public var pm:PropertyViewPM;
+
+			/**
+			 * Spiceコアコンテキスト.
+			 */
+			[Inject]
+			[Bindable]
+			public var context:Context;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+
+		<popup:PopUpWrapper open="{pm.isOwnerSelectDialogOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isOwnerSelectDialogOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+					<popup:KeepCenteredBehavior/>
+				</fx:Array>
+			</popup:behaviors>
+			<presentation:OwnerSelectDialog/>
+		</popup:PopUpWrapper>
+	</fx:Declarations>
+	<mx:Form top="0" bottom="0" left="0" right="0">
+		<mx:FormItem label="@Resource(key='owner', bundle='APPUI')" horizontalAlign="left">
+			<s:HGroup verticalAlign="middle">
+				<mx:Text text="{ pm.editingApplication.targetApplication.vhutUser.fullName }" />
+				<s:Button label="@Resource(key='change', bundle='APPUI')"
+						  visible="{pm.isOwnerButtonVisible}"
+						  click="pm.launchOwnerSelectDialog()"/>
+			</s:HGroup>
+		</mx:FormItem>
+		<mx:HRule width="100%"/>
+		<mx:FormItem label="@Resource(key='applicationName', bundle='APPUI')" width="100%">
+			<s:TextInput width="100%"
+						 text="@{ pm.editingApplication.targetApplication.name }"
+						 maxChars="32"
+						 errorString="{pm.appNameErrorMessage}"/>
+		</mx:FormItem>
+		<mx:HRule width="100%"/>
+		<!--
+		<mx:FormItem label="image" width="100%">
+			<presentation:ImageForm/>
+		</mx:FormItem>
+		-->
+	</mx:Form>
+</s:SkinnableContainer>

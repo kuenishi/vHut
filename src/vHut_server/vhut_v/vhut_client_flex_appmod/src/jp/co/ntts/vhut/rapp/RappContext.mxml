@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppModuleContext.mxml -->
+<!---
+リリースドアプリケーションのSpiceコンテキスト.
+<p xmlns:domain="jp.co.ntts.vhut.rapp.domain.*"></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<fx:Object xmlns="http://www.spicefactory.org/parsley"
+		   xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		   xmlns:presentation="jp.co.ntts.vhut.rapp.presentation.*"
+		   xmlns:domain="jp.co.ntts.vhut.rapp.domain.*"
+		   xmlns:data="com.adobe.cairngorm.integration.data.*">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.app.ApplicationEvent;
+			import jp.co.ntts.vhut.core.GetAllEvent;
+			import jp.co.ntts.vhut.core.GetByIdEvent;
+			import jp.co.ntts.vhut.rapp.application.AddReleasedApplicationByApplicationIdCommand;
+			import jp.co.ntts.vhut.rapp.application.GetAllReleasedApplicationAbstractionListCommand;
+			import jp.co.ntts.vhut.rapp.application.GetReleasedApplicationByIdCommand;
+			import jp.co.ntts.vhut.rapp.application.GetUnfinishedCommandAbstractionListByReleasedApplicationIdCommand;
+			import jp.co.ntts.vhut.rapp.application.RemoveReleasedApplicationByIdCommand;
+			import jp.co.ntts.vhut.rapp.presentation.RappPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- INFRASTRUCTURE LAYER-->
+		<s:RemoteObject id="releasedApplicationService"
+						destination="applicationService"/>
+		<data:DataCache id="releasedApplicationDataCache"
+						type="jp.co.ntts.vhut.entity.ReleasedApplication"/>
+		<data:DataCache id="rappCommandDataCache"
+						type="jp.co.ntts.vhut.entity.Command"/>
+		
+		<!-- DOMAIN LAYER -->
+		<domain:ReleasedApplications/>
+		
+		
+		<!-- APPLICATION LAYER -->
+		<spicefactory:DynamicCommand type="{ GetAllReleasedApplicationAbstractionListCommand }"
+									 selector="getAllrapp"
+									 messageType="{ GetAllEvent }"/>
+		<spicefactory:DynamicCommand type="{ GetReleasedApplicationByIdCommand }"
+									 selector="getRappById"
+									 messageType="{ GetByIdEvent }"/>
+		<spicefactory:DynamicCommand type="{ AddReleasedApplicationByApplicationIdCommand }"
+									 selector="addRapp"
+									 messageType="{ ApplicationEvent }"/>
+		<spicefactory:DynamicCommand type="{ RemoveReleasedApplicationByIdCommand }"
+									 selector="removeRapp"
+									 messageType="{ ReleasedApplicationEvent }"/>
+		<spicefactory:DynamicCommand type="{ GetUnfinishedCommandAbstractionListByReleasedApplicationIdCommand }"
+									 selector="getCommandListByRappId"
+									 messageType="{ GetByIdEvent }"/>
+		
+		<!-- PRESENTATION LAYER -->
+		<!--- ログモジュールのメインSpiceコンテキスト. -->
+		<presentation:RappPM/>
+	</fx:Declarations>
+</fx:Object>

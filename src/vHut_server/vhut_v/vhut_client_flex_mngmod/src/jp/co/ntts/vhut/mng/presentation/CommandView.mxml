@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AbstractionView.mxml -->
+<!---
+<p>コマンド表示コンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  xmlns:parsley="http://www.spicefactory.org/parsley"
+					  width="400" height="300" >
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.entity.CommandOperation;
+			import jp.co.ntts.vhut.entity.CommandStatus;
+			import jp.co.ntts.vhut.entity.Template;
+			import jp.co.ntts.vhut.entity.Vm;
+
+			import mx.collections.ArrayCollection;
+			[Inject]
+			[Bindable]
+			public var pm:CommandViewPM;
+
+			public function dateLabelFunction(data:Object, column:DataGridColumn):String
+			{
+				return dateFormatter.format(data[column.dataField]);
+			}
+
+			public function statusLabelFunction(data:Object, column:DataGridColumn):String
+			{
+				var status:CommandStatus = data[column.dataField] as CommandStatus;
+				return resourceManager.getString("APIUI", "command.status."+status.toString());
+			}
+
+			public function operationLabelFunction(data:Object, column:DataGridColumn):String
+			{
+				var operation:CommandOperation = data[column.dataField] as CommandOperation;
+				return operation.toString();
+			}
+
+			public function targetLabelFunction(data:Object, column:DataGridColumn):String
+			{
+				var target:Object = data[column.dataField];
+				if(target is Vm)
+				{
+					var vm:Vm = target as Vm;
+					return vm.name;
+				}
+				else if(target is Template)
+				{
+					var template:Template = target as Template;
+					return template.name;
+				}
+				return "";
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+		<mx:DateFormatter id="dateFormatter" formatString="MM.DD JJ:NN:SS.QQQ"/>
+	</fx:Declarations>
+	<s:Group width="100%" height="37">
+		<s:HGroup left="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+			<s:Button label="@Resource(key='update', bundle='APIUI')"
+					  click="pm.updateCommands()"
+					  styleName="menuButton"/>
+		</s:HGroup>
+		<s:HGroup right="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+	</s:Group>
+	<s:Group width="100%" height="100%">
+		<s:SkinnableContainer id="performance" styleName="paper"
+							  left="10" right="10" top="0" bottom="0">
+			<mx:DataGrid id="commandGrid" dataProvider="{pm.commands.commandDtos}"
+						 left="10" right="10" top="10" bottom="10" minWidth="300"
+						 horizontalScrollPolicy="auto">
+				<mx:columns>
+					<mx:DataGridColumn dataField="status" headerText="@Resource(key='command.label.status', bundle='MNGUI')"
+									   width="50" labelFunction="statusLabelFunction"/>
+					<mx:DataGridColumn dataField="startTime" headerText="@Resource(key='command.label.startTime', bundle='MNGUI')"
+									   width="120" labelFunction="dateLabelFunction"/>
+					<mx:DataGridColumn dataField="endTime" headerText="@Resource(key='command.label.endTime', bundle='MNGUI')"
+									   width="120" labelFunction="dateLabelFunction"/>
+					<mx:DataGridColumn dataField="operation" headerText="@Resource(key='command.label.operation', bundle='MNGUI')"
+									   width="220" labelFunction="operationLabelFunction"/>
+					<mx:DataGridColumn dataField="cloudTargetName" headerText="@Resource(key='command.label.vmOrTemplate', bundle='MNGUI')"
+									   width="120"/>
+					<mx:DataGridColumn dataField="serviceTargetName" headerText="@Resource(key='command.label.appOrAig', bundle='MNGUI')"
+									   width="100"/>
+					<mx:DataGridColumn dataField="vhutUserAccount" headerText="@Resource(key='command.label.owner', bundle='MNGUI')"
+									   width="100"/>
+					<mx:DataGridColumn dataField="errorMessage" headerText="@Resource(key='command.label.errorMessage', bundle='MNGUI')"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</s:SkinnableContainer>
+	</s:Group>
+	<s:Group width="100%" height="37">
+		<s:HGroup left="0" height="100%"
+				  verticalAlign="middle"
+				  gap="8"
+				  paddingLeft="6" paddingRight="6">
+			<mx:FormItem label="@Resource(key='command.search.start', bundle='MNGUI')" indicatorGap="3">
+				<mx:DateField id="targetDateField" selectedDate="@{pm.commands.targetDate}"/>
+			</mx:FormItem>
+			<mx:FormItem label="@Resource(key='command.search.span', bundle='MNGUI')" indicatorGap="3">
+				<s:NumericStepper id="dateSpanStepper"
+								  width="40"
+								  minimum="1" maximum="10"
+								  value="@{pm.commands.dateSpan}"/>
+			</mx:FormItem>
+			<!--<mx:FormItem label="@Resource(key='command.search.status', bundle='MNGUI')" indicatorGap="3" borderStyle="solid" borderColor="#000000" borderAlpha="0.3">-->
+				<s:CheckBox label="@Resource(key='command.search.status.success', bundle='MNGUI')" selected="@{pm.isIncludeSuccessCommand}"/>
+			<!--</mx:FormItem>-->
+			<!--<mx:FormItem label="@Resource(key='command.search.operation', bundle='MNGUI')" indicatorGap="3" borderStyle="solid" borderColor="#000000" borderAlpha="0.3">-->
+				<s:CheckBox label="@Resource(key='command.search.operation.sync', bundle='MNGUI')" selected="@{pm.isIncludeSyncCommand}"/>
+			<!--</mx:FormItem>-->
+			<mx:FormItem label="@Resource(key='command.search.keyword', bundle='MNGUI')" indicatorGap="3">
+				<s:TextInput text="@{pm.keyword}"
+							 enter="{pm.updateCommands()}"/>
+			</mx:FormItem>
+		</s:HGroup>
+		<s:HGroup right="0" height="100%"
+				  verticalAlign="middle"
+				  paddingLeft="6" paddingRight="6">
+		</s:HGroup>
+	</s:Group>
+
+</s:Group>

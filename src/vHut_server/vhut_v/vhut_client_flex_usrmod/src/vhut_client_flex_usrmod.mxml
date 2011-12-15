@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		   xmlns:cairngorm="com.adobe.cairngorm.*"
+		   xmlns:usr="jp.co.ntts.vhut.usr.presentation.*"
+		   xmlns:popup="http://ns.adobe.com/cairngorm"
+		   xmlns:wiz="jp.co.ntts.vhut.usr.presentation.wiz.*" 
+		   xmlns:addwiz="jp.co.ntts.vhut.usr.presentation.addwiz.*" 
+		   implements="com.adobe.cairngorm.module.IParsleyModule"
+		   layout="absolute" 
+		   width="100%" height="100%"  >
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.usr.UsrContext;
+			import jp.co.ntts.vhut.usr.presentation.UsrPM;
+			
+			import org.spicefactory.parsley.core.context.Context;
+			
+			/**
+			 * Spiceコアコンテキスト.
+			 */
+			[Inject]
+			[Bindable]
+			public var context:Context;
+			
+			/**
+			 * Spiceコンテキスト.
+			 */
+			public function get contextBuilder():ContextBuilderTag
+			{
+				return _contextBuilder;
+			}
+			
+			/**
+			 * プレゼンテーションモデル.
+			 */
+			[Inject]
+			[Bindable]
+			public var pm:UsrPM;
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[ResourceBundle("vhut")]
+		[ResourceBundle("USRMessages")]
+		[ResourceBundle("USRUI")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<spicefactory:ContextBuilder id="_contextBuilder">
+			<cairngorm:CairngormModuleSupport/>
+			<cairngorm:CairngormIntegrationSupport/>
+			<cairngorm:CairngormNavigationSupport/>
+			<spicefactory:FlexConfig type="{ UsrContext }"/>
+		</spicefactory:ContextBuilder>
+		<spicefactory:Configure/>
+		
+		<popup:PopUpWrapper open="{pm.isUsrWizardOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isUsrWizardOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+				</fx:Array>
+			</popup:behaviors>
+			<wiz:UsrWizard/>
+		</popup:PopUpWrapper>
+		
+		<popup:PopUpWrapper open="{pm.isUsrAddWizardOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isUsrAddWizardOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+				</fx:Array>
+			</popup:behaviors>
+			<addwiz:UsrAddWizard/>
+		</popup:PopUpWrapper>
+		
+		<s:Fade id="fadeInEffect" alphaFrom="0" alphaTo="1"/>
+		<s:Fade id="fadeOutEffect" alphaFrom="1" alphaTo="0"/>
+	</fx:Declarations>
+	
+	<s:Group id="topElements"
+			 top="0"
+			 left="0"
+			 right="0"
+			 bottom="0"
+			 showEffect="{fadeInEffect}"
+			 hideEffect="{fadeOutEffect}">
+		<usr:ListContent top="37"
+						 bottom="37"
+						 left="0"
+						 width="300"/>
+		<usr:ListFootBar height="37"
+						 bottom="0"
+						 left="0"
+						 width="300"/>
+		<usr:MainHeadBar height="37"
+						 top="0"
+						 right="0"
+						 left="306"/>
+		<usr:MainContent id="mainContent"
+						 left="306"
+						 right="0"
+						 top="37"
+						 bottom="37"/>
+		<usr:MainFootBar height="37"
+						 bottom="0"
+						 right="0"
+						 left="306"/>
+	</s:Group>
+	
+</mx:Module>

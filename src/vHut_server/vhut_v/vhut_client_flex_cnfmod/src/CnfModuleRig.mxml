@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\CnfModuleRig.mxml -->
+<!---
+<p>xxxクラスです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+			   xmlns:cairngorm="com.adobe.cairngorm.*"
+			   xmlns:core="jp.co.ntts.vhut.core.*"
+			   xmlns:module="com.adobe.cairngorm.module.*"
+			   skinClass="jp.co.ntts.vhut.core.presentation.VhutSkmPortalSkin"
+			   minWidth="955" minHeight="600"
+			   >
+	<fx:Style source="VhutStyle.css"/>
+	<fx:Metadata>
+		[Event(type="jp.co.ntts.vhut.core.AuthenticationEvent", name="login")]
+		[ManagedEvents("login")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.module.IModuleManager;
+
+			import jp.co.ntts.vhut.APIContext;
+			import jp.co.ntts.vhut.core.AuthenticationEvent;
+			import jp.co.ntts.vhut.core.SessionEvent;
+			import jp.co.ntts.vhut.core.domain.Session;
+
+			import mx.logging.LogEventLevel;
+
+			[Inject]
+			[Bindable]
+			public var session:Session;
+
+			[Bindable]
+			[Inject(id="cnfModule")]
+			public var cnfModuleManager:IModuleManager;
+
+			[Init]
+			public function init():void
+			{
+				session.addEventListener(SessionEvent.SESSION_CHANGED, sessionChangedHandler);
+				dispatchEvent(AuthenticationEvent.newLoginAuthenticationEvet("vhut", "vHut1234"));
+			}
+
+			protected function sessionChangedHandler(event:SessionEvent):void
+			{
+				if(event.isAuthenticated)
+				{
+					moduleLoader.loadModule(cnfModuleManager);
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<spicefactory:ContextBuilder>
+			<cairngorm:CairngormModuleSupport/>
+			<cairngorm:CairngormIntegrationSupport/>
+			<spicefactory:FlexConfig type="{ CnfModuleRigContext }"/>
+			<spicefactory:FlexConfig type="{ APIContext }"/>
+		</spicefactory:ContextBuilder>
+
+		<spicefactory:Configure/>
+
+		<s:TraceTarget level="{ LogEventLevel.DEBUG }"
+					   includeCategory="true"
+					   includeLevel="true">
+			<s:filters>
+				<fx:Array>
+					<fx:String>com.adobe.cairngorm.*</fx:String>
+					<fx:String>org.spicefactory.*</fx:String>
+					<fx:String>jp.co.ntts.vhut.*</fx:String>
+				</fx:Array>
+			</s:filters>
+		</s:TraceTarget>
+	</fx:Declarations>
+
+	<s:SkinnableContainer id="mainContainer"
+						  top="0" bottom="0" right="0" left="0"
+						  skinClass="jp.co.ntts.vhut.core.presentation.MainContainerSkin">
+		<core:VhutViewLoader id="moduleLoader" top="43" bottom="43" right="20" left="20"/>
+	</s:SkinnableContainer>
+</s:Application>

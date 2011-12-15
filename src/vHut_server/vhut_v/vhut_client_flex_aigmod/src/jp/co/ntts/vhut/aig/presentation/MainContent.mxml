@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\MainContent.mxml -->
+<!---
+	 メインの中央コンポーネント.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:presentation="jp.co.ntts.vhut.app.presentation.*"
+		 xmlns:va="jp.co.ntts.vhut.va.*"
+		 xmlns:va1="jp.co.ntts.vhut.comp.va.*"
+		 xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		 xmlns:presentation1="jp.co.ntts.vhut.panel.presentation.*"
+		 xmlns:presentation2="jp.co.ntts.vhut.core.presentation.*"
+		 width="800"
+		 height="600"
+		 minWidth="30"
+		 minHeight="30" xmlns:shutter="jp.co.ntts.vhut.comp.shutter.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Metadata>
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			[Inject]
+			[Bindable]
+			public var pm:AigPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<spicefactory:Configure/>
+		<mx:DateFormatter id="dateFormatter"
+						  formatString="YYYY/MM/DD"/>
+	</fx:Declarations>
+	<s:Scroller width="100%" height="100%"
+				horizontalScrollPolicy="off" verticalScrollPolicy="on">
+		<s:Group visible="{pm.aigs.targetAig != null}">
+			<s:layout>
+				<s:VerticalLayout paddingLeft="10" paddingRight="10"/>
+			</s:layout>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<s:layout>
+					<s:HorizontalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+				</s:layout>
+				<presentation2:IconImage source="@Embed(source='/images/icon_app.png')"
+										 url="{pm.aigs.targetAig.application.imageUrl}"
+										 shadow="true"
+										 width="60" height="60"/>
+				<mx:Form left="0" right="50" paddingTop="0" paddingLeft="0" paddingRight="0" paddingBottom="0">
+					<mx:FormItem label="@Resource(key='ownerAccount', bundle='AIGUI')"
+								 width="100%">
+						<mx:Text text="{ pm.aigs.targetAig.vhutUser.account }"/>
+					</mx:FormItem>
+					<mx:FormItem label="@Resource(key='ownerName', bundle='AIGUI')"
+								 width="100%">
+						<mx:Text  text="{ pm.aigs.targetAig.vhutUser.lastName +' '+ pm.aigs.targetAig.vhutUser.firstName }"/>
+					</mx:FormItem>
+				</mx:Form>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<mx:Form left="0" right="50">
+					<mx:FormItem label="@Resource(key='memberCount', bundle='AIGUI')"
+								 width="100%">
+						<mx:Text  text="{ pm.aigs.targetAig.applicationInstanceList.length }"/>
+					</mx:FormItem>
+				</mx:Form>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<mx:Form left="0" right="50">
+					<mx:FormItem label="@Resource(key='startDate', bundle='AIGUI')"
+								 width="100%">
+						<mx:Text  text="{ dateFormatter.format(pm.aigs.targetAig.startTime) }"/>
+					</mx:FormItem>
+					<mx:FormItem label="@Resource(key='endDate', bundle='AIGUI')"
+								 width="100%">
+						<mx:Text  text="{ dateFormatter.format(pm.aigs.targetAig.endTime) }"/>
+					</mx:FormItem>
+					<mx:FormItem label="@Resource(key='deleteDate', bundle='AIGUI')"
+								 width="100%">
+						<mx:Text text="{ dateFormatter.format(pm.aigs.targetAig.deleteTime) }"/>
+					</mx:FormItem>
+				</mx:Form>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<mx:Form left="0" right="50">
+					<mx:FormItem label="@Resource(key='password', bundle='AIGUI')"
+								 width="100%">
+						<mx:Text  text="{ pm.aigs.targetAig.password }"/>
+					</mx:FormItem>
+				</mx:Form>
+			</s:SkinnableContainer>
+			<s:SkinnableContainer width="100%"
+								  styleName="paper">
+				<s:layout>
+					<s:HorizontalLayout gap="10" paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"/>
+				</s:layout>
+				<shutter:Shutter title="@Resource(key='aig.ipInfo', bundle='AIGUI')"
+								 width="100%">
+					<shutter:layout>
+						<s:VerticalLayout gap="5"/>
+					</shutter:layout>
+					<mx:DataGrid id="ipInfoGrid" dataProvider="{pm.aigs.targetAigIpInfos}"
+								 width="100%"
+								 rowCount="16"
+								 horizontalScrollPolicy="on">
+						<mx:columns>
+							<mx:DataGridColumn dataField="vhutUserFullName"
+											   headerText="@Resource(key='owner', bundle='APIUI')"/>
+							<mx:DataGridColumn dataField="vhutUserAccount"
+											   headerText="@Resource(key='account', bundle='APIUI')"/>
+							<mx:DataGridColumn dataField="vmName"
+											   headerText="@Resource(key='vm', bundle='APIUI')"/>
+							<mx:DataGridColumn dataField="os"
+											   headerText="@Resource(key='os', bundle='APIUI')"/>
+							<mx:DataGridColumn dataField="macColon"
+											   headerText="@Resource(key='mac', bundle='APIUI')"
+											   width="120"/>
+							<mx:DataGridColumn dataField="privateIpDot"
+											   headerText="@Resource(key='privateIp', bundle='APIUI')"
+											   width="100"/>
+							<mx:DataGridColumn dataField="publicIpDot"
+											   headerText="@Resource(key='publicIp', bundle='APIUI')"
+											   width="100"/>
+							<mx:DataGridColumn dataField="vlan"
+											   headerText="@Resource(key='vlan', bundle='APIUI')"
+											   width="50"/>
+							<mx:DataGridColumn dataField="networkAddressDot"
+											   headerText="@Resource(key='networkAddress', bundle='APIUI')"
+											   width="100"/>
+						</mx:columns>
+					</mx:DataGrid>
+					<s:Button label="@Resource(key='aig.ipInfo.export', bundle='AIGUI')"
+							  click="pm.exportTargetIpInfos(ipInfoGrid)"/>
+				</shutter:Shutter>
+			</s:SkinnableContainer>
+		</s:Group>
+	</s:Scroller>
+</s:Group>

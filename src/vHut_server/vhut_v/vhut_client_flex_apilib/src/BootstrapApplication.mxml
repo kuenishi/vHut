@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\BootstrapApplication.mxml -->
+<!---
+<p>xxxクラスです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:parsley="http://www.spicefactory.org/parsley"
+			   minWidth="955" minHeight="600" >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.*;
+			import jp.co.ntts.vhut.comp.wiz.presentation.Wizard;
+			import jp.co.ntts.vhut.comp.wiz.presentation.WizardPM;
+			APIContext;
+
+			import jp.co.ntts.vhut.config.*;
+			VhutConfig;
+
+			import jp.co.ntts.vhut.panel.presentation.*;
+			CommandPanelItemRenderer;
+
+			import jp.co.ntts.vhut.ai.*;
+			AiEvent;
+			AiVmEvent;
+
+			import jp.co.ntts.vhut.aig.*;
+			AigEvent;
+			AigListEvent;
+			UserListEvent;
+
+			import jp.co.ntts.vhut.app.*;
+			ApplicationEvent;
+			AppVmEvent;
+			TermEvent;
+
+			import jp.co.ntts.vhut.comp.cal.*;
+			Calendar;
+			EditableCalendar;
+
+			import jp.co.ntts.vhut.comp.va.*;
+			VaController;
+			VaEditor;
+			VaViewer;
+
+			import jp.co.ntts.vhut.comp.wiz.domain.*;
+			Wizard;
+			WizardPM;
+			WizardStep;
+			WizardSteps;
+
+			import jp.co.ntts.vhut.core.*;
+			AlertEvent;
+			AlertHandler;
+			AuthenticationEvent;
+			BaseCommand;
+			ChangeTargetItemEvent;
+			CommandEvent;
+			GetAllEvent;
+			GetByIdEvent;
+			GetByIdWithTimeSpanEvent;
+			GetEvent;
+			VhutViewLoader;
+
+			import jp.co.ntts.vhut.core.domain.*;
+			Session;
+
+			import jp.co.ntts.vhut.core.infrastructure.*
+			GetCurrentUserCommand;
+			LoginCommand;
+			LogoutCommand;
+			ServerException;
+			SessionHandler;
+
+			import jp.co.ntts.vhut.dialog.presentation.*;
+			CommonDialog;
+			CommonDialogPM;
+			LoginPanel;
+			SelectUserDialog;
+			SelectUserDialogPM;
+
+			import jp.co.ntts.vhut.dto.*;
+			AdditionalDiskDto;
+			CloudInfraConfigurationDto;
+			CloudInfraPerformanceDto;
+			CloudServiceConfigurationDto;
+			CloudTroubleDto;
+			NwAgentConfigDto;
+			OperationIntervalDto;
+			PerformanceDto;
+			PredictionDto;
+			RealmDto;
+			ResourceDto;
+			RightDto;
+			ServiceConfigurationDto;
+			ServiceTroubleDto;
+			SpecDto;
+			SwitchTemplateDto;
+			VhutUserDto;
+			IpInfoDto;
+
+			import jp.co.ntts.vhut.entity.*;
+			Application;
+			ApplicationInstance;
+			ApplicationInstanceGroup;
+			ApplicationInstanceGroupResourceStatus;
+			ApplicationInstanceGroupStatus;
+			ApplicationInstanceSecurityGroup;
+			ApplicationInstanceStatus;
+			ApplicationInstanceVm;
+			ApplicationInstanceVmSecurityGroupMap;
+			ApplicationSecurityGroup;
+			ApplicationStatus;
+			ApplicationVm;
+			ApplicationVmSecurityGroupMap;
+			BaseTemplate;
+			Cloud;
+			CloudType;
+			CloudUser;
+			Cluster;
+			ClusterReservation;
+			ClusterReservationVmMap;
+			ClusterResource;
+			Command;
+			CommandOperation;
+			CommandStatus;
+			CommandTemplateMap;
+			CommandVmMap;
+			Conflict;
+			ConflictStatus;
+			Disk;
+			DiskTemplate;
+			Host;
+			HostStatus;
+			IIdentifiableEntity;
+			ISynchronizedEntity;
+			LocalId;
+			LocalIdType;
+			Network;
+			NetworkAdapter;
+			NetworkAdapterTemplate;
+			NetworkStatus;
+			Os;
+			PublicIpReservation;
+			PublicIpResource;
+			ReleasedApplication;
+			ReleasedApplicationSecurityGroupTemplate;
+			ReleasedApplicationStatus;
+			ReleasedApplicationTemplate;
+			ReleasedApplicationTemplateSecurityGroupMap;
+			Reservation;
+			ResourceType;
+			Role;
+			SecurityGroup;
+			SecurityGroupTemplate;
+			Storage;
+			StorageReservation;
+			StorageReservationDiskMap;
+			StorageReservationDiskTemplateMap;
+			StorageResource;
+			StorageStatus;
+			Template;
+			TemplateStatus;
+			Term;
+			VhutUser;
+			VhutUserCloudUserMap;
+			VhutUserRoleMap;
+			VhutUserStatus;
+			VlanReservation;
+			VlanResource;
+			Vm;
+			VmCloudUserMap;
+			VmStatus;
+
+			import jp.co.ntts.vhut.exception.*;
+
+			import jp.co.ntts.vhut.form.presentation.*;
+			ImageForm;
+			ImageFormPM;
+
+			import jp.co.ntts.vhut.log.*;
+			LogCacheTarget;
+			LogConfPanelEvent;
+			LogData;
+			VhutLog;
+			VhutLogLogger;
+
+			import jp.co.ntts.vhut.rapp.*;
+			ReleasedApplicationEvent;
+
+			import jp.co.ntts.vhut.util.*;
+			CloneUtil;
+			DateUtil;
+			Enum;
+			IClonable;
+			MessageUtil;
+			VhutTimer;
+
+			import org.spicefactory.parsley.flex.tag.builder.ContextBuilderProcessor;
+			ContextBuilderProcessor;
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:ContextBuilder>
+		</parsley:ContextBuilder>
+	</fx:Declarations>
+</s:Application>

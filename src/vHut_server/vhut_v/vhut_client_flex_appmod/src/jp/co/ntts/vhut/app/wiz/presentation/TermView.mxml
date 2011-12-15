@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\TermView.mxml -->
+<!---
+	アプリケーション起動期間予約ビュー.
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:presentation="jp.co.ntts.vhut.form.presentation.*"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:cal="jp.co.ntts.vhut.app.cal.presentation.*"
+		 width="800" height="550" >
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center" gap="10"/>
+	</s:layout>
+	<fx:Declarations>
+		<parsley:Configure/>
+		<mx:DateFormatter id="monthFormatter"
+						  formatString="@Resource(key='formatter.month', bundle='APPUI')"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.IList;
+			[Inject]
+			[Bindable]
+			public var pm:TermViewPM;
+
+		]]>
+	</fx:Script>
+	<s:SkinnableContainer width="100%" styleName="paper">
+		<s:layout>
+			<s:VerticalLayout paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"
+							  gap="5"/>
+		</s:layout>
+		<s:Label text="@Resource(key='term.wizard.howto', bundle='APPUI')"/>
+	</s:SkinnableContainer>
+	<s:SkinnableContainer width="100%" styleName="paper">
+		<s:layout>
+			<s:VerticalLayout horizontalAlign="center"
+							  paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"
+							  gap="5"/>
+		</s:layout>
+		<s:SkinnableContainer width="100%" height="40">
+			<s:layout>
+				<s:HorizontalLayout verticalAlign="middle" variableColumnWidth="true"/>
+			</s:layout>
+			<s:Button width="30" label="&lt;" click="pm.prev()"/>
+			<s:Label width="100%" textAlign="center" fontSize="18"
+					 text="{monthFormatter.format(pm.currentMonth)}"/>
+			<s:Button width="30" label="&gt;" click="pm.next()"/>
+		</s:SkinnableContainer>
+		<cal:TermCalendar id="calendar"
+						  width="100%" height="250"
+						  currentMonth="{ pm.currentMonth }"
+						  reservedTermList="{pm.applications.targetApplicationTermList}"
+						  availableTermList="{pm.applications.targetApplicationAvailableTermList}"
+						  reservingTermChanged="pm.reservingTermListChangedHandler(event)"
+						  />
+	</s:SkinnableContainer>
+	<s:SkinnableContainer width="100%" styleName="paper">
+		<s:layout>
+			<s:VerticalLayout horizontalAlign="center"
+							  paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"
+							  gap="5"/>
+		</s:layout>
+		<s:Group width="100%">
+			<s:layout>
+				<s:HorizontalLayout gap="10" verticalAlign="middle"/>
+			</s:layout>
+			<s:Rect width="10" height="10">
+				<s:fill>
+					<s:SolidColor color="#E8B53E"/>
+				</s:fill>
+			</s:Rect>
+			<s:Label text="@Resource(key='term.wizard.legend.available', bundle='APPUI')"/>
+		</s:Group>
+		<s:Group width="100%">
+			<s:layout>
+				<s:HorizontalLayout gap="10" verticalAlign="middle"/>
+			</s:layout>
+			<s:Rect width="10" height="10">
+				<s:fill>
+					<s:SolidColor color="#64FF3F"/>
+				</s:fill>
+			</s:Rect>
+			<s:Label text="@Resource(key='term.wizard.legend.reserving', bundle='APPUI')"/>
+		</s:Group>
+	</s:SkinnableContainer>
+</s:SkinnableContainer>

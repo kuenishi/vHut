@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\vhut_client_flex_topmod.mxml -->
+<!---
+<p>xxxモジュールです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		   xmlns:cairngorm="com.adobe.cairngorm.*"
+		   xmlns:top="jp.co.ntts.vhut.top.presentation.*"
+		   implements="com.adobe.cairngorm.module.IParsleyModule"
+		   layout="absolute" 
+		   width="100%" height="100%" >
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.top.TopContext;
+			
+			/**
+			 * Spiceコンテキスト.
+			 */
+			public function get contextBuilder():ContextBuilderTag
+			{
+				return _contextBuilder;
+			}
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[ResourceBundle("vhut")]
+		[ResourceBundle("TOPMessages")]
+		[ResourceBundle("TOPUI")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<spicefactory:ContextBuilder id="_contextBuilder">
+			<cairngorm:CairngormModuleSupport/>
+			<cairngorm:CairngormIntegrationSupport/>
+			<cairngorm:CairngormNavigationSupport/>
+			<spicefactory:FlexConfig type="{ TopContext }"/>
+		</spicefactory:ContextBuilder>
+		<spicefactory:Configure/>
+		<s:Fade id="fadeInEffect" alphaFrom="0" alphaTo="1"/>
+		<s:Fade id="fadeOutEffect" alphaFrom="1" alphaTo="0"/>
+	</fx:Declarations>
+	
+	<s:Group id="topElements"
+			 top="0"
+			 left="0"
+			 right="0"
+			 bottom="0"
+			 showEffect="{fadeInEffect}"
+			 hideEffect="{fadeOutEffect}">
+		<top:ListContent top="37"
+						 bottom="37"
+						 left="0"
+						 width="300"/>
+		<top:ListFootBar height="37"
+						 bottom="0"
+						 left="0"
+						 width="300"/>
+		<top:MainHeadBar height="37"
+						   top="0"
+						   right="0"
+						   left="306"/>
+		<top:MainContent id="mainContent"
+						   left="306"
+						   right="0"
+						   top="37"
+						   bottom="37"/>
+		<top:MainFootBar height="37"
+						   bottom="0"
+						   right="0"
+						   left="306"/>
+	</s:Group>
+	
+</mx:Module>

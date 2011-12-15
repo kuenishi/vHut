@@ -1,0 +1,27 @@
+/* CSS file */
+
+/* xxx‚ÌƒXƒ^ƒCƒ‹ƒtƒ@ƒCƒ‹B */
+
+/* $Date: 2011-11-28 19:50:40 +0900 (æœˆ, 28 11 2011) $ */
+/* $Revision: 949 $ */
+/* $Author: NTT Software Corporation. $ */
+
+/* author NTT Software Corporation. */
+/* version 1.0.0 */
+
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace p "jp.co.ntts.vhut.presentation.*";
+@namespace dialog "jp.co.ntts.vhut.dialog.presentation.*";
+@namespace form "jp.co.ntts.form.presentation.*";
+
+
+#contentTabBar
+{
+	skin-class:ClassReference("skins.ContentTabBarSkin");
+}
+
+p|LoginPanel
+{
+	skin-class:ClassReference("jp.co.ntts.vhut.dialog.presentation.BasicPanelSkin");
+}

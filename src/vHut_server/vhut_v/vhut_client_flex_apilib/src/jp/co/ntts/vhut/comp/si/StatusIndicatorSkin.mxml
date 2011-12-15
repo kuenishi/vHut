@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\StatusIndicatorSkin.mxml -->
+<!---
+<p>StatusIndicatorのスキンです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		xmlns:primitives="jp.co.ntts.vhut.primitives.*">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("jp.co.ntts.vhut.comp.si.StatusIndicator")]
+	</fx:Metadata>
+	<s:states>
+		<s:State name="none"/>
+		<s:State name="stable"/>
+		<s:State name="changing"/>
+	</s:states>
+
+	<fx:Declarations>
+		<primitives:SolidMenuBarGradient id="barFill" rotation="90"/>
+		<s:SolidColor id="shadow" color="#000000" alpha="0.4"/>
+		<s:SolidColor id="light" color="#FFFFFF" alpha="0.8"/>
+	</fx:Declarations>
+
+	<!-- SkinParts
+	name=actionButton, type=spark.components.Button, required=false
+	name=statusLabel, type=spark.components.Label, required=false
+	-->
+	<s:Rect id="background"
+			left="0" right="0" top="0" bottom="0" fill="{barFill}"
+			excludeFrom="none"/>
+	<s:Rect id="leftShadow"
+			left="0" width="1" top="0" bottom="0" fill="{shadow}"
+			excludeFrom="none"/>
+	<s:Rect id="rightLight"
+			right="0" width="1" top="0" bottom="0" fill="{light}"
+			excludeFrom="none"/>
+	<s:Group left="0" right="0" top="0" bottom="0"
+			 excludeFrom="none">
+		<s:layout>
+			<s:HorizontalLayout gap="8"
+								verticalAlign="middle"
+								paddingLeft="10"
+								paddingRight="10"/>
+		</s:layout>
+		<s:Label id="statusLabel"/>
+		<s:Button id="actionButton"
+				  styleName="menuButton"
+				  includeIn="stable"/>
+	</s:Group>
+</s:Skin>

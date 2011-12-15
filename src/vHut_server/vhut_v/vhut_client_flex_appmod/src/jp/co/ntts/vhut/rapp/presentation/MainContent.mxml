@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\MainContent.mxml -->
+<!---
+xxxコンポーネント.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 xmlns:presentation="jp.co.ntts.vhut.rapp.presentation.*"
+		 xmlns:presentation1="jp.co.ntts.panel.presentation.*"
+		 xmlns:presentation2="jp.co.ntts.vhut.panel.presentation.*"
+		 xmlns:va="jp.co.ntts.vhut.comp.va.*"
+		 width="30" height="30" minWidth="30" minHeight="30" >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Metadata>
+		[Event(type="jp.co.ntts.vhut.core.CommandEvent", name="cancelCommand")]
+		[Event(type="jp.co.ntts.vhut.core.CommandEvent", name="retryCommand")]
+		[ManagedEvents(names="cancelCommand,retryCommand")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.comp.va.application.SelectEvent;
+			import jp.co.ntts.vhut.entity.ReleasedApplication;
+			import jp.co.ntts.vhut.entity.ReleasedApplicationSecurityGroupTemplate;
+			import jp.co.ntts.vhut.entity.ReleasedApplicationTemplate;
+
+			import spark.events.IndexChangeEvent;
+			[Inject]
+			[Bindable]
+			public var pm:RappPM;
+
+		]]>
+	</fx:Script>
+	<va:VaViewer id="vaViewer" left="0" top="0" bottom="0" right="0"
+				 topology="{ pm.releasedApplications.targetReleasedApplication.topology }"
+				 selectVm="pm.selectReleasedApplicationElement(event.data)"
+				 selectSg="pm.selectReleasedApplicationElement(event.data)"
+				 />
+
+	<presentation:RappElementPanel
+		right="0"
+		top="0"
+		bottom="0"/>
+
+	<s:DataGroup id="commandStackPanel"
+				 dataProvider="{ pm.releasedApplications.nestedTargetReleasedApplicationCommands }"
+				 top="0"
+				 left="0"
+				 right="0">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+		<s:itemRenderer>
+			<fx:Component>
+				<presentation2:CommandPanelItemRenderer
+					retryCommand="outerDocument.dispatchEvent(event)"
+					cancelCommand="outerDocument.dispatchEvent(event)"/>
+			</fx:Component>
+		</s:itemRenderer>
+	</s:DataGroup>
+</s:Group>

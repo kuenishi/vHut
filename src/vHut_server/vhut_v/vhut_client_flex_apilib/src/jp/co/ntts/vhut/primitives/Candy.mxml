@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\Candy.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   width="100" height="100">
+	<fx:Declarations>
+		<s:LinearGradient id="highlightFill" rotation="90">
+			<s:GradientEntry color="#FFFFFF" alpha="0.8" ratio="0"/>
+			<s:GradientEntry color="#FFFFFF" alpha="0.3" ratio="0.1"/>
+			<s:GradientEntry color="#FFFFFF" alpha="0.0" ratio="0.3"/>
+		</s:LinearGradient>
+		<s:LinearGradient id="basicFill" rotation="90">
+			<s:GradientEntry color="#000000" alpha="0.2" ratio="0"/>
+			<s:GradientEntry color="#000000" alpha="0.1" ratio="0.2"/>
+			<s:GradientEntry color="#000000" alpha="0.0" ratio="0.5"/>
+			<s:GradientEntry color="#000000" alpha="0.1" ratio="0.8"/>
+			<s:GradientEntry color="#000000" alpha="0.2" ratio="1"/>
+		</s:LinearGradient>
+		<s:SolidColorStroke id="basicStroke" color="#000000" alpha="0.3" weight="2"/>
+	</fx:Declarations>
+	<s:Rect top="0" bottom="0" left="0" right="0" 
+			radiusX="6" radiusY="6"
+			fill="{basicFill}" stroke="{basicStroke}"/>
+	<s:Rect top=" 2" bottom="2" left="2" right="2" 
+			radiusX="4" radiusY="4"
+			fill="{highlightFill}" />
+</s:Group>

@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+# vhutad        Startup script for the vHut Agent
+#
+# chkconfig: 2345 55 25
+# description: vHut Agent
+# processname: vhutad
+# config: $VHUT_HOME/agent/conf/vhuta.conf
+# config: $VHUT_HOME/agent/conf/log.conf
+# pidfile: $VHUT_HOME/agent/log/vhutad.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+export VHUT_HOME=/opt/vhut
+RUN_AS_USER=root # Adjust run user here
+export PYTHONPATH=$PYTHONPATH:$VHUT_HOME/agent/vhut
+
+start() {
+        echo -n $"Starting vHut Agent: "
+	if [ "x$USER" != "x$RUN_AS_USER" ]; then
+		su - $RUN_AS_USER -c "python $VHUT_HOME/agent/vhut/vhutad.py"
+	else
+		python $VHUT_HOME/agent/vhut/vhutad.py
+	fi
+	echo "done."
+}
+
+# When stopping httpd a delay of >10 second is required before SIGKILLing the
+# httpd parent; this gives enough time for the httpd parent to SIGKILL any
+# errant children.
+stop() {
+	echo -n $"Stopping vHut Agent: "
+	if [ "x$USER" != "x$RUN_AS_USER" ]; then
+		su - $RUN_AS_USER -c "kill `cat $VHUT_HOME/agent/log/vhutad.pid`"
+	else
+		kill `cat $VHUT_HOME/agent/log/vhutad.pid`
+	fi
+	echo "done."
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit 0
+
+
+ # =====================================================================
+ # 
+ #    Copyright 2011 NTT Sofware Corporation
+ # 
+ #    Licensed under the Apache License, Version 2.0 (the "License");
+ #    you may not use this file except in compliance with the License.
+ #    You may obtain a copy of the License at
+ # 
+ #        http://www.apache.org/licenses/LICENSE-2.0
+ # 
+ #    Unless required by applicable law or agreed to in writing, software
+ #    distributed under the License is distributed on an "AS IS" BASIS,
+ #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ #    See the License for the specific language governing permissions and
+ #    limitations under the License.
+ # 
+ # =====================================================================

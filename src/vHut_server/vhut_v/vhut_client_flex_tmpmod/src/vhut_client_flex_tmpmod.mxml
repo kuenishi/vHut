@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		   xmlns:cairngorm="com.adobe.cairngorm.*"
+		   xmlns:tmp="jp.co.ntts.vhut.tmp.presentation.*"
+		   xmlns:popup="http://ns.adobe.com/cairngorm"
+		   xmlns:wiz="jp.co.ntts.vhut.tmp.presentation.wiz.*"
+		   implements="com.adobe.cairngorm.module.IParsleyModule"
+		   layout="absolute" 
+		   width="100%" height="100%" 
+		   >
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.tmp.TmpContext;
+			import jp.co.ntts.vhut.tmp.presentation.TmpPM;
+			
+			import org.spicefactory.parsley.core.context.Context;
+			
+			/**
+			 * Spiceコアコンテキスト.
+			 */
+			[Inject]
+			[Bindable]
+			public var context:Context;
+			
+			/**
+			 * Spiceコンテキスト.
+			 */
+			public function get contextBuilder():ContextBuilderTag
+			{
+				return _contextBuilder;
+			}
+			
+			/**
+			 * プレゼンテーションモデル.
+			 */
+			[Inject]
+			[Bindable]
+			public var pm:TmpPM;
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[ResourceBundle("vhut")]
+		[ResourceBundle("TMPMessages")]
+		[ResourceBundle("TMPUI")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<spicefactory:ContextBuilder id="_contextBuilder">
+			<cairngorm:CairngormModuleSupport/>
+			<cairngorm:CairngormIntegrationSupport/>
+			<cairngorm:CairngormNavigationSupport/>
+			<spicefactory:FlexConfig type="{ TmpContext }"/>
+		</spicefactory:ContextBuilder>
+		<spicefactory:Configure/>
+		
+		<popup:PopUpWrapper open="{pm.isTmpWizardOpen}"
+							center="true"
+							modal="true"
+							closed="pm.isTmpWizardOpen = false"
+							reuse="false">
+			<popup:behaviors>
+				<fx:Array>
+					<popup:AddPopUpToParsleyContext context="{ context }"/>
+				</fx:Array>
+			</popup:behaviors>
+			<wiz:TmpWizard/>
+		</popup:PopUpWrapper>
+		
+		<s:Fade id="fadeInEffect" alphaFrom="0" alphaTo="1"/>
+		<s:Fade id="fadeOutEffect" alphaFrom="1" alphaTo="0"/>
+	</fx:Declarations>
+	
+	<s:Group id="topElements"
+			 top="0"
+			 left="0"
+			 right="0"
+			 bottom="0"
+			 showEffect="{fadeInEffect}"
+			 hideEffect="{fadeOutEffect}">
+		<tmp:ListContent top="37"
+						 bottom="37"
+						 left="0"
+						 width="300"/>
+		<tmp:ListFootBar height="37"
+						 bottom="0"
+						 left="0"
+						 width="300"/>
+		<tmp:MainHeadBar height="37"
+						 top="0"
+						 right="0"
+						 left="306"/>
+		<tmp:MainContent id="mainContent"
+						 left="306"
+						 right="0"
+						 top="37"
+						 bottom="37"/>
+		<tmp:MainFootBar height="37"
+						 bottom="0"
+						 right="0"
+						 left="306"/>
+	</s:Group>
+	
+</mx:Module>

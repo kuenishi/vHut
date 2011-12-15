@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\LogContext.mxml -->
+<!---
+	 ログモジュールのSpiceコンテキスト.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+
+<fx:Object xmlns="http://www.spicefactory.org/parsley"
+		   xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:module="com.adobe.cairngorm.module.*"
+		   xmlns:flashnet="flash.net.*"
+		   xmlns:localconnection="com.adobe.cairngorm.integration.localconnection.*">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.log.infrastructure.LocalConnectionTarget;
+			import jp.co.ntts.vhut.log.presentation.LocalConnectionTargetConfGroupPM;
+			import jp.co.ntts.vhut.log.presentation.LogCacheTargetConfGroupPM;
+			import jp.co.ntts.vhut.log.presentation.LogPM;
+			import jp.co.ntts.vhut.log.presentation.TraceTargetConfGroupPM;
+			
+			import mx.logging.targets.TraceTarget;
+			
+			import org.spicefactory.parsley.core.context.Context;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- PRESENTATION LAYER -->
+		<!--- ログモジュールのメインSpiceコンテキスト. -->
+		<Object id="logPM"
+				type="{ LogPM }"/>
+		<!--- トレースターゲットコンポーネントのSpiceコンテキスト. -->
+		<Object id="traceTargetConfGroupPM"
+				type="{ TraceTargetConfGroupPM }"/>
+		<!--- ログをキャッシュするターゲットコンポーネントのSpiceコンテキスト. -->
+		<Object id="logCacheTargetConfGroupPM"
+				type="{ LogCacheTargetConfGroupPM }"/>
+		<!--- ローカルコネクションターゲットコンポーネントのSpiceコンテキスト. -->
+		<Object id="localConnectionTargetConfGroupPM"
+				type="{ LocalConnectionTargetConfGroupPM }"/>
+		<!-- INFRASTRUCTURE LAYER -->
+		<!--- トレースに出力するロギングターゲット. -->
+		<Object lazy="true"
+				type="{TraceTarget}"
+				id="traceTarget">
+			<Property name="includeCategory"
+					  value="true"/>
+			<Property name="includeLevel"
+					  value="true"/>
+			<Property name="includeTime"
+					  value="true"/>
+			<Property name="includeDate"
+					  value="true"/>
+		</Object>
+		<!--- ログビューアに出力するロギングターゲット. -->
+		<Object lazy="true"
+				type="{ LocalConnectionTarget }"
+				id="localConnectionTarget">
+			<Property name="includeCategory"
+					  value="true"/>
+			<Property name="includeLevel"
+					  value="true"/>
+			<Property name="includeTime"
+					  value="true"/>
+			<Property name="includeDate"
+					  value="true"/>
+			<Property name="level"
+					  value="0"/>
+		</Object>
+
+		<!-- INTEGRATION LAYER -->
+	</fx:Declarations>
+</fx:Object>

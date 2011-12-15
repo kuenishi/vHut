@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module:ModuleViewLoader xmlns:module="com.adobe.cairngorm.module.*"
+						 xmlns:mx="http://www.adobe.com/2006/mxml"
+						 skinClass="jp.co.ntts.vhut.core.VhutViewLoaderSkin">
+
+	<module:loadPolicy>
+		<module:BasicLoadPolicy/>
+	</module:loadPolicy>
+
+</module:ModuleViewLoader>

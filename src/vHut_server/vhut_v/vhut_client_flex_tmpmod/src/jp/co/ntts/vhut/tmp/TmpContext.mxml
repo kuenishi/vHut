@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!---
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+
+<Objects
+	xmlns="http://www.spicefactory.org/parsley"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:module="com.adobe.cairngorm.module.*"
+	xmlns:data="com.adobe.cairngorm.integration.data.*"
+	xmlns:presentation="jp.co.ntts.vhut.tmp.presentation.*"
+	xmlns:domain="jp.co.ntts.vhut.tmp.domain.*"
+	xmlns:config="jp.co.ntts.vhut.config.*"
+	xmlns:wiz="jp.co.ntts.vhut.tmp.presentation.wiz.*"
+	xmlns:compwiz="jp.co.ntts.vhut.comp.wiz.domain.*"
+	>
+
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.GetAllEvent;
+			import jp.co.ntts.vhut.core.GetByIdEvent;
+			import jp.co.ntts.vhut.tmp.application.CreateBaseTemplateCommand;
+			import jp.co.ntts.vhut.tmp.application.DeleteBaseTemplateByIdCommand;
+			import jp.co.ntts.vhut.tmp.application.GetAllBaseTemplateAbstractionListCommand;
+			import jp.co.ntts.vhut.tmp.application.GetBaseTemplateByIdCommand;
+			import jp.co.ntts.vhut.tmp.application.GetUnregisteredTemplateListCommand;
+			import jp.co.ntts.vhut.tmp.application.UpdateBaseTemplateCommand;
+			import jp.co.ntts.vhut.tmp.presentation.wiz.SelectViewPM;
+			import jp.co.ntts.vhut.tmp.presentation.wiz.TmpWizardDestination;
+			import mx.resources.ResourceManager;
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- INFRASTRUCTURE -->
+		<config:VhutConfig id="vhutConfig"/>
+		<s:RemoteObject id="baseTemplateService"
+						destination="baseTemplateService"/>
+		<data:DataCache id="baseTemplateDataCache"
+						type="jp.co.ntts.vhut.entity.BaseTemplate"/>
+		<data:DataCache id="unregisteredTemplateDataCache"
+						type="jp.co.ntts.vhut.entity.Template"/>
+		<!-- DOMAIN -->
+		<domain:BaseTemplates/>
+		<domain:UnregisteredTemplates/>
+		<domain:EditingBaseTemplate/>
+		<!-- APPLICATION -->
+		<DynamicCommand type="{ GetAllBaseTemplateAbstractionListCommand }"
+						selector="getAllBaseTemplate"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetUnregisteredTemplateListCommand }"
+						selector="getUnregisteredTemplate"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetBaseTemplateByIdCommand }"
+						selector="getTmpById"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ CreateBaseTemplateCommand }"
+						selector="createTmp"
+						messageType="{ TmpEvent }"/>
+		<DynamicCommand type="{ UpdateBaseTemplateCommand }"
+						selector="updateTmp"
+						messageType="{ TmpEvent }"/>
+		<DynamicCommand type="{ DeleteBaseTemplateByIdCommand }"
+						selector="deleteTmp"
+						messageType="{ TmpEvent }"/>
+		<compwiz:WizardSteps id="tmpWizardSteps">
+			<compwiz:WizardStep destination="{ TmpWizardDestination.SELECT }"
+								name="{ ResourceManager.getInstance().getString('TMPUI', TmpWizardDestination.SELECT ) }"
+								initiator="{ selectViewPM }"
+								validator="{ selectViewPM }"/>
+			<compwiz:WizardStep destination="{ TmpWizardDestination.PROP }"
+								name="{ ResourceManager.getInstance().getString('TMPUI', TmpWizardDestination.PROP) }"
+								initiator="{ propViewPM }"
+								validator="{ propViewPM }"/>
+		</compwiz:WizardSteps>
+
+		<!-- PRESENTATION -->
+		<presentation:TmpPM/>
+		<wiz:TmpWizardPM steps="{ tmpWizardSteps }"/>
+		<wiz:PropViewPM id="propViewPM"/>
+		<wiz:SelectViewPM id="selectViewPM"/>
+	</fx:Declarations>
+
+</Objects>
+

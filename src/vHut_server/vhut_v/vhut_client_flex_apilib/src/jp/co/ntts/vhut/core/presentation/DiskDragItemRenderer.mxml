@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\UserItemRenderer.mxml -->
+<!---
+<p>ユーザを記述するレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:primitives="jp.co.ntts.vhut.primitives.*"
+				xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+				xmlns:va="jp.co.ntts.vhut.comp.va.presentation.*"
+				autoDrawBackground="false"
+				width="100%" height="52" xmlns:dragimage="jp.co.ntts.vhut.comp.va.presentation.dragimage.*">
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+	<s:layout>
+		<s:HorizontalLayout gap="1" verticalAlign="middle"/>
+	</s:layout>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+	</s:states>
+	<core:BasicLabel id="basicLabel" width="100%" height="100%"
+							text="{data.name} [{data.size}GB]"
+							glassColor.hovered="#FFEE00" glassAlpha.hovered="0.5"
+							glassColor.selected="#FFEE00" glassAlpha.selected="0.5"/>
+	<dragimage:DiskDragImage id="dragImage" width="50" height="50" right="1"
+						data="{ data }"/>
+</s:ItemRenderer>

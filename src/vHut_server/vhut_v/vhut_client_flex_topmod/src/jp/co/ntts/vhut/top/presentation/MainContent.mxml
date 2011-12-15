@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\MainContent.mxml -->
+<!---
+	 xxxコンポーネント.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:top="jp.co.ntts.vhut.top.presentation.*"
+		 xmlns:va="jp.co.ntts.vhut.comp.va.*"
+		 xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		 width="800"
+		 height="600"
+		 minWidth="30"
+		 minHeight="30" xmlns:presentation3="jp.co.ntts.vhut.top.presentation.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Metadata>
+		[Event(type="jp.co.ntts.vhut.core.CommandEvent", name="cancelCommand")]
+		[Event(type="jp.co.ntts.vhut.core.CommandEvent", name="retryCommand")]
+		[ManagedEvents(names="cancelCommand,retryCommand")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.CommandEvent;
+			[Inject]
+			[Bindable]
+			public var pm:TopPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<spicefactory:Configure/>
+	</fx:Declarations>
+	<mx:ViewStack left="0" top="0" bottom="0" right="0"
+				  selectedIndex="{pm.targetContent.index}">
+		<s:NavigatorContent label="abstraction">
+			<top:AbstractionView left="0" top="0" bottom="0" right="0" />
+		</s:NavigatorContent>
+		<s:NavigatorContent label="guide">
+			<top:ManualView left="0" top="0" bottom="0" right="0" />
+		</s:NavigatorContent>
+	</mx:ViewStack>
+</s:Group>

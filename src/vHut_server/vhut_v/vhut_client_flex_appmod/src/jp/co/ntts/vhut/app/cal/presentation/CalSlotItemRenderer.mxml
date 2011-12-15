@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\CalSlotItemRenderer.mxml -->
+<!---
+<p>起動予約カレンダーの日付アイテムレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+				autoDrawBackground="false"
+				currentState="none"
+				currentStateChange="itemrenderer1_currentStateChangeHandler(event)"
+				width="20" height="20"
+				visible.none="false" xmlns:primitives="jp.co.ntts.vhut.primitives.*">
+
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.app.cal.application.CalSlotEvent;
+			import jp.co.ntts.vhut.app.cal.domain.CalSlot;
+			import jp.co.ntts.vhut.core.presentation.ZSortLayout;
+
+			import mx.events.EffectEvent;
+			import mx.events.StateChangeEvent;
+
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				setCurrentState(getCurrentRendererState(), true);
+			}
+
+			override protected function getCurrentRendererState():String
+			{
+				var calSlot:CalSlot = data as CalSlot;
+				if(calSlot)
+				{
+					switch(calSlot.status)
+					{
+						case CalSlot.STATUS_AVAILABLE:
+//							if(calSlot.hovered)
+//								return "availableHovered"
+//							else
+								return "available";
+						case CalSlot.STATUS_NOT_AVAILABLE:
+							return "notAvailable";
+						case CalSlot.STATUS_RESERVING:
+//							if(calSlot.hovered)
+//								return "reservingHovered"
+//							else
+								return "reserving";
+						case CalSlot.STATUS_NONE:
+							return "none";
+					}
+				}
+				return "none";
+			}
+
+			protected function rotate3d1_effectUpdateHandler(event:EffectEvent):void
+			{
+				panel.invalidateDisplayList();
+			}
+
+
+			protected function itemrenderer1_currentStateChangeHandler(event:StateChangeEvent):void
+			{
+				trace(event.oldState +" -"+data.displayDate+"-> "+ event.newState);
+				panel.invalidateDisplayList();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:Parallel id="rotation3d1">
+			<s:Rotate3D target="{panel}" duration="500" autoCenterTransform="true" effectUpdate="rotate3d1_effectUpdateHandler(event)"/>
+		</s:Parallel>
+		<primitives:GlassGradient id="glassFill"/>
+	</fx:Declarations>
+
+	<s:transitions>
+		<s:Transition fromState="available" toState="reserving" effect="{rotation3d1}" autoReverse="true"/>
+		<s:Transition fromState="reserving" toState="available" effect="{rotation3d1}" autoReverse="true"/>
+	</s:transitions>
+
+	<s:states>
+		<s:State name="available" stateGroups="availableGroup"/>
+		<s:State name="notAvailable"/>
+		<s:State name="reserving" stateGroups="availableGroup"/>
+		<s:State name="none"/>
+	</s:states>
+
+	<s:Rect id="background" width="100%" height="100%" visible.notAvailable="false">
+		<s:fill>
+			<s:SolidColor alpha="{data.hovered ? 0.8 : 0}"
+						  color.available="#64FF3F"
+						  color.reserving="#E8B53E"
+						  />
+		</s:fill>
+	</s:Rect>
+
+	<s:Label id="notAvailableLabel"
+			 visible="false" visible.notAvailable="true"
+			 horizontalCenter="0" verticalCenter="0"
+			 textAlign="center" verticalAlign="middle"
+			 text="{data.displayDate}"
+			 />
+
+	<s:Group id="panel"
+			 visible="false" visible.availableGroup="true"
+			 top="3" left="3" bottom="3" right="3"
+			 transformX="{backPanel.width/2}"
+			 rotationY.available="0" rotationY.reserving="180"
+			 maintainProjectionCenter="true">
+		<s:layout>
+			<core:ZSortLayout/>
+		</s:layout>
+		<s:Group id="frontPanel"
+				 width="100%" height="100%"
+				 z="1"
+				 >
+			<s:Rect id="frontPanelBackground" width="100%" height="100%">
+				<s:fill>
+					<s:SolidColor color="#E8B53E"/>
+				</s:fill>
+			</s:Rect>
+			<s:Label id="frontPanelLabel"
+					 horizontalCenter="0" verticalCenter="0"
+					 textAlign="center" verticalAlign="middle"
+					 text="{data.displayDate}"
+					 />
+			<s:Rect id="frontPanelGlass" width="100%" height="100%" fill="{glassFill}"/>
+			<primitives:Bevel id="frontPanelBevel" weight="1" width="100%" height="100%"/>
+		</s:Group>
+		<s:Group id="backPanel"
+				 width="100%" height="100%"
+				 z="-1"
+				 transformX="{backPanel.width/2}" rotationY="180"
+				 >
+			<s:Rect id="backPanelBackground" width="100%" height="100%">
+				<s:fill>
+					<s:SolidColor color="#64FF3F"/>
+				</s:fill>
+			</s:Rect>
+			<s:Label id="backPanelLabel"
+					 horizontalCenter="0" verticalCenter="0"
+					 textAlign="center" verticalAlign="middle"
+					 text="{data.displayDate}"
+					 />
+			<s:Rect id="backPanelGlass" width="100%" height="100%" fill="{glassFill}"/>
+			<primitives:Bevel id="backPanelBevel" weight="1" width="100%" height="100%"/>
+		</s:Group>
+	</s:Group>
+
+</s:ItemRenderer>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\RappElementPanel.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<panel:VAttributePanel xmlns:fx="http://ns.adobe.com/mxml/2009"
+							  xmlns:s="library://ns.adobe.com/flex/spark"
+							  xmlns:mx="library://ns.adobe.com/flex/mx"
+							  xmlns:panel="jp.co.ntts.vhut.panel.presentation.*"
+							  xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+							  currentState="{ pm.releasedApplications.targetReleasedApplicationElement ? 'active' : 'deactive'}">
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.entity.ReleasedApplicationSecurityGroupTemplate;
+			import jp.co.ntts.vhut.rapp.presentation.RappPM;
+			[Inject]
+			[Bindable]
+			public var pm:RappPM;
+
+			protected function getViewstackIndex(target:Object):int
+			{
+				if(target != null && target is ReleasedApplicationSecurityGroupTemplate) return 1;
+				return 0;
+			}
+		]]>
+	</fx:Script>
+	<mx:ViewStack
+		id="viewStack"
+		top="0" bottom="0" left="0" right="0"
+		selectedIndex="{getViewstackIndex(pm.releasedApplications.targetReleasedApplicationElement)}">
+		<s:NavigatorContent label="@Resource(key='vm', bundle='APPUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<core:IconLabel height="60" right="5" top="5" left="5"
+								url="{pm.releasedApplications.targetReleasedApplicationTemplate.imageUrl}"
+								source="@Embed(source='/images/icon_vm.png')">
+					<s:Label id="appVmNameLabel"
+							 text="{pm.releasedApplications.targetReleasedApplicationTemplate.name}"
+							 maxDisplayedLines="1"/>
+					<s:Label id="vmNameLabel"
+							 text="{pm.releasedApplications.targetReleasedApplicationTemplate.template.name}"
+							 maxDisplayedLines="1"/>
+				</core:IconLabel>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+							<mx:FormItem label="@Resource(key='description', bundle='APPUI')"
+										 width="100%">
+								<s:TextArea text="{pm.releasedApplications.targetReleasedApplicationTemplate.description}"
+											editable="false"
+											width="100%" />
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='spec', bundle='APPUI')"
+										 width="100%"
+										 styleName="h1">
+								<mx:Text text="{pm.releasedApplications.targetReleasedApplicationTemplate.template.specId}"
+										 width="100%"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='cpu', bundle='APPUI')"
+										 width="100%">
+								<mx:Text text="{pm.releasedApplications.targetReleasedApplicationTemplate.template.cpuCore + resourceManager.getString('APPUI', 'unit.cpu.core')}"
+										 width="100%"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='memory', bundle='APPUI')"
+										 width="100%">
+								<mx:Text text="{pm.releasedApplications.targetReleasedApplicationTemplate.template.memory + resourceManager.getString('APPUI', 'unit.memory.m')}"
+										 width="100%"/>
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='os', bundle='APPUI')"
+										 width="100%"
+										 styleName="h1">
+								<mx:Text text="{pm.releasedApplications.targetReleasedApplicationTemplate.template.os}"
+										 width="100%"/>
+							</mx:FormItem>
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="@Resource(key='securityGroup', bundle='APPUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<core:IconLabel height="60" right="5" top="5" left="5"
+								source="@Embed(source='/images/icon_nw.png')">
+					<s:Label id="appSgNameLabel"
+							 text="{pm.releasedApplications.targetReleasedApplicationSecurityGroupTemplate.name}"
+							 maxDisplayedLines="1"/>
+					<s:Label id="sgNameLabel"
+							 text="{pm.releasedApplications.targetReleasedApplicationSecurityGroupTemplate.securityGroupTemplate.name}"
+							 maxDisplayedLines="1"/>
+				</core:IconLabel>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+	</mx:ViewStack>
+</panel:VAttributePanel>

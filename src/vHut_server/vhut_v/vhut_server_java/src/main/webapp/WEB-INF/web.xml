@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+version="2.4">
+    <display-name>S2BlazeDS</display-name>
+    <description>S2BlazeDS blank</description>
+
+    <context-param>
+        <param-name>flex.class.path</param-name>
+        <param-value>/WEB-INF/flex/hotfixes</param-value>
+    </context-param>
+
+    <!-- Http Flex Session attribute and binding listener support -->
+    <listener>
+        <listener-class>flex.messaging.HttpFlexSession</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>encodingfilter</filter-name>
+        <filter-class>org.seasar.extension.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    
+    <filter>
+        <filter-name>requestDumpFilter</filter-name>
+        <filter-class>org.seasar.extension.filter.RequestDumpFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>hotdeployfilter</filter-name>
+        <filter-class>org.seasar.framework.container.hotdeploy.HotdeployFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>s2filter</filter-name>
+        <filter-class>org.seasar.framework.container.filter.S2ContainerFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>encodingfilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>hotdeployfilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>s2filter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>requestDumpFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>configFilter</filter-name>
+        <filter-class>org.seasar.config.extension.servlet.filter.ConfigFilter</filter-class>
+        <init-param>
+            <param-name>targetURIs</param-name>
+            <param-value>.*</param-value>
+        </init-param>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>configFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <servlet>
+        <servlet-name>s2container</servlet-name>
+        <servlet-class>org.seasar.framework.container.servlet.S2ContainerServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    
+    <!-- MessageBroker Servlet -->
+    <servlet>
+        <servlet-name>MessageBrokerServlet</servlet-name>
+        <display-name>MessageBrokerServlet</display-name>
+        <servlet-class>flex.messaging.MessageBrokerServlet</servlet-class>
+        <init-param>
+            <param-name>services.configuration.file</param-name>
+            <param-value>/WEB-INF/flex/services-config.xml</param-value>
+        </init-param>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>s2container</servlet-name>
+        <url-pattern>/s2container/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>MessageBrokerServlet</servlet-name>
+        <url-pattern>/messagebroker/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error/debug.jsp</location>
+    </error-page>
+    
+    <!-- for WebSphere deployment, please uncomment -->
+    <!--
+    <resource-ref>
+       <description>Flex Messaging WorkManager</description>
+        <res-ref-name>wm/MessagingWorkManager</res-ref-name>
+        <res-type>com.ibm.websphere.asynchbeans.WorkManager</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+    -->
+
+    <!--
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Protected Sample</web-resource-name>
+
+            <url-pattern>/messagebroker/amf/SampleSalaryRO</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+
+        <auth-constraint>
+            <role-name>sampleusers</role-name>
+        </auth-constraint>
+    </security-constraint>
+    -->
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>
+
+    <!--
+    <security-role>
+        <role-name>sampleusers</role-name>
+    </security-role>
+    -->  
+  	<servlet>
+		<servlet-name>chronosServlet</servlet-name>
+		<servlet-class>org.seasar.chronos.extension.servlet.S2ChronosServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	
+	
+</web-app>

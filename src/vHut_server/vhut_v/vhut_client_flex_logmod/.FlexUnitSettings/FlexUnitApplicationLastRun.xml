@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testrun name="" >
+<testsuite  name="Default Test Suite" project="vhut_client_flex_logmod">
+<testsuite name="jp.co.ntts.vhut.log.presentation:LogViewerGroupPMTest" type="testsuiteclass"/>
+<testsuite name="jp.co.ntts.vhut.log:VhutLogLoggerTest" type="testsuiteclass"/>
+<testsuite name="jp.co.ntts.vhut.log.presentation:TraceTargetConfGroupPMTest" type="testsuiteclass"/>
+<testsuite name="jp.co.ntts.vhut.log:LogCacheTargetTest" type="testsuiteclass"/>
+<testsuite name="jp.co.ntts.vhut.log.infrastructure:LogViewerEventTest" type="testsuiteclass"/>
+<testsuite name="jp.co.ntts.vhut.log:UnitTest" type="testcaseclass"/>
+</testsuite>
+</testrun>

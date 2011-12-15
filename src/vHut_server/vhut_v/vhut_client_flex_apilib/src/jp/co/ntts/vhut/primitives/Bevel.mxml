@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\Bebel.mxml -->
+<!---
+<p>ベベル効果を描画するグラフィックです</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Graphic name="Bevel"
+		   xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   width="100%" height="100%">
+	<fx:Declarations>
+		<s:SolidColor id="highlightFill" color="{ highlightColor }" alpha="{ highlightAlpha }"/>
+		<s:SolidColor id="shadowFill" color="{ shadowColor }" alpha="{ shadowAlpha }"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			/** 北西方向から光を当てます. */
+			public static const DIRECTION_NW:String = "directionNw";
+			/** 北東方向から光を当てます. */
+			public static const DIRECTION_NE:String = "directionNe";
+			/** 南東方向から光を当てます. */
+			public static const DIRECTION_SE:String = "directionSe";
+			/** 南西方向から光を当てます. */
+			public static const DIRECTION_SW:String = "directionSw";
+
+			[Bindable]　
+			/** 光を当てる方向 */
+			public function set direction(value:String):void
+			{
+				_direction = value;
+				invalidateDisplayList();
+			}
+			public function get direction():String
+			{
+				return _direction;
+			}
+			private var _direction:String = DIRECTION_NW;
+
+			[Inspectable(category="General", dafaultValue=1, format="Number")]
+			[Bindable]　
+			/** ベベル幅 */
+			public function set weight(value:Number):void
+			{
+				_weight = value;
+				invalidateDisplayList();
+			}
+			public function get weight():Number
+			{
+				return _weight;
+			}
+			private var _weight:Number = 1;
+
+			[Bindable]
+			/** ハイライトの色 */
+			public function set highlightColor(value:uint):void
+			{
+				_highlightColor = value;
+				invalidateDisplayList();
+			}
+			public function get highlightColor():uint
+			{
+				return _highlightColor;
+			}
+			private var _highlightColor:uint = 0xFFFFFF;
+
+			[Bindable]
+			/** ハイライトの透明度 */
+			public function set highlightAlpha(value:Number):void
+			{
+				_highlightAlpha = value;
+				invalidateDisplayList();
+			}
+			public function get highlightAlpha():Number
+			{
+				return _highlightAlpha;
+			}
+			private var _highlightAlpha:Number =0.8;
+
+			[Bindable]
+			/** 影の色 */
+			public function set shadowColor(value:uint):void
+			{
+				_shadowColor = value;
+				invalidateDisplayList();
+			}
+			public function get shadowColor():uint
+			{
+				return _shadowColor;
+			}
+			private var _shadowColor:uint = 0x000000;
+
+			[Bindable]
+			/** 影の透明度 */
+			public function set shadowAlpha(value:Number):void
+			{
+				_shadowAlpha = value;
+				invalidateDisplayList();
+			}
+			public function get shadowAlpha():Number
+			{
+				return _shadowAlpha;
+			}
+			private var _shadowAlpha:Number =0.3;
+
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				var tlo:Point = new Point(0, 0);
+				var tro:Point = new Point(unscaledWidth, 0);
+				var bro:Point = new Point(unscaledWidth, unscaledHeight);
+				var blo:Point = new Point(0, unscaledHeight);
+
+				var tli:Point = new Point(0+_weight, 0+_weight);
+				var tri:Point = new Point(unscaledWidth-_weight, 0+_weight);
+				var bri:Point = new Point(unscaledWidth-_weight, unscaledHeight-_weight);
+				var bli:Point = new Point(0+_weight, unscaledHeight-_weight);
+
+				topPath.data = rect(tlo, tro, tri, tli);
+				rightPath.data = rect(tri, tro, bro, bri);
+				bottomPath.data = rect(bli, bri, bro, blo);
+				leftPath.data = rect(tlo, tli, bli, blo);
+
+				switch(_direction)
+				{
+					case DIRECTION_NW:
+						topPath.fill = highlightFill;
+						rightPath.fill = shadowFill;
+						bottomPath.fill = shadowFill;
+						leftPath.fill = highlightFill;
+						break;
+					case DIRECTION_NE:
+						topPath.fill = highlightFill;
+						rightPath.fill = highlightFill;
+						bottomPath.fill = shadowFill;
+						leftPath.fill = shadowFill;
+						break;
+					case DIRECTION_SE:
+						topPath.fill = shadowFill;
+						rightPath.fill = highlightFill;
+						bottomPath.fill = highlightFill;
+						leftPath.fill = shadowFill;
+						break;
+					case DIRECTION_SW:
+						topPath.fill = shadowFill;
+						rightPath.fill = shadowFill;
+						bottomPath.fill = highlightFill;
+						leftPath.fill = highlightFill;
+						break;
+				}
+
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+			}
+
+			private function rect(tl:Point, tr:Point, br:Point, bl:Point):String
+			{
+				return "M " + tl.x + " " + tl.y + "\n"
+					+ "L " + tr.x + " " + tr.y + "\n"
+					+ "L " + br.x + " " + br.y + "\n"
+					+ "L " + bl.x + " " + bl.y + "\n"
+					+ "Z";
+			}
+		]]>
+	</fx:Script>
+	<s:Path id="topPath"/>
+	<s:Path id="rightPath"/>
+	<s:Path id="bottomPath"/>
+	<s:Path id="leftPath"/>
+</s:Graphic>

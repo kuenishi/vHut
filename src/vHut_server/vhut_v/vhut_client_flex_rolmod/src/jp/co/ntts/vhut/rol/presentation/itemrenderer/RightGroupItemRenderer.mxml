@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\RightGroupItemRenderer.mxml -->
+<!---
+<p>xxxアイテムレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				autoDrawBackground="false">
+	<s:layout>
+		<s:VerticalLayout gap="2"/>
+	</s:layout>
+
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.domain.RightGroup;
+			import jp.co.ntts.vhut.core.domain.RightItem;
+			import jp.co.ntts.vhut.entity.RightLevel;
+
+			protected function actionLabelFunction(item:RightItem, column:DataGridColumn):String
+			{
+				return resourceManager.getString('ROLUI', 'action.'+item.action.name.toLowerCase());
+			}
+		]]>
+	</fx:Script>
+
+	<s:Label text="{resourceManager.getString('ROLUI', 'target.'+(data as RightGroup).target.name.toLowerCase())}"/>
+
+	<mx:DataGrid dataProvider="{ (data as RightGroup).items }"
+				 rowCount="{ (data as RightGroup).items.length }"
+				 dragEnabled="false"
+				 draggableColumns="false"
+				 sortableColumns="false"
+				 selectable="false"
+				 width="100%">
+		<mx:columns>
+			<mx:DataGridColumn dataField="action"
+							   headerText="@Resource(bundle='ROLUI', key='action')"
+							   labelFunction="{actionLabelFunction}"
+							   width="150"/>
+			<mx:DataGridColumn dataField="sys"
+							   headerText="@Resource(bundle='ROLUI', key='level.sys')"
+							   visible="{ (data as RightGroup).levels.indexOf(RightLevel.SYS) >= 0 }"
+							   width="80"/>
+			<mx:DataGridColumn dataField="own"
+							   headerText="@Resource(bundle='ROLUI', key='level.own')"
+							   visible="{ (data as RightGroup).levels.indexOf(RightLevel.OWN) >= 0 }"
+							   width="80"/>
+			<mx:DataGridColumn dataField="child"
+							   headerText="@Resource(bundle='ROLUI', key='level.child')"
+							   visible="{ (data as RightGroup).levels.indexOf(RightLevel.CHILD) >= 0 }"
+							   width="80"/>
+			<mx:DataGridColumn dataField="all"
+							   headerText="@Resource(bundle='ROLUI', key='level.all')"
+							   visible="{ (data as RightGroup).levels.indexOf(RightLevel.ALL) >= 0}"
+							   width="80"/>
+		</mx:columns>
+	</mx:DataGrid>
+
+</s:ItemRenderer>

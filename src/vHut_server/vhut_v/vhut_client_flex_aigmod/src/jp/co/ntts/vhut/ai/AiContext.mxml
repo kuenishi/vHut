@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppModuleContext.mxml -->
+<!---
+リリースドアプリケーションのSpiceコンテキスト.
+<p xmlns:domain="jp.co.ntts.vhut.rapp.domain.*"></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<fx:Object xmlns="http://www.spicefactory.org/parsley"
+		   xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		   xmlns:presentation="jp.co.ntts.vhut.ai.presentation.*"
+		   xmlns:domain="jp.co.ntts.vhut.ai.domain.*"
+		   xmlns:data="com.adobe.cairngorm.integration.data.*">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.ai.application.ActivateApplicationInstanceByIdCommand;
+			import jp.co.ntts.vhut.ai.application.CancelCommandCommand;
+			import jp.co.ntts.vhut.ai.application.DeactivateApplicationInstanceByIdCommand;
+			import jp.co.ntts.vhut.ai.application.GetAllApplicationInstanceAbstractionListByApplicationInstanceGroupIdCommand;
+			import jp.co.ntts.vhut.ai.application.GetApplicationInstanceByIdCommand;
+			import jp.co.ntts.vhut.ai.application.GetUnfinishedCommandAbstractionListByApplicationInstanceIdCommand;
+			import jp.co.ntts.vhut.ai.application.RebuildApplicationInstanceByIdCommand;
+			import jp.co.ntts.vhut.ai.application.RetryCommandCommand;
+			import jp.co.ntts.vhut.ai.application.StartApplicationInstanceVmCommand;
+			import jp.co.ntts.vhut.ai.application.StopApplicationInstanceVmCommand;
+			import jp.co.ntts.vhut.core.CommandEvent;
+			import jp.co.ntts.vhut.core.GetByIdEvent;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- INFRASTRUCTURE LAYER-->
+		<s:RemoteObject id="aiService"
+						destination="applicationInstanceGroupService"/>
+		<data:DataCache id="aiDataCache"
+						type="jp.co.ntts.vhut.entity.ApplicationInstance"/>
+		<data:DataCache id="aiCommandDataCache"
+						type="jp.co.ntts.vhut.entity.Command"/>
+		
+		<!-- DOMAIN LAYER -->
+		<domain:Ais/>
+		
+		
+		<!-- APPLICATION LAYER -->
+		<spicefactory:DynamicCommand type="{ GetAllApplicationInstanceAbstractionListByApplicationInstanceGroupIdCommand }"
+									 selector="getAiListByAigId"
+									 messageType="{ GetByIdEvent }"/>
+		<spicefactory:DynamicCommand type="{ GetUnfinishedCommandAbstractionListByApplicationInstanceIdCommand }"
+									 selector="getCommandListByAiId"
+									 messageType="{ GetByIdEvent }"/>
+		<spicefactory:DynamicCommand type="{ CancelCommandCommand }"
+									 selector="cancelCommand"
+									 messageType="{ CommandEvent }"/>
+		<spicefactory:DynamicCommand type="{ RetryCommandCommand }"
+									 selector="retryCommand"
+									 messageType="{ CommandEvent }"/>
+		<spicefactory:DynamicCommand type="{ GetApplicationInstanceByIdCommand }"
+									 selector="getAiById"
+									 messageType="{ GetByIdEvent }"/>
+		<spicefactory:DynamicCommand type="{ ActivateApplicationInstanceByIdCommand }"
+									 selector="activateAi"
+									 messageType="{ AiEvent }"/>
+		<spicefactory:DynamicCommand type="{ DeactivateApplicationInstanceByIdCommand }"
+									 selector="deactivateAi"
+									 messageType="{ AiEvent }"/>
+		<spicefactory:DynamicCommand type="{ RebuildApplicationInstanceByIdCommand }"
+									 selector="rebuildAi"
+									 messageType="{ AiEvent }"/>
+		<spicefactory:DynamicCommand type="{ StartApplicationInstanceVmCommand }"
+									 selector="startAiVm"
+									 messageType="{ AiVmEvent }"/>
+		<spicefactory:DynamicCommand type="{ StopApplicationInstanceVmCommand }"
+									 selector="stopAiVm"
+									 messageType="{ AiVmEvent }"/>
+		
+		<!-- PRESENTATION LAYER -->
+		<!--- ログモジュールのメインSpiceコンテキスト. -->
+		<presentation:AiPM/>
+	</fx:Declarations>
+</fx:Object>

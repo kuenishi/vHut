@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\VmItemRenderer.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:va="jp.co.ntts.vhut.comp.va.*"
+				xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+				xmlns:primitives="jp.co.ntts.vhut.primitives.*"
+				xmlns:connector="jp.co.ntts.vhut.comp.va.presentation.connector.*"
+				autoDrawBackground="false"
+				width="120" height="60" >
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+	</s:states>
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<s:Scale id="scaleUp" scaleXFrom="0" scaleXTo="1" scaleYFrom="0" scaleYTo="1"/>
+		<s:Scale id="scaleDown" scaleXFrom="1" scaleXTo="0" scaleYFrom="1" scaleYTo="0"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.comp.va.domain.IVaElement;
+			import jp.co.ntts.vhut.entity.ApplicationSecurityGroup;
+			import jp.co.ntts.vhut.entity.ApplicationVm;
+		]]>
+	</fx:Script>
+	<s:Group id="content" width="120" height="60">
+		<s:layout>
+			<s:BasicLayout/>
+		</s:layout>
+		<core:IconImage id="image" source="@Embed(source='/images/icon_nw.png')"
+						shadow="true"
+						verticalCenter="0" horizontalCenter="0" width="50" height="50"/>
+		<primitives:Candy top="0" bottom="0" left="0" right="0" />
+		<s:Label top="5" left="5" right="5" textAlign="center"
+				 text="{(data as ApplicationSecurityGroup).name}"/>
+		<s:HGroup bottom="5" left="5" right="5" height="20" verticalAlign="middle" horizontalAlign="center">
+		</s:HGroup>
+	</s:Group>
+	<connector:ConnectorGroup id="northConnectorGroup"
+							  rotation="180"
+							  x="{content.x + content.width}" y="{content.y}" width="{content.width}" height="10"
+							  data="{data as IVaElement}" side="NORTH"/>
+	<connector:ConnectorGroup id="southConnectorGroup"
+							  rotation="0"
+							  x="{content.x}" y="{content.y + content.height}" width="{content.width}" height="10"
+							  data="{data as IVaElement}" side="SOUTH"/>
+	<connector:ConnectorGroup id="eastConnectorGroup"
+							  rotation="270"
+							  x="{content.x + content.width}" y="{content.y + content.height}" width="{content.height}" height="10"
+							  data="{data as IVaElement}" side="EAST"/>
+	<connector:ConnectorGroup id="westConnectorGroup"
+							  rotation="90"
+							  x="{content.x}" y="{content.y}" width="{content.height}" height="10"
+							  data="{data as IVaElement}" side="WEST"/>
+</s:ItemRenderer>

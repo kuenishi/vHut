@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- asdoc\vhut_client_flex_logmod.mxml -->
+<!---
+	 ログ設定用モジュールの単体テストアプリケーションのメインクラス.
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Application minWidth="800"
+			   minHeight="600"
+			   xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+			   xmlns:cairngorm="com.adobe.cairngorm.*"
+			   xmlns:module="com.adobe.cairngorm.module.*"
+			   creationComplete="initApp()" xmlns:core="jp.co.ntts.vhut.core.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.module.IModuleManager;
+
+			import jp.co.ntts.vhut.log.LogCacheTarget;
+			import jp.co.ntts.vhut.log.LogConfPanelEvent;
+			import jp.co.ntts.vhut.log.VhutLog;
+			import jp.co.ntts.vhut.log.VhutLogLogger;
+
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.logging.ILogger;
+			import mx.logging.Log;
+			import mx.logging.LogEventLevel;
+
+			//リソースバンドル読み込み宣言
+			[ResourceBundle("LOGMessages")]
+
+			/** vHut独自ロガー. */
+			private static var logger:VhutLogLogger=VhutLog.getLogger("LogModuleRig");
+
+			[Bindable]
+			[Inject(id="logModule")]
+			/**
+			 * Spiceのモジュール管理マネージャ.
+			 */
+			public var logModuleManager:IModuleManager;
+
+			[MessageDispatcher]
+			/** Spiceメッセージハンドラー登録用dispacher. */
+			public var dispacher:Function;
+
+			/** ログ生成用タイマー */
+			private var timer:Timer;
+
+			[Bindable]
+			protected var log:String;
+
+			/**
+			 * キー入力を感知するハンドラー.
+			 * @param event キーボードイベント
+			 */
+			protected function keyHandler(event:KeyboardEvent):void
+			{
+				if (event.ctrlKey && event.keyCode == Keyboard.F1)
+				{
+					//Ctrl+F1
+					dispacher(LogConfPanelEvent.newLaunchMessage());
+				}
+			}
+
+			/**
+			 * 初期化処理.
+			 */
+			protected function initApp():void
+			{
+				FlexGlobals.topLevelApplication.addEventListener(KeyboardEvent.KEY_UP, keyHandler);
+				timer=new Timer(2000, 0);
+				timer.addEventListener(TimerEvent.TIMER, timerHandler);
+				timer.start();
+			}
+
+			/**
+			 * 時限実行ハンドラー.
+			 * @param event タイマーイベント
+			 */
+			protected function timerHandler(event:TimerEvent):void
+			{
+				logger.log("DLOG0001", "val0", 80);
+				logger.log("ILOG0001", "val0", 80);
+				logger.log("WLOG0001", "val0", 80);
+				logger.log("ELOG0001", "val0", 80);
+				logger.log("FLOG0001", "val0", 80);
+			}
+
+			protected function getCachedLog():void
+			{
+				log = LogCacheTarget.getInstance().getLogAsString();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<spicefactory:ContextBuilder>
+			<cairngorm:CairngormModuleSupport/>
+			<spicefactory:FlexConfig type="{LogModuleRigContext}"/>
+		</spicefactory:ContextBuilder>
+
+		<spicefactory:Configure/>
+	</fx:Declarations>
+	<s:Button x="10"
+			  y="10"
+			  label="ログ取得"
+			  click="getCachedLog()"/>
+	<s:TextArea top="50"
+				left="10"
+				right="10"
+				bottom="10"
+				text="{ log }"/>
+	<!--- モジュールの管理クラス -->
+	
+	<core:VhutViewLoader moduleManager="{ logModuleManager }"
+						 width="100%"
+						 height="100%"/>
+</s:Application>

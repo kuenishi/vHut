@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!---
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+
+<Objects
+	xmlns="http://www.spicefactory.org/parsley"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:module="com.adobe.cairngorm.module.*"
+	xmlns:presentation="jp.co.ntts.vhut.usr.presentation.*"
+	xmlns:domain="jp.co.ntts.vhut.usr.domain.*"
+	xmlns:config="jp.co.ntts.vhut.config.*"
+	xmlns:data="com.adobe.cairngorm.integration.data.*"
+	xmlns:wiz="jp.co.ntts.vhut.usr.presentation.wiz.*"
+	xmlns:compwiz="jp.co.ntts.vhut.comp.wiz.domain.*"
+	xmlns:addwiz="jp.co.ntts.vhut.usr.presentation.addwiz.*" 
+	xmlns:domain1="jp.co.ntts.vhut.comp.wiz.domain.*"
+	>
+
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.GetAllEvent;
+			import jp.co.ntts.vhut.core.GetByIdEvent;
+			import jp.co.ntts.vhut.usr.application.DeleteVhutUserByIdCommand;
+			import jp.co.ntts.vhut.usr.application.GetAllApplicationAbstractionListByUserIdCommand;
+			import jp.co.ntts.vhut.usr.application.GetAllApplicationInstanceAbstractionListByUserIdCommand;
+			import jp.co.ntts.vhut.usr.application.GetAllApplicationInstanceGroupAbstractionListByUserIdCommand;
+			import jp.co.ntts.vhut.usr.application.GetAllRoleAbstractionListCommand;
+			import jp.co.ntts.vhut.usr.application.GetAllVhutUserAbstractionListCommand;
+			import jp.co.ntts.vhut.usr.application.GetUnregisteredVhutUserAbstractionListCommand;
+			import jp.co.ntts.vhut.usr.application.GetVhutUserByIdCommand;
+			import jp.co.ntts.vhut.usr.application.UpdateVhutUserCommand;
+			import jp.co.ntts.vhut.usr.application.CreateVhutUserListCommand;
+			import jp.co.ntts.vhut.usr.presentation.addwiz.UsrAddWizardDestination;
+			import jp.co.ntts.vhut.usr.presentation.wiz.UsrWizardDestination;
+			import mx.resources.ResourceManager;
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- INFRASTRUCTURE -->
+		<config:VhutConfig id="vhutConfig"/>
+		<s:RemoteObject id="vhutUserService"
+						destination="vhutUserService"/>
+		<data:DataCache id="vhutUserDataCache"
+						type="jp.co.ntts.vhut.entity.VhutUser"/>
+		<s:RemoteObject id="applicationService"
+						destination="applicationService"/>
+		<s:RemoteObject id="applicationInstanceGroupService"
+						destination="applicationInstanceGroupService"/>
+		<s:RemoteObject id="roleService"
+						destination="roleService"/>
+		<data:DataCache id="roleDataCache"
+						type="jp.co.ntts.vhut.entity.Role"/>
+		<!-- DOMAIN -->
+		<domain:VhutUsers/>
+		<domain:EditingVhutUser/>
+		<domain:Roles/>
+		<domain:EditingVhutUsers/>
+		<domain:UnregisteredVhutUsers/>
+		<!-- APPLICATION -->
+		<DynamicCommand type="{ GetAllRoleAbstractionListCommand }"
+						selector="getAllRole"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetAllVhutUserAbstractionListCommand }"
+						selector="getAllUser"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetVhutUserByIdCommand }"
+						selector="getUsrById"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ GetAllApplicationAbstractionListByUserIdCommand }"
+						selector="getAppListByUserId"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ GetAllApplicationInstanceGroupAbstractionListByUserIdCommand }"
+						selector="getAigListByUserId"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ GetAllApplicationInstanceAbstractionListByUserIdCommand }"
+						selector="getAiListByUserId"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ DeleteVhutUserByIdCommand }"
+						selector="deleteUsr"
+						messageType="{ UsrEvent }"/>
+		<DynamicCommand type="{ UpdateVhutUserCommand }"
+						selector="editUsr"
+						messageType="{ UsrEvent }"/>
+		<DynamicCommand type="{ CreateVhutUserListCommand }"
+						selector="createUsrList"
+						messageType="{ UsrListEvent }"/>
+		<DynamicCommand type="{ GetUnregisteredVhutUserAbstractionListCommand }"
+						selector="getAllUnregisteredUser"
+						messageType="{ GetAllEvent }"/>
+
+		<compwiz:WizardSteps id="usrWizardSteps">
+			<compwiz:WizardStep destination="{ UsrWizardDestination.PROP }"
+								name="{ ResourceManager.getInstance().getString('USRUI', UsrWizardDestination.PROP) }"
+								validator="{ propViewPM }"/>
+		</compwiz:WizardSteps>
+		<compwiz:WizardSteps id="usrAddWizardSteps">
+			<compwiz:WizardStep destination="{ UsrAddWizardDestination.SELECT }"
+								name="{ ResourceManager.getInstance().getString('USRUI', UsrAddWizardDestination.SELECT) }"
+								initiator="{ selectViewPM }"
+								validator="{ selectViewPM }"/>
+			<compwiz:WizardStep destination="{ UsrAddWizardDestination.PROP_LIST }"
+								name="{ ResourceManager.getInstance().getString('USRUI', UsrAddWizardDestination.PROP_LIST) }"
+								initiator="{ propListViewPM }"
+								validator="{ propListViewPM }"/>
+		</compwiz:WizardSteps>
+		<!-- PRESENTATION -->
+		<presentation:UsrPM/>
+		<wiz:UsrWizardPM steps="{ usrWizardSteps }"/>
+		<wiz:PropViewPM id="propViewPM"/>
+		<addwiz:UsrAddWizardPM steps="{ usrAddWizardSteps }"/>
+		<addwiz:PropListViewPM id="propListViewPM"/>
+		<addwiz:SelectViewPM id="selectViewPM"/>
+	</fx:Declarations>
+
+</Objects>
+

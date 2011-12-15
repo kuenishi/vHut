@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppWizard.mxml -->
+<!---
+	 <p>アプリケーションインスタンスグループ追加・複製・編集ウィザードです.</p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+
+	 author NTT Software Corporation.
+	 version 1.0.0
+-->
+<wiz:Wizard xmlns:fx="http://ns.adobe.com/mxml/2009"
+					 xmlns:s="library://ns.adobe.com/flex/spark"
+					 xmlns:mx="library://ns.adobe.com/flex/mx"
+					 xmlns:parsley="http://www.spicefactory.org/parsley"
+					 xmlns:wiz="jp.co.ntts.vhut.comp.wiz.presentation.*"
+					 xmlns:usr-wiz="jp.co.ntts.vhut.usr.presentation.wiz.*"
+					 width="800"
+					 height="600"
+					 title="{pm.title}">
+	<wiz:layout>
+		<s:BasicLayout/>
+	</wiz:layout>
+	<fx:Script>
+		<![CDATA[
+
+			[Inject]
+			public function set usrWizardPM(value:UsrWizardPM):void
+			{
+				pm=value;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<usr-wiz:UsrWizardViewStack width="100%" height="100%"/>
+</wiz:Wizard>

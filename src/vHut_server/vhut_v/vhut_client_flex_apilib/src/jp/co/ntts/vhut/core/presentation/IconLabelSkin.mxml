@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+    ADOBE SYSTEMS INCORPORATED
+    Copyright 2008 Adobe Systems Incorporated
+    All Rights Reserved.
+
+    NOTICE: Adobe permits you to use, modify, and distribute this file
+    in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for a Spark SkinnableContainer container.
+
+     @see spark.components.SkinnableContainer
+
+      @langversion 3.0
+      @playerversion Flash 10
+      @playerversion AIR 1.5
+      @productversion Flex 4
+-->
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+	xmlns:primitives="jp.co.ntts.vhut.primitives.*"
+	alpha.disabled="0.5" xmlns:presentation="jp.co.ntts.vhut.core.presentation.*" >
+    <fx:Metadata>[HostComponent("jp.co.ntts.vhut.core.presentation.IconLabel")]</fx:Metadata>
+
+    <fx:Script fb:purpose="styling">
+        <![CDATA[
+            /**
+             *  @private
+             */
+            override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number) : void
+            {
+                // Push backgroundColor and backgroundAlpha directly.
+                // Handle undefined backgroundColor by hiding the background object.
+                if (isNaN(getStyle("backgroundColor")))
+                {
+                    background.visible = false;
+                }
+                else
+                {
+                    background.visible = true;
+                    bgFill.color = getStyle("backgroundColor");
+                    bgFill.alpha = getStyle("backgroundAlpha");
+                }
+
+				var glassColor:uint = 0x000000;
+				var glassAlpha:Number = 0.1;
+				if (!isNaN(getStyle("glassColor")))
+				{
+					glassColor = getStyle("glassColor");
+				}
+				if (getStyle("glassAlpha"))
+				{
+					glassAlpha = getStyle("glassAlpha");
+				}
+
+				glassFill = new LinearGradient();
+				var entries:Array = new Array();
+				entries.push(new GradientEntry(0xFFFFFF, 0.0, 0.3));
+				entries.push(new GradientEntry(0xFFFFFF, 0.3, 0.0));
+				entries.push(new GradientEntry(glassColor, 0.5, 0.0));
+				entries.push(new GradientEntry(glassColor, 1.0, glassAlpha));
+				glassFill.entries = entries;
+
+                super.updateDisplayList(unscaledWidth, unscaledHeight);
+            }
+        ]]>
+    </fx:Script>
+
+	<fx:Declarations>
+		<s:LinearGradient id="glassFill">
+			<s:entries>
+				<s:GradientEntry color="#FFFFFF" alpha="0.3" ratio="0.0"/>
+				<s:GradientEntry color="#FFFFFF" alpha="0.0" ratio="0.3"/>
+				<s:GradientEntry color="#000000" alpha="0.0" ratio="0.5"/>
+				<s:GradientEntry color="#000000" alpha="0.1" ratio="1.0"/>
+			</s:entries>
+		</s:LinearGradient>
+		<fx:Array id="iconFillter">
+			<s:DropShadowFilter blurX="5" blurY="5" distance="0" alpha="0.5"/>
+		</fx:Array>
+	</fx:Declarations>
+
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+		<s:State name="disabled"/>
+	</s:states>
+
+    <!--- Defines the appearance of the SkinnableContainer class's background. -->
+    <s:Rect id="background" left="0" right="0" top="0" bottom="0">
+        <s:fill>
+            <!--- @private -->
+            <s:SolidColor id="bgFill" color="#FFFFFF"/>
+        </s:fill>
+    </s:Rect>
+
+    <!--
+        Note: setting the minimum size to 0 here so that changes to the host component's
+        size will not be thwarted by this skin part's minimum size.   This is a compromise,
+        more about it here: http://bugs.adobe.com/jira/browse/SDK-21143
+    -->
+    <!--- @copy spark.components.SkinnableContainer#contentGroup -->
+    <s:Group left="10" right="10" top="2" bottom="2" minWidth="{image.width}" minHeight="{image.height}">
+        <s:layout>
+            <s:HorizontalLayout verticalAlign="middle" gap="8"/>
+        </s:layout>
+		<presentation:IconImage id="image"
+								width="36" height="36"
+					   source="{hostComponent.getStyle('source')}"
+					   filters="{iconFillter}"/>
+		<s:Group id="contentGroup" width="100%" height="100%">
+			<s:layout>
+				<s:VerticalLayout verticalAlign="middle"/>
+			</s:layout>
+		</s:Group>
+    </s:Group>
+
+	<primitives:Bevel id="bevel"
+					  weight="1"
+					  left="0" right="0" top="0" bottom="0"/>
+
+	<s:Rect id="glass"
+			left="0" right="0" top="0" bottom="0"
+			fill="{ glassFill }"/>
+
+</s:Skin>

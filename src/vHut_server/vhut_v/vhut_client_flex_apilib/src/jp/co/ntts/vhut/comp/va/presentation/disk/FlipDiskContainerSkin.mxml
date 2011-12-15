@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+    ADOBE SYSTEMS INCORPORATED
+    Copyright 2008 Adobe Systems Incorporated
+    All Rights Reserved.
+
+    NOTICE: Adobe permits you to use, modify, and distribute this file
+    in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for a Spark SkinnableContainer container.
+
+     @see spark.components.SkinnableContainer
+
+      @langversion 3.0
+      @playerversion Flash 10
+      @playerversion AIR 1.5
+      @productversion Flex 4
+-->
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+    	xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+		xmlns:core="jp.co.ntts.vhut.core.presentation.*" xmlns:disk="jp.co.ntts.vhut.comp.va.presentation.disk.*"
+		>
+    <fx:Metadata>
+		[HostComponent("jp.co.ntts.vhut.comp.va.presentation.disk.FlipDiskContainer")]
+	</fx:Metadata>
+
+    <fx:Script fb:purpose="styling">
+        <![CDATA[
+			import jp.co.ntts.vhut.comp.va.presentation.itemrenderer.DiskItemRenderer;
+			import mx.events.EffectEvent;
+			protected function rotate3d1_effectUpdateHandler(event:EffectEvent):void
+			{
+				contentGroup.invalidateDisplayList();
+			}
+        ]]>
+    </fx:Script>
+
+    <s:states>
+        <s:State name="normal" />
+		<s:State name="back" />
+		<s:State name="disabled" />
+    </s:states>
+
+	<s:transitions>
+		<s:Transition fromState="*" toState="back">
+			<s:effect>
+				<s:Parallel>
+					<s:Rotate3D target="{contentGroup}" duration="500" autoCenterTransform="true" effectUpdate="rotate3d1_effectUpdateHandler(event)"/>
+				</s:Parallel>
+			</s:effect>
+		</s:Transition>
+		<s:Transition fromState="back" toState="*">
+			<s:effect>
+				<s:Parallel>
+					<s:Rotate3D target="{contentGroup}" duration="500" autoCenterTransform="true" effectUpdate="rotate3d1_effectUpdateHandler(event)"/>
+				</s:Parallel>
+			</s:effect>
+		</s:Transition>
+	</s:transitions>
+
+	<!--- Defines the appearance of the SkinnableContainer class's background. -->
+	<s:Rect id="background" left="0" right="0" top="0" bottom="0">
+		<s:fill>
+			<!--- @private -->
+			<s:SolidColor id="bgFill" color="#FFFFFF" alpha="0"/>
+		</s:fill>
+	</s:Rect>
+
+
+    <!--
+        Note: setting the minimum size to 0 here so that changes to the host component's
+        size will not be thwarted by this skin part's minimum size.   This is a compromise,
+        more about it here: http://bugs.adobe.com/jira/browse/SDK-21143
+    -->
+    <!--- @copy spark.components.SkinnableContainer#contentGroup -->
+    <s:Group id="contentGroup"
+			 left="0" right="0" top="0" bottom="0" minWidth="0" minHeight="0"
+			 maintainProjectionCenter="true"
+			 transformX="35"
+			 rotationY.normal="0" rotationY.back="180">
+        <s:layout>
+            <s:BasicLayout/>
+        </s:layout>
+		<core:IconImage id="image" source="@Embed(source='/images/icon_vm.png')"
+						url="{ hostComponent.imageUrl }"
+						shadow="true"
+						horizontalCenter="0" verticalCenter="0" width="70" height="70"
+						z="1"/>
+		<disk:DiskContainer id="diskContainer"
+				dataProvider="{ hostComponent.diskList }"
+				horizontalCenter="0" verticalCenter="0" width="70" height="70"
+				transformX="35" rotationY="180" z="-1">
+			<disk:layout>
+				<s:TileLayout requestedColumnCount="2" requestedRowCount="2"
+							  horizontalGap="2" verticalGap="2"
+							  horizontalAlign="center" verticalAlign="middle"/>
+			</disk:layout>
+		</disk:DiskContainer>
+    </s:Group>
+</s:Skin>

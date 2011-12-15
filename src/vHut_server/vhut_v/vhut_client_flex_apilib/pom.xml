@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>jp.co.ntts.vhut</groupId>
+        <artifactId>vhut_parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>vhut_client_flex_apilib</artifactId>
+    <name>${project.groupId} ${project.artifactId} ${project.version}</name>
+    <description>${project.groupId} ${project.artifactId} ${project.version}</description>
+    <packaging>swc</packaging>
+
+    <dependencies>
+        <!-- Dynamically load the Adobe signed RSL framework instead of merging into SWF. -->
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>textLayout</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>swc</type>
+	      <scope>caching</scope>
+	    </dependency>
+	    <!-- OSMF SWC would go here. -->
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>osmf</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>swc</type>
+	      <scope>caching</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>framework</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>swc</type>
+	      <scope>caching</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>spark</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>swc</type>
+	      <scope>caching</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>sparkskins</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>swc</type>
+	      <scope>caching</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>rpc</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>swc</type>
+	      <scope>caching</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>datavisualization</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>swc</type>
+	    </dependency>
+	    <!-- Flex framework resource bundles -->
+	    <dependency>
+	      <groupId>com.adobe.flex.framework</groupId>
+	      <artifactId>flex-framework</artifactId>
+	      <version>${flex.sdk.version}</version>
+	      <type>pom</type>
+	    </dependency>
+
+	    <!-- Flex unit test -->
+        <dependency>
+            <groupId>com.adobe.flexunit</groupId>
+            <artifactId>flexunit</artifactId>
+            <version>4.0-rc-1</version>
+            <type>swc</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.flexunit</groupId>
+            <artifactId>flexunit-optional</artifactId>
+            <version>0.9</version>
+            <type>swc</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.flexunit</groupId>
+            <artifactId>flexunitUIRunner</artifactId>
+            <version>4.0-beta-2</version>
+            <type>swc</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-as3</artifactId>
+            <version>1.0</version>
+            <type>swc</type>
+            <scope>test</scope>
+        </dependency>
+
+	    <!-- splicelib & parsley -->
+        <dependency>
+            <groupId>org.spicefactory</groupId>
+            <artifactId>parsley-flex4</artifactId>
+            <version>${parsley.version}</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>org.spicefactory</groupId>
+            <artifactId>spicelib-flex</artifactId>
+            <version>${spicelib.version}</version>
+            <type>swc</type>
+        </dependency>
+
+        <!-- Cairngorm -->
+        <dependency>
+            <groupId>com.adobe.cairngorm</groupId>
+            <artifactId>module</artifactId>
+            <version>${cairngorm.module.version}</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.cairngorm</groupId>
+            <artifactId>navigationParsley</artifactId>
+            <version>${cairngorm.navigation.version}</version>
+            <type>swc</type>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.cairngorm</groupId>
+            <artifactId>integrationParsley</artifactId>
+            <version>${cairngorm.integration.version}</version>
+            <type>swc</type>
+        </dependency>
+
+        <!-- vHut -->
+   <!-- <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>vhut_server_java</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency> -->
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+
+        <plugins>
+            <plugin>
+                <!-- Flex (SWC and SWF) compilation -->
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>${flex-mojos.version}</version>
+                <extensions>true</extensions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.adobe.flex</groupId>
+                        <artifactId>compiler</artifactId>
+                        <version>${flex.sdk.version}</version>
+                        <type>pom</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.adobe.flex.compiler</groupId>
+                        <artifactId>asdoc</artifactId>
+                        <version>${flex.sdk.version}</version>
+                        <classifier>template</classifier>
+                        <type>zip</type>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                   <compiledLocales>
+                       <locale>ja_JP</locale>
+                   </compiledLocales>
+                    <sourcePaths>
+                        <path>${project.basedir}/src</path>
+                        <path>${project.basedir}/gen</path>
+                        <path>${project.basedir}/locale/{locale}</path>
+                    </sourcePaths>
+
+                    <!--
+                    <includes>
+					  <include>jp.co.ntts.vhut.dialog.presentation.CommonDialog</include>
+					  <include>jp.co.ntts.vhut.dialog.presentation.LoginPanel</include>
+					  <include>jp.co.ntts.vhut.dialog.presentation.SelectUserDialog</include>
+					  <include>jp.co.ntts.vhut.dialog.presentation.Wizard</include>
+					  <include>jp.co.ntts.vhut.form.presentation.ImageForm</include>
+					  <include>jp.co.ntts.vhut.core.VhutViewLoader</include>
+					  <include>jp.co.ntts.panel.presentation.CommandPanelItemRenderer</include>
+					</includes>
+					 -->
+
+                    <!--
+                    <includeSources>
+                        <sources>${project.basedir}/src</sources>
+                        <sources>${project.basedir}/gen</sources>
+                    </includeSources>
+
+                    <includeFiles>
+  						<file>${project.basedir}/src/vhut.properties</file>
+					</includeFiles>
+					<includeResourceBundles>
+						<bundle>vhut</bundle>
+					</includeResourceBundles>
+					-->
+
+					<!--
+                    <keepAs3Metadatas>
+                    	<keepAs3Metadata>Metadata</keepAs3Metadata>
+						<keepAs3Metadata>DefaultProperty</keepAs3Metadata>
+						<keepAs3Metadata>Required</keepAs3Metadata>
+						<keepAs3Metadata>Event</keepAs3Metadata>
+						<keepAs3Metadata>AssignableTo</keepAs3Metadata>
+						<keepAs3Metadata>Inject</keepAs3Metadata>
+						<keepAs3Metadata>InjectConstructor</keepAs3Metadata>
+						<keepAs3Metadata>Publish</keepAs3Metadata>
+						<keepAs3Metadata>Subscribe</keepAs3Metadata>
+						<keepAs3Metadata>PublishSubscribe</keepAs3Metadata>
+						<keepAs3Metadata>Factory</keepAs3Metadata>
+						<keepAs3Metadata>Init</keepAs3Metadata>
+						<keepAs3Metadata>Destroy</keepAs3Metadata>
+						<keepAs3Metadata>Observe</keepAs3Metadata>
+						<keepAs3Metadata>AsyncInit</keepAs3Metadata>
+						<keepAs3Metadata>ManagedEvents</keepAs3Metadata>
+						<keepAs3Metadata>MessageDispatcher</keepAs3Metadata>
+						<keepAs3Metadata>MessageHandler</keepAs3Metadata>
+						<keepAs3Metadata>MessageBinding</keepAs3Metadata>
+						<keepAs3Metadata>MessageInterceptor</keepAs3Metadata>
+						<keepAs3Metadata>MessageError</keepAs3Metadata>
+						<keepAs3Metadata>Command</keepAs3Metadata>
+						<keepAs3Metadata>CommandComplete</keepAs3Metadata>
+						<keepAs3Metadata>CommandResult</keepAs3Metadata>
+						<keepAs3Metadata>CommandError</keepAs3Metadata>
+						<keepAs3Metadata>CommandStatus</keepAs3Metadata>
+						<keepAs3Metadata>ResourceBinding</keepAs3Metadata>
+						<keepAs3Metadata>Selector</keepAs3Metadata>
+						<keepAs3Metadata>Target</keepAs3Metadata>
+						<keepAs3Metadata>Autoremove</keepAs3Metadata>
+						<keepAs3Metadata>Internal</keepAs3Metadata>
+						<keepAs3Metadata>ObjectDefinition</keepAs3Metadata>
+						<keepAs3Metadata>DynamicObject</keepAs3Metadata>
+					</keepAs3Metadatas>
+					<keepAllTypeSelectors>true</keepAllTypeSelectors>
+					-->
+	                    <baseOutputDirectory>${project.basedir}/gen</baseOutputDirectory>
+
+	                    <beanTemplate>
+	                        <template>${project.basedir}/template/beanBase.gsp</template>
+	                        <template>${project.basedir}/template/bean.gsp</template>
+	                    </beanTemplate>
+	                    <entityTemplate>
+	                        <template>${project.basedir}/template/entityBase.gsp</template>
+	                        <template>${project.basedir}/template/entity.gsp</template>
+	                    </entityTemplate>
+	                    <interfaceTemplate>
+	                        <template>${project.basedir}/template/interfaceBase.gsp</template>
+	                        <template>${project.basedir}/template/interface.gsp</template>
+	                    </interfaceTemplate>
+	                    <enumTemplate>
+	                        <template>${project.basedir}/template/enum.gsp</template>
+	                    </enumTemplate>
+
+	                    <includeJavaClasses>
+	                        <includeClass>jp.co.ntts.vhut.entity.*</includeClass>
+	                        <includeClass>jp.co.ntts.vhut.dto.*</includeClass>
+	                        <includeClass>jp.co.ntts.vhut.exception.*</includeClass>
+	                        <!--<includeClass>jp.co.ntts.vhut.config.*</includeClass>-->
+	                    </includeJavaClasses>
+	                    <excludeJavaClasses>
+	                        <excludeClass>jp.co.ntts.vhut.entity.*Names</excludeClass>
+	                        <excludeClass>jp.co.ntts.vhut.dto.OrderDto</excludeClass>
+	                        <excludeClass>jp.co.ntts.vhut.dto.OrderItem</excludeClass>
+	                        <excludeClass>jp.co.ntts.vhut.dto.OrderItemType</excludeClass>
+	                    </excludeJavaClasses>
+
+                </configuration>
+		        <executions>
+		          <execution>
+		          	<id>swf</id>
+		          	<phase>compile</phase>
+		            <goals>
+		              <goal>optimize</goal><!--  Optimized RSL generation -->
+		              <!--<goal>generate</goal>  ActionScript POJOs generation based on Java POJOs -->
+		               <goal>compile-swf</goal><!---->
+		            </goals>
+		            <configuration>
+
+	                    <optimizeRsls>false</optimizeRsls>
+
+			            <policyFileUrls>
+			              <url>http://fpdownload.adobe.com/pub/swz/crossdomain.xml</url>
+			              <url></url>
+			            </policyFileUrls>
+			            <rslUrls>
+			              <url>http://fpdownload.adobe.com/pub/{extension}/flex/${flex.sdk.version}/{artifactId}_{version}.{extension}</url>
+	  					  <url>/vhut/{artifactId}.{extension}</url>
+			            </rslUrls>
+
+	                    <linkReport>true</linkReport>
+	                    <configurationReport>true</configurationReport>
+
+	                    <compiledLocales>
+	                        <locale>ja_JP</locale>
+	                    </compiledLocales>
+	                    <targetPlayer>${player.version}</targetPlayer>
+	                    <debug>true</debug>
+	                    <coverage>true</coverage>
+	                    <configuration>true</configuration>
+	                    <optimize>true</optimize>
+	                    <verboseStacktraces>true</verboseStacktraces>
+	                    <allowSourcePathOverlap>false</allowSourcePathOverlap>
+	                    <showWarnings>true</showWarnings>
+	                    <resourceBundlePath>${basedir}/locale/{locale}</resourceBundlePath>
+	                    <includeSources>
+	                        <param>${project.build.sourceDirectory}</param>
+	                    </includeSources>
+	                    <sourceFile>BootstrapApplication.mxml</sourceFile>
+		            	<output>${project.build.directory}/${project.artifactId}-${project.version}.swf</output>
+		            	<keepGeneratedActionscript>true</keepGeneratedActionscript>
+		            </configuration>
+		          </execution>
+		          <execution>
+		          	<id>swc</id>
+		          	<phase>compile</phase>
+		            <goals>
+		              <!--  <goal>optimize</goal>Optimized RSL generation -->
+		              <!--<goal>generate</goal>  ActionScript POJOs generation based on Java POJOs -->
+		              <goal>compile-swc</goal>
+		            </goals>
+		            <configuration>
+	                    <linkReport>true</linkReport>
+	                    <configurationReport>true</configurationReport>
+
+	                    <compiledLocales>
+	                        <locale>ja_JP</locale>
+	                    </compiledLocales>
+		            </configuration>
+		          </execution>
+		        </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <id>delete-lib-dir</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <tasks>
+                                <delete dir="libs"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-lib-run</id>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>libs</outputDirectory>
+                            <excludeGroupIds>com.adobe.flex.framework</excludeGroupIds>
+                            <includeScope>runtime</includeScope>
+                            <excludeScope>provided</excludeScope>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

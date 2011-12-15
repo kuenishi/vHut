@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties mainApplicationPath="AigModuleRig.mxml" projectUUID="e689b634-7934-4435-b6ac-27a87b3431aa" version="6">
+  <compiler additionalCompilerArguments="-services &quot;C:\workspace\vhut_server_java\src\main\webapp\WEB-INF\flex\services-config.xml&quot;  -locale ja_JP  -keep-all-type-selectors=true -dump-config dump.xml" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="C:/workspace/vhut_server_java/src/main/webapp/vhut_client_flex-debug" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+    <compilerSourcePath>
+      <compilerSourcePathEntry kind="1" linkType="1" path="locale/{locale}"/>
+    </compilerSourcePath>
+    <libraryPath defaultLinkType="0">
+      <libraryPathEntry kind="4" path="">
+        <excludedEntries>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
+        </excludedEntries>
+      </libraryPathEntry>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry autoExtract="true" kind="3" linkType="3" path="/vhut_client_flex_apilib/bin/vhut_client_flex_apilib.swc" rslUrl="vhut_client_flex_apilib.swf" useDefaultLinkType="false"/>
+    </libraryPath>
+    <sourceAttachmentPath/>
+  </compiler>
+  <applications>
+    <application path="AigModuleRig.mxml"/>
+  </applications>
+  <modules>
+    <module application="src/vhut_client_flex_aigmod.mxml" destPath="vhut_client_flex_aigmod.swf" optimize="false" sourcePath="src/vhut_client_flex_aigmod.mxml"/>
+  </modules>
+  <buildCSSFiles/>
+</actionScriptProperties>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\LogViewerGroup.mxml -->
+<!---
+	 ログビューアーのメインコンポーネント.
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		 width="400"
+		 height="300">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.log.infrastructure.LogViewerEvent;
+
+			import spark.events.TextOperationEvent;
+			[Bindable]
+			[Inject]
+			/**
+			 * プレゼンテーションモデル.
+			 */
+			public var pm:LogViewerGroupPM;
+
+			[MessageHandler]
+			/**
+			 * ログ追加イベントを受け取る.
+			 * @param event ログ追加イベント
+			 */
+			public function logAddedHandler(event:LogViewerEvent):void
+			{
+				outputText.scrollToRange(outputText.text.length - 1);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<spicefactory:Configure/>
+	</fx:Declarations>
+	<!--- ログを表示するテキストエリア. -->
+	<s:TextArea id="outputText"
+				top="10"
+				left="10"
+				right="10"
+				bottom="50"
+				editable="false"
+				textFlow="{ pm.textFlow }"/>
+	<s:Group id="buttonContainer"
+			 width="100%"
+			 height="30"
+			 bottom="10"
+			 left="10">
+		<s:layout>
+			<s:HorizontalLayout/>
+		</s:layout>
+		<!--- DEBUG表示を有効化するチェックボックス. -->
+		<s:CheckBox id="debugCheck"
+					label="debug"
+					selected="@{ pm.isDebugLevelEnable }"
+					color="#5E885E"/>
+		<!--- INFO表示を有効化するチェックボックス. -->
+		<s:CheckBox id="infoCheck"
+					label="info"
+					selected="@{ pm.isInfoLevelEnable}"
+					color="#00689D"/>
+		<!--- WARN表示を有効化するチェックボックス. -->
+		<s:CheckBox id="warnCheck"
+					label="warn"
+					selected="@{ pm.isWarnLevelEnable }"
+					color="#995522"/>
+		<!--- ERROR表示を有効化するチェックボックス. -->
+		<s:CheckBox id="errorCheck"
+					label="error"
+					selected="@{ pm.isErrorLevelEnable}"
+					color="#DD5500"/>
+		<!--- FATAL表示を有効化するチェックボックス. -->
+		<s:CheckBox id="fatalCheck"
+					label="fatal"
+					selected="@{ pm.isFatalLevelEnable }"
+					color="#FF0000"/>
+		<!--- ログを消去するボタン. -->
+		<s:Button label="Clear"
+				  click="pm.clear()"/>
+	</s:Group>
+</s:Group>

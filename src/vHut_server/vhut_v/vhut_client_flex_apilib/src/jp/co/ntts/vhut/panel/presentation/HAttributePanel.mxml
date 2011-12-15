@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\HAttributePanel.mxml -->
+<!---
+	 xxxコンポーネント.
+	 <p xmlns:parsley="http://www.spicefactory.org/parsley"></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 width="500"
+		 height="200"
+		 clipAndEnableScrolling="true"
+		 verticalScrollPosition.active="0"
+		 verticalScrollPosition.deactive="{ tabBar.height - height }"
+		 currentState="{ tabBar.selectedIndex >=0 ? 'active' : 'deactive' }"
+		 initialize="init()">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<s:states>
+		<s:State name="active"/>
+		<s:State name="deactive"/>
+	</s:states>
+	<s:transitions>
+		<s:Transition fromState="active"
+					  toState="deactive">
+			<s:Animate target="{ this }"
+					   duration="200">
+				<s:SimpleMotionPath property="verticalScrollPosition"
+									valueFrom="0"
+									valueTo="{ tabBar.height - height }"/>
+			</s:Animate>
+		</s:Transition>
+		<s:Transition fromState="deactive"
+					  toState="active">
+			<s:Animate target="{ this }"
+					   duration="200">
+				<s:SimpleMotionPath property="verticalScrollPosition"
+									valueFrom="{ tabBar.height - height }"
+									valueTo="0"/>
+			</s:Animate>
+		</s:Transition>
+	</s:transitions>
+	<fx:Script>
+		<![CDATA[
+			public function init():void
+			{
+				tabBar.selectedIndex = -1;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:TabBar id="tabBar"
+			  left="0" top="0" width="500" height="30"
+			  requireSelection="false"/>
+</s:Group>

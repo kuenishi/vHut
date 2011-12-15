@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ContentNavigator.mxml -->
+<!---
+メインコンテンツを配置するコンポーネント.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+<presentation:VhutMainViewStack xmlns:fx="http://ns.adobe.com/mxml/2009"
+				 xmlns:s="library://ns.adobe.com/flex/spark"
+				 xmlns:mx="library://ns.adobe.com/flex/mx"
+				 xmlns:spicefactory="http://www.spicefactory.org/parsley"
+				 xmlns:core="jp.co.ntts.vhut.core.*"
+				 xmlns:presentation="jp.co.ntts.vhut.presentation.*">
+
+	<fx:Metadata>
+	</fx:Metadata>
+
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.module.IModuleManager;
+
+			import jp.co.ntts.vhut.application.ContentDestination;
+
+			[Bindable]
+			[Inject(id="topModuleManager")]
+			public var topModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="appModuleManager")]
+			public var appModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="aigModuleManager")]
+			public var aigModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="tmpModuleManager")]
+			public var tmpModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="usrModuleManager")]
+			public var usrModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="rolModuleManager")]
+			public var rolModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="mngModuleManager")]
+			public var mngModuleManager:IModuleManager;
+
+			[Bindable]
+			[Inject(id="cnfModuleManager")]
+			public var cnfModuleManager:IModuleManager;
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<spicefactory:Configure/>
+	</fx:Declarations>
+<!--
+	<s:NavigatorContent automationName="{ ContentDestination.TOP }"
+						label="@Resource(key='top', bundle='SKMUI')">
+		<core:VhutViewLoader id="topModuleLoader"
+							 moduleId="{ ContentDestination.TOP }"
+							 width="100%" height="100%"
+							 moduleManager="{ topModuleManager }"/>
+	</s:NavigatorContent>
+
+	<s:NavigatorContent automationName="{ ContentDestination.APP }"
+						label="@Resource(key='app', bundle='SKMUI')">
+		<core:VhutViewLoader id="appModuleLoader"
+							 moduleId="{ ContentDestination.APP }"
+							 width="100%" height="100%"
+							 moduleManager="{ appModuleManager }"/>
+	</s:NavigatorContent>
+
+	<s:NavigatorContent automationName="{ ContentDestination.AIG }"
+						label="@Resource(key='aig', bundle='SKMUI')">
+		<core:VhutViewLoader id="aigModuleLoader"
+							 moduleId="{ ContentDestination.AIG }"
+							 width="100%" height="100%"
+							 moduleManager="{ aigModuleManager }"/>
+	</s:NavigatorContent>
+
+	<s:NavigatorContent automationName="{ ContentDestination.TMP }"
+						label="@Resource(key='tmp', bundle='SKMUI')">
+		<core:VhutViewLoader id="tmpModuleLoader"
+							 moduleId="{ ContentDestination.TMP }"
+							 width="100%" height="100%"
+							 moduleManager="{ tmpModuleManager }"/>
+	</s:NavigatorContent>
+
+	<s:NavigatorContent automationName="{ ContentDestination.USR }"
+						label="@Resource(key='usr', bundle='SKMUI')">
+		<core:VhutViewLoader id="usrModuleLoader"
+							 moduleId="{ ContentDestination.USR }"
+							 width="100%" height="100%"
+							 moduleManager="{ usrModuleManager }"/>
+	</s:NavigatorContent>
+
+	<s:NavigatorContent automationName="{ ContentDestination.ROL }"
+						label="@Resource(key='rol', bundle='SKMUI')">
+		<core:VhutViewLoader id="rolModuleLoader"
+							 moduleId="{ ContentDestination.ROL }"
+							 width="100%" height="100%"
+							 moduleManager="{ rolModuleManager }"/>
+	</s:NavigatorContent>
+
+	<s:NavigatorContent automationName="{ ContentDestination.MNG }"
+						label="@Resource(key='mng', bundle='SKMUI')">
+		<core:VhutViewLoader id="mngModuleLoader"
+							 moduleId="{ ContentDestination.MNG }"
+							 width="100%" height="100%"
+							 moduleManager="{ mngModuleManager }"/>
+	</s:NavigatorContent>
+
+	<s:NavigatorContent automationName="{ ContentDestination.CNF }"
+						label="@Resource(key='cnf', bundle='SKMUI')">
+		<core:VhutViewLoader id="cnfModuleLoader"
+							 moduleId="{ ContentDestination.CNF }"
+							 width="100%" height="100%"
+							 moduleManager="{ cnfModuleManager }"/>
+	</s:NavigatorContent>
+-->
+
+	<presentation:contents>
+		<s:ArrayCollection>
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.TOP }"
+												   label="@Resource(key='top', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_SYS_BASIC }">
+				<core:VhutViewLoader id="topModuleLoader"
+									 moduleId="{ ContentDestination.TOP }"
+									 width="100%" height="100%"
+									 moduleManager="{ topModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.TMP }"
+												   label="@Resource(key='tmp', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_SYS_TEMPLATE }">
+				<core:VhutViewLoader id="tmpModuleLoader"
+									 moduleId="{ ContentDestination.TMP }"
+									 width="100%" height="100%"
+									 moduleManager="{ tmpModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+			
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.APP }"
+												   label="@Resource(key='app', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_OWN_APP }">
+				<core:VhutViewLoader id="appModuleLoader"
+									 moduleId="{ ContentDestination.APP }"
+									 width="100%" height="100%"
+									 moduleManager="{ appModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.AIG }"
+												   label="@Resource(key='aig', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_OWN_AIG }">
+				<core:VhutViewLoader id="aigModuleLoader"
+									 moduleId="{ ContentDestination.AIG }"
+									 width="100%" height="100%"
+									 moduleManager="{ aigModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.USR }"
+												   label="@Resource(key='usr', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_OWN_USER }">
+				<core:VhutViewLoader id="usrModuleLoader"
+									 moduleId="{ ContentDestination.USR }"
+									 width="100%" height="100%"
+									 moduleManager="{ usrModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.ROL }"
+												   label="@Resource(key='rol', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_SYS_ROLE }">
+				<core:VhutViewLoader id="rolModuleLoader"
+									 moduleId="{ ContentDestination.ROL }"
+									 width="100%" height="100%"
+									 moduleManager="{ rolModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.MNG }"
+												   label="@Resource(key='mng', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_SYS_MANAGEMENT }">
+				<core:VhutViewLoader id="mngModuleLoader"
+									 moduleId="{ ContentDestination.MNG }"
+									 width="100%" height="100%"
+									 moduleManager="{ mngModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+			<presentation:VhutMainNavigatorContent automationName="{ ContentDestination.CNF }"
+												   label="@Resource(key='cnf', bundle='SKMUI')"
+												   requiredRight="{ Right.READ_SYS_CONFIGURATION }">
+				<core:VhutViewLoader id="cnfModuleLoader"
+									 moduleId="{ ContentDestination.CNF }"
+									 width="100%" height="100%"
+									 moduleManager="{ cnfModuleManager }"/>
+			</presentation:VhutMainNavigatorContent>
+		</s:ArrayCollection>
+	</presentation:contents>
+</presentation:VhutMainViewStack>

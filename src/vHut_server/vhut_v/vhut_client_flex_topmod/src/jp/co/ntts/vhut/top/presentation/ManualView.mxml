@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AbstractionView.mxml -->
+<!---
+<p>使い方表示コンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  xmlns:parsley="http://www.spicefactory.org/parsley"
+					  width="400" height="300" >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			[Inject]
+			[Bindable]
+			public var pm:TopPM;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:Scroller width="100%" height="100%"
+				horizontalScrollPolicy="off" verticalScrollPolicy="on">
+		<s:DataGroup id="categoryDataGroup"
+					 dataProvider="{ pm.manuals.manualList }"
+					 itemRenderer="jp.co.ntts.vhut.top.presentation.ManualCategoryItemRenderer"
+					 width="100%"
+					 >
+			<s:layout>
+				<s:VerticalLayout paddingLeft="10" paddingRight="10"/>
+			</s:layout>
+		</s:DataGroup>
+	</s:Scroller>
+
+</s:Group>

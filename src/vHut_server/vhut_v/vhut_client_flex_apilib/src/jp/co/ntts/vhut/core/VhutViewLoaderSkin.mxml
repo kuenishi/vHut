@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+    ADOBE SYSTEMS INCORPORATED
+    Copyright 2008 Adobe Systems Incorporated
+    All Rights Reserved.
+
+    NOTICE: Adobe permits you to use, modify, and distribute this file
+    in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for a Spark SkinnableContainer container.
+
+     @see spark.components.SkinnableContainer
+
+      @langversion 3.0
+      @playerversion Flash 10
+      @playerversion AIR 1.5
+      @productversion Flex 4
+-->
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:fb="http://ns.adobe.com/flashbuilder/2009">
+    <fx:Metadata>[HostComponent("com.adobe.cairngorm.module.ModuleViewLoader")]</fx:Metadata>
+
+    <s:states>
+        <s:State name="normal" />
+        <s:State name="disabled" />
+		<s:State name="loading"/>
+		<s:State name="error"/>
+		<s:State name="loaded"/>
+    </s:states>
+
+	<!-- contains the landing view -->
+	<s:Group id="landingGroup"
+			 left="0" right="0" top="0" bottom="0"
+			 includeIn="normal">
+		<s:Label
+			horizontalCenter="0"
+			verticalCenter="0"
+			text="Landing"/>
+	</s:Group>
+
+	<!-- contains the error view -->
+	<s:Group id="loadingGroup"
+			  left="0" right="0" top="0" bottom="0"
+			  includeIn="loading">
+		<s:Label
+			horizontalCenter="0"
+			verticalCenter="0"
+			text="Loading..."/>
+	</s:Group>
+
+	<!-- contains the error view -->
+	<s:Group id="errorGroup"
+			 left="0" right="0" top="0" bottom="0"
+			 includeIn="error">
+		<s:Label
+			horizontalCenter="0"
+			verticalCenter="0"
+			text="An error occured..."/>
+	</s:Group>
+
+	<!-- content group contains the loaded module -->
+	<s:Group id="contentGroup"
+			 left="0" right="0" top="0" bottom="0"
+			 includeIn="loaded"/>
+
+</s:Skin>

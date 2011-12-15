@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\FlexUnitCompilerApplication.mxml -->
+<!---
+xxxアプリケーション.
+<p></p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+
+<!-- これは FlexUnit クラスをコンパイルするために Flash Builder で自動的に生成されるファイルです。変更しないでください。
+このファイルを再生成するには、「FlexUnit 結果」ビューの「更新」アイコンをクリックしてください。 -->
+
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.log.LogCacheTargetTest;
+			import jp.co.ntts.vhut.log.VhutLogLoggerTest;
+			import jp.co.ntts.vhut.log.infrastructure.LogViewerEventTest;
+			import jp.co.ntts.vhut.log.presentation.TraceTargetConfGroupPMTest;
+			import jp.co.ntts.vhut.log.UnitTest;
+			import jp.co.ntts.vhut.log.presentation.LogViewerGroupPMTest;
+			
+			private var jp_co_ntts_vhut_log_LogCacheTargetTest_obj:jp.co.ntts.vhut.log.LogCacheTargetTest;
+			
+			
+			private var jp_co_ntts_vhut_log_VhutLogLoggerTest_obj:jp.co.ntts.vhut.log.VhutLogLoggerTest;
+			
+			
+			private var jp_co_ntts_vhut_log_infrastructure_LogViewerEventTest_obj:jp.co.ntts.vhut.log.infrastructure.LogViewerEventTest;
+			
+			
+			private var jp_co_ntts_vhut_log_presentation_TraceTargetConfGroupPMTest_obj:jp.co.ntts.vhut.log.presentation.TraceTargetConfGroupPMTest;
+			
+			
+			private var jp_co_ntts_vhut_log_UnitTest_obj:jp.co.ntts.vhut.log.UnitTest;
+			
+			
+			private var jp_co_ntts_vhut_log_presentation_LogViewerGroupPMTest_obj:jp.co.ntts.vhut.log.presentation.LogViewerGroupPMTest;
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+</s:Application>

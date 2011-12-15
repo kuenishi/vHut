@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\LinkItemRenderer.mxml -->
+<!---
+<p>LANケーブルのアイテムレンダラーです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date$
+$Revision$
+$Author$
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:graphic="jp.co.ntts.vhut.comp.va.presentation.graphic.*"
+				autoDrawBackground="false" >
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+	</s:states>
+
+	<graphic:LanCableGraphic x="0" y="0"
+							 points="{ data.points }">
+		<graphic:stroke>
+			<s:SolidColorStroke color="#000000" alpha="0.5" caps="none" joints="round" weight="4" />
+		</graphic:stroke>
+	</graphic:LanCableGraphic>
+
+	<graphic:LanCableGraphic x="0" y="0"
+							 points="{ data.points }">
+		<graphic:stroke>
+			<s:SolidColorStroke color="#000000" color.selected="#FF0000" alpha="0.5" caps="none" joints="round" weight="2"/>
+		</graphic:stroke>
+	</graphic:LanCableGraphic>
+
+</s:ItemRenderer>

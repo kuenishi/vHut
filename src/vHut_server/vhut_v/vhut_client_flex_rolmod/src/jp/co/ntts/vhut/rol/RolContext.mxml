@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!---
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@langversion 3.0
+@playerversion Flash 10.1
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+-->
+
+<Objects
+	xmlns="http://www.spicefactory.org/parsley"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:module="com.adobe.cairngorm.module.*"
+	xmlns:data="com.adobe.cairngorm.integration.data.*"
+	xmlns:presentation="jp.co.ntts.vhut.rol.presentation.*"
+	xmlns:config="jp.co.ntts.vhut.config.*"
+	xmlns:compwiz="jp.co.ntts.vhut.comp.wiz.domain.*"
+	xmlns:domain="jp.co.ntts.vhut.rol.domain.*"
+	xmlns:wiz="jp.co.ntts.vhut.rol.presentation.wiz.*"
+	>
+
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.GetAllEvent;
+			import jp.co.ntts.vhut.core.GetByIdEvent;
+			import jp.co.ntts.vhut.rol.application.CreateRoleCommand;
+			import jp.co.ntts.vhut.rol.application.DeleteRoleCommand;
+			import jp.co.ntts.vhut.rol.application.GetAllRoleAbstractionListCommand;
+			import jp.co.ntts.vhut.rol.application.GetRoleByIdCommand;
+			import jp.co.ntts.vhut.rol.application.UpdateRoleCommand;
+			import jp.co.ntts.vhut.rol.presentation.wiz.RolWizardDestination;
+			import mx.resources.ResourceManager;
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- INFRASTRUCTURE -->
+		<config:VhutConfig id="vhutConfig"/>
+		<s:RemoteObject id="roleService"
+						destination="roleService"/>
+		<data:DataCache id="roleDataCache"
+						type="jp.co.ntts.vhut.entity.Role"/>
+		<s:RemoteObject id="vhutUserService"
+						destination="vhutUserService"/>
+		<!-- DOMAIN -->
+		<domain:Roles/>
+		<domain:EditingRole/>
+		<!-- APPLICATION -->
+		<DynamicCommand type="{ GetAllRoleAbstractionListCommand }"
+						selector="getAllRole"
+						messageType="{ GetAllEvent }"/>
+		<DynamicCommand type="{ GetRoleByIdCommand }"
+						selector="getRolById"
+						messageType="{ GetByIdEvent }"/>
+		<DynamicCommand type="{ CreateRoleCommand }"
+						selector="createRol"
+						messageType="{ RolEvent }"/>
+		<DynamicCommand type="{ UpdateRoleCommand }"
+						selector="updateRol"
+						messageType="{ RolEvent }"/>
+		<DynamicCommand type="{ DeleteRoleCommand }"
+						selector="deleteRol"
+						messageType="{ RolEvent }"/>
+		<compwiz:WizardSteps id="tmpWizardSteps">
+			<compwiz:WizardStep destination="{ RolWizardDestination.PROP }"
+								name="{ ResourceManager.getInstance().getString('ROLUI', RolWizardDestination.PROP) }"
+								initiator="{ propViewPM }"
+								validator="{ propViewPM }"/>
+		</compwiz:WizardSteps>
+
+		<!-- PRESENTATION -->
+		<presentation:RolPM/>
+		<wiz:RolWizardPM steps="{ tmpWizardSteps }"/>
+		<wiz:PropViewPM id="propViewPM"/>
+	</fx:Declarations>
+
+</Objects>
+

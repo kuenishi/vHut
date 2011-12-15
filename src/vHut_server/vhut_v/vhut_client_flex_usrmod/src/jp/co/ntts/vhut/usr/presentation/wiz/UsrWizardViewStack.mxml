@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\AppWizardViewStack.mxml -->
+<!---
+	 <p>ユーザ編集ウィザードのコンテンツを指定しています.</p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+
+	 author NTT Software Corporation.
+	 version 1.0.0
+-->
+<mx:ViewStack xmlns:fx="http://ns.adobe.com/mxml/2009"
+			  xmlns:s="library://ns.adobe.com/flex/spark"
+			  xmlns:mx="library://ns.adobe.com/flex/mx"
+			  xmlns:parsley="http://www.spicefactory.org/parsley"
+			  xmlns:wiz="jp.co.ntts.vhut.usr.presentation.wiz.*"
+			  width="400"
+			  height="300">
+	<fx:Metadata>
+		[Waypoint]
+	</fx:Metadata>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:NavigatorContent automationName="{ UsrWizardDestination.PROP }"
+						label="prop">
+		<wiz:PropView horizontalCenter="0" width="400" top="0" bottom="0"/>
+	</s:NavigatorContent>
+</mx:ViewStack>

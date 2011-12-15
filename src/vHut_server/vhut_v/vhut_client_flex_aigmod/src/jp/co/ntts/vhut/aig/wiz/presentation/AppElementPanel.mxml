@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\ApplicationElementPanel.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<presentation:VAttributePanel xmlns:fx="http://ns.adobe.com/mxml/2009"
+							  xmlns:s="library://ns.adobe.com/flex/spark"
+							  xmlns:mx="library://ns.adobe.com/flex/mx"
+							  xmlns:presentation="jp.co.ntts.vhut.panel.presentation.*"
+							  xmlns:presentation1="jp.co.ntts.vhut.form.presentation.*"
+							  xmlns:core="jp.co.ntts.vhut.core.presentation.*"
+							  currentState="{ pm.apps.targetApplicationElement ? 'active' : 'deactive'}">
+	<presentation:layout>
+		<s:BasicLayout/>
+	</presentation:layout>
+	<fx:Declarations>
+		<!-- 非ビジュアルエレメント (サービス、値オブジェクトなど) をここに配置 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.entity.ApplicationSecurityGroup;
+			[Inject]
+			[Bindable]
+			public var pm:AppViewPM;
+
+			protected function getViewstackIndex(target:Object):int
+			{
+				if(target != null && target is ApplicationSecurityGroup) return 1;
+				return 0;
+			}
+		]]>
+	</fx:Script>
+	<mx:ViewStack
+		id="viewStack"
+		top="0" bottom="0" left="0" right="0"
+		selectedIndex="{getViewstackIndex(pm.apps.targetApplicationElement)}">
+		<s:NavigatorContent label="@Resource(key='vm', bundle='APIUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<core:IconLabel height="60" right="5" top="5" left="5"
+								url="{pm.apps.targetApplicationVm.imageUrl}"
+								source="@Embed(source='/images/icon_vm.png')">
+					<s:Label id="appVmNameLabel"
+							 text="{pm.apps.targetApplicationVm.name}"
+							 maxDisplayedLines="1"/>
+					<s:Label id="vmNameLabel"
+							 text="{pm.apps.targetApplicationVm.vm.name}"
+							 maxDisplayedLines="1"/>
+				</core:IconLabel>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+							<mx:FormItem label="@Resource(key='description', bundle='APIUI')"
+										 width="100%">
+								<s:TextArea text="{pm.apps.targetApplicationVm.description}"
+											editable="false"
+											width="100%" />
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='spec', bundle='APIUI')"
+										 width="100%"
+										 styleName="h1">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.specId}"
+										 width="100%"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='cpu', bundle='APIUI')"
+										 width="100%">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.cpuCore + resourceManager.getString('APIUI', 'unit.cpu.core')}"
+										 width="100%"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='memory', bundle='APIUI')"
+										 width="100%">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.memory + resourceManager.getString('APIUI', 'unit.memory.m')}"
+										 width="100%"/>
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='os', bundle='APIUI')"
+										 width="100%"
+										 styleName="h1">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.os}"
+										 width="100%"/>
+							</mx:FormItem>
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="@Resource(key='securityGroup', bundle='APIUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<core:IconLabel height="60" right="5" top="5" left="5"
+								source="@Embed(source='/images/icon_nw.png')">
+					<s:Label id="appSgNameLabel"
+							 text="{pm.apps.targetApplicationSecurityGroup.name}"
+							 maxDisplayedLines="1"/>
+					<s:Label id="sgNameLabel"
+							 text="{pm.apps.targetApplicationSecurityGroup.securityGroup.name}"
+							 maxDisplayedLines="1"/>
+				</core:IconLabel>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+		<!--
+		<s:NavigatorContent label="@Resource(key='vm', bundle='AIGUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<presentation1:ElementTitleForm height="60"
+												right="5"
+												top="5"
+												left="5"
+												localName="{pm.apps.targetApplicationVm.name}"
+												globalName="{pm.apps.targetApplicationVm.vm.name}"
+												imageUrl="{pm.apps.targetApplicationVm.imageUrl}"/>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+							<mx:FormItem label="@Resource(key='description', bundle='AIGUI')"
+										 width="100%">
+								<s:TextArea text="{pm.apps.targetApplicationVm.description}"
+											editable="false"
+											width="100%" />
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='spec', bundle='AIGUI')"
+										 width="100%"
+										 styleName="h1">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.specId}"
+										 width="100%"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='cpu', bundle='AIGUI')"
+										 width="100%">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.cpuCore + resourceManager.getString('AIGUI', 'unit.cpu.core')}"
+										 width="100%"/>
+							</mx:FormItem>
+							<mx:FormItem label="@Resource(key='memory', bundle='AIGUI')"
+										 width="100%">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.memory + resourceManager.getString('AIGUI', 'unit.memory.m')}"
+										 width="100%"/>
+							</mx:FormItem>
+
+							<mx:FormItem label="@Resource(key='os', bundle='AIGUI')"
+										 width="100%"
+										 styleName="h1">
+								<mx:Text text="{pm.apps.targetApplicationVm.vm.os}"
+										 width="100%"/>
+							</mx:FormItem>
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="@Resource(key='securityGroup', bundle='AIGUI')">
+			<s:SkinnableContainer left="0" right="0" top="0" bottom="0"
+								  styleName="basicContainer">
+				<presentation1:ElementTitleForm height="60"
+												right="5"
+												top="5"
+												left="5"
+												localName="{pm.apps.targetApplicationSecurityGroup.name}"
+												globalName="{pm.apps.targetApplicationSecurityGroup.securityGroup.name}"/>
+				<s:Scroller left="5"
+							right="5"
+							top="65"
+							bottom="5"
+							styleName="bevelDownScroller">
+					<s:Group width="100%">
+						<s:layout>
+							<s:VerticalLayout clipAndEnableScrolling="true" />
+						</s:layout>
+						<mx:Form width="100%"
+								 styleName="attr">
+						</mx:Form>
+					</s:Group>
+				</s:Scroller>
+			</s:SkinnableContainer>
+		</s:NavigatorContent>
+		-->
+	</mx:ViewStack>
+</presentation:VAttributePanel>

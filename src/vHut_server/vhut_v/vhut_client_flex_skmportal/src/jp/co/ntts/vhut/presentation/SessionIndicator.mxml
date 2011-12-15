@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\SessionIndicator.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" 
+				   xmlns:parsley="http://www.spicefactory.org/parsley"
+				   width="300" height="60" >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import spark.skins.spark.BorderContainerSkin;
+			[Inject]
+			[Bindable]
+			public var pm:ContentPM;
+			BorderContainerSkin
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<s:Group left="10" right="0" bottom="0" height="24">
+		<s:Label id="account" 
+				 verticalCenter="0" left="0"
+				 text="{pm.session.user.fullName}"/>
+		<mx:LinkButton id="logoutBtn"
+					   label="@Resource(key='logout', bundle='SKMUI')"
+					   verticalCenter="0"
+					   right="0"
+					   click="pm.logout()"/>
+	</s:Group>
+</s:BorderContainer>

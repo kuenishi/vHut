@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\TopModuleRigContext.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<Objects 
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns="http://www.spicefactory.org/parsley"
+	xmlns:module="com.adobe.cairngorm.module.*" 
+	>
+	
+	<fx:Script>
+		<![CDATA[
+			import org.spicefactory.lib.reflect.ClassInfo;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<module:ParsleyModuleDescriptor id="mngModuleDescriptor"
+										objectId="mngModule"
+										url="vhut_client_flex_mngmod.swf"
+										applicationDomain="{ ClassInfo.currentDomain }" />
+	</fx:Declarations>
+	
+</Objects> 

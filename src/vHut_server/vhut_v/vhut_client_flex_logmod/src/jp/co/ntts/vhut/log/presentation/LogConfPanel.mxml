@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- asdoc\LogConfPanel.mxml -->
+<!---
+	 ログ出力に関する設定を行うパネルベースのコンポーネント.
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:TitleWindow width="320"
+			   height="250"
+			   xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:spicefactory="http://www.spicefactory.org/parsley"
+			   title="@Resource(key='logconf_title', bundle='LOGUI')"
+			   xmlns:presentation="jp.co.ntts.vhut.log.presentation.*">
+	<s:layout>
+		<s:VerticalLayout paddingBottom="5"
+						  paddingLeft="5"
+						  paddingRight="5"
+						  paddingTop="5"
+						  gap="5"/>
+	</s:layout>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:Scroller width="100%"
+				height="100%"
+				horizontalScrollPolicy="off">
+		<s:Group>
+			<s:layout>
+				<s:VerticalLayout/>
+			</s:layout>
+			<!--- ユーザへの説明を表示するテキストエリア. -->
+			<s:TextArea id="ta_caution"
+						width="100%"
+						textAlign="center"
+						verticalAlign="middle"
+						text="@Resource(key='logconf_caution', bundle='LOGUI')"
+						editable="false"
+						height="60"/>
+			<!--- トレースターゲットの設定を行うコンポーネント. -->
+			<presentation:TraceTargetConfGroup id="traceTargetConfGroup"
+											   width="100%"/>
+			<!--- ログをキャッシュするターゲットの設定を行うコンポーネント. -->
+			<presentation:LogCacheTargetConfGroup id="logCacheTargetConfGroup"
+														 width="100%"/>
+			<!--- ローカルコネクションターゲットの設定を行うコンポーネント. -->
+			<presentation:LocalConnectionTargetConfGroup id="localConnectionTargetConfGroup"
+														 width="100%"/>
+		</s:Group>
+	</s:Scroller>
+</s:TitleWindow>

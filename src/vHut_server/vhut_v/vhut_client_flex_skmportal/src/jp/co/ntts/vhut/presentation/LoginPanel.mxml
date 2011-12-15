@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\LoginPanel.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 title="@Resource(key='login.panel.title', bundle='SKMUI')"
+		 width="300" height="200" >
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<s:controlBarContent>
+		<s:Button id="loginBtn"
+				  label="@Resource(key='login', bundle='SKMUI')"
+				  right="0" bottom="0"
+				  click="submit()"
+				  styleName="menuButton"/>
+	</s:controlBarContent>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.AuthenticationEvent;
+			import jp.co.ntts.vhut.core.GetEvent;
+
+			import mx.events.ValidationResultEvent;
+			import mx.validators.ValidationResult;
+
+			[Inject]
+			[Bindable]
+			public var pm:ContentPM;
+
+			protected function submit():void
+			{
+				if(Validator.validateAll([ accountNotNullValidator ]).length == 0)
+				{
+					pm.login(accountTextInput.text ,passwordTextInput.text);
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+		<mx:Validator id="accountNotNullValidator"
+					  required="true"
+					  source="{accountTextInput}"
+					  property="text"
+					  requiredFieldError="@Resource(key='validate.required', bundle='APIUI')"/>
+
+	</fx:Declarations>
+	<mx:Form top="0" left="0" right="0" bottom="0">
+		<mx:FormItem label="@Resource(key='account', bundle='SKMUI')" required="true">
+			<s:TextInput id="accountTextInput" enter="submit()"
+						 text=""/>
+		</mx:FormItem>
+		<mx:FormItem label="@Resource(key='password', bundle='SKMUI')" required="true">
+			<s:TextInput id="passwordTextInput" displayAsPassword="true" enter="submit()"
+						 text=""/>
+		</mx:FormItem>
+		<mx:FormItem>
+			<s:Label text="{pm.session.errorString}" color="#880000"/>
+		</mx:FormItem>
+	</mx:Form>
+</s:Panel>

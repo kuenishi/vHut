@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\EditorView.mxml -->
+<!---
+	 アプリケーションインスタンスグループ一括ウィザードの
+	 ユーザ存在確認時のView.
+	 <p></p>
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:va="jp.co.ntts.vhut.va.*"
+		 xmlns:presentation="jp.co.ntts.vhut.app.wiz.presentation.*"
+		 xmlns:va1="jp.co.ntts.vhut.comp.va.*"
+		 xmlns:parsley="http://www.spicefactory.org/parsley"
+		 width="800"
+		 height="550">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.entity.VhutUserStatus;
+			
+			import mx.resources.IResourceManager;
+			import mx.resources.ResourceBundle;
+			[Inject]
+			[Bindable]
+			public var pm:UserGridViewPM;
+			
+			public function formatUserStatus(data:Object, column:DataGridColumn):String
+			{
+				switch(data[column.dataField].toString())
+				{
+					case VhutUserStatus.NONE.toString():
+						return resourceManager.getString("AIGUI", "aig.wizard.import.vhutUserStatus.none");
+					case VhutUserStatus.NOTREGISTERED.toString():
+						return resourceManager.getString("AIGUI", "aig.wizard.import.vhutUserStatus.notRegistered");
+					case VhutUserStatus.REGISTERED.toString():
+						return resourceManager.getString("AIGUI", "aig.wizard.import.vhutUserStatus.registered");
+					default:
+						return resourceManager.getString("AIGUI", "aig.wizard.import.vhutUserStatus.error");
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<parsley:Configure/>
+	</fx:Declarations>
+	<mx:DataGrid dataProvider="{pm.importingAigs.userList}"
+				 width="100%" height="100%">
+		<mx:columns>
+			<mx:DataGridColumn dataField="account" 
+							   headerText="@Resource(key='aig.wizard.import.account', bundle='AIGUI')" 
+							   width="180"/>
+			<mx:DataGridColumn dataField="lastName" 
+							   headerText="@Resource(key='aig.wizard.import.lastName', bundle='AIGUI')" 
+							   width="80"/>
+			<mx:DataGridColumn dataField="firstName" 
+							   headerText="@Resource(key='aig.wizard.import.firstName', bundle='AIGUI')" 
+							   width="80"/>
+			<mx:DataGridColumn dataField="email"
+							   headerText="@Resource(key='aig.wizard.import.email', bundle='AIGUI')" 
+							   />
+			<mx:DataGridColumn dataField="status" 
+							   headerText="@Resource(key='aig.wizard.import.registrationStatus', bundle='AIGUI')" 
+							   labelFunction="formatUserStatus"
+							   width="120"/>
+		</mx:columns>
+	</mx:DataGrid>
+</s:SkinnableContainer>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\LocalConnectionTargetConfGroup.mxml -->
+<!---
+	 ローカルコネクションターゲットの設定を行うためのコンポーネント.
+
+	 <p>
+	 <b>Author :</b> NTT Software Corporation.
+	 <b>Version :</b> 1.0.0
+	 </p>
+
+	 @langversion 3.0
+	 @playerversion Flash 10.1
+
+	 @internal
+	 $Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+	 $Revision: 949 $
+	 $Author: NTT Software Corporation. $
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:spicefactory="http://www.spicefactory.org/parsley"
+		 width="300"
+		 currentState="{pm.isTargetEnable ? 'enable' : 'disable'}">
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			[Inject]
+			public var pm:LocalConnectionTargetConfGroupPM;
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<s:states>
+		<s:State name="disable"/>
+		<s:State name="enable"/>
+	</s:states>
+	<fx:Declarations>
+		<spicefactory:Configure/>
+	</fx:Declarations>
+	<!--- 有効化/無効化を変更するチェックボックス. -->
+	<s:CheckBox id="cb_enable"
+				label="@Resource(key='output_to_logviewer', bundle='LOGUI')"
+				selected="@{pm.isTargetEnable}"/>
+	<mx:Form includeIn="enable"
+			 width="100%"
+			 paddingLeft="15"
+			 paddingTop="8"
+			 paddingRight="8"
+			 paddingBottom="8">
+		<!--- ログビューアーを起動するボタン. -->
+		<mx:FormItem label="@Resource(key='log_viewer', bundle='LOGUI')">
+			<s:Button id="b_launch" includeIn="enable"
+					  label="@Resource(key='launch', bundle='LOGUI')"
+					  click="pm.launchViewer()"/>
+		</mx:FormItem>
+	</mx:Form>
+</s:Group>

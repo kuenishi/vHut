@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 NTT Software Corporation. All Rights Reserved. -->
+<!-- asdoc\APIContext.mxml -->
+<!---
+<p>xxxコンポーネントです。</p>
+
+<p>
+<b>Author :</b> NTT Software Corporation.
+<b>Version :</b> 1.0.0
+</p>
+
+@internal
+$Date: 2011-11-28 19:50:40 +0900 (月, 28 11 2011) $
+$Revision: 949 $
+$Author: NTT Software Corporation. $
+
+author NTT Software Corporation.
+version 1.0.0
+-->
+<Objects xmlns="http://www.spicefactory.org/parsley"
+		 xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:domain="jp.co.ntts.vhut.core.domain.*"
+		 xmlns:infrastructure="jp.co.ntts.vhut.core.infrastructure.*" xmlns:core="jp.co.ntts.vhut.core.*">
+	<fx:Script>
+		<![CDATA[
+			import jp.co.ntts.vhut.core.AuthenticationEvent;
+			import jp.co.ntts.vhut.core.infrastructure.GetCurrentUserCommand;
+			import jp.co.ntts.vhut.core.infrastructure.LoginCommand;
+			import jp.co.ntts.vhut.core.infrastructure.LogoutCommand;
+			import jp.co.ntts.vhut.log.LogConfPanelEvent;
+
+			import org.spicefactory.lib.reflect.ClassInfo;
+			import jp.co.ntts.vhut.core.GetEvent;
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[ResourceBundle("APIMessages")]
+		[ResourceBundle("APIUI")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- PRESENTATION LAYER -->
+
+		<!-- APPLICATION LAYER -->
+		<DynamicCommand type="{ LoginCommand }"
+								selector="login"
+								messageType="{ AuthenticationEvent }"/>
+
+		<DynamicCommand type="{ LogoutCommand }"
+								selector="logout"
+								messageType="{ AuthenticationEvent }"/>
+
+		<DynamicCommand type="{ GetCurrentUserCommand }"
+								selector="getCurrentUser"
+								messageType="{ GetEvent }"/>
+
+		<!-- DOMAIN LAYER -->
+		<domain:Session/>
+
+		<!-- INFRASTRACTURE LAYER -->
+
+		<s:RemoteObject id="basicService"
+						destination="basicService"/>
+
+		<infrastructure:SessionHandler/>
+
+		<core:CommandWatcher/>
+
+	</fx:Declarations>
+
+</Objects>
+
